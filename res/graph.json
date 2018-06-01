@@ -10,11 +10,85 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render"
+      "A": "SpinningCube.render",
+      "B": "lightrings.render",
+      "C": "intro.render",
+      "D": "scannerShader.render",
+      "E": "ZentangleVisionShader.render",
+      "F": "dimentionMultiplexerShader.render",
+      "G": "cradle.render"
     }
   },
   {
     "id": "SpinningCube",
     "type": "spinningCube"
+  },
+  {
+    "id": "lightrings",
+    "type": "lightrings"
+  },
+  {
+    "id": "intro",
+    "type": "IntroNode"
+  },
+  {
+    "id": "scannerShader",
+    "type": "scannerShaderNode",
+    "options": {
+      "shader": "scannerShader"
+    },
+    "connected": {
+      "texture": "scanner.render",
+      "depth": "scanner.depth"
+    }
+  },
+  {
+    "id": "scanner",
+    "type": "scanner"
+  },
+  {
+    "id": "ZentangleVision",
+    "type": "zentangleVision"
+  },
+  {
+    "id": "ZentangleVisionShader",
+    "type": "ZentangleVisionShaderNode",
+    "options": {
+      "shader": "ZentangleVisionShader"
+    },
+    "connected": {
+      "texture": "ZentangleVision.render"
+    }
+  },
+  {
+    "id": "dimension1",
+    "type": "dimension1"
+  },
+  {
+    "id": "dimension2",
+    "type": "dimension2"
+  },
+  {
+    "id": "dimensionBackground",
+    "type": "dimensionBackground"
+  },
+  {
+    "id": "dimentionMultiplexerShader",
+    "type": "dimentionMultiplexerShaderNode",
+    "options": {
+      "shader": "dimentionMultiplexerShader"
+    },
+    "connected": {
+      "textureBG": "dimensionBackground.render",
+      "depthBG": "dimensionBackground.depth",
+      "texture1": "dimension1.render",
+      "depth1": "dimension1.depth",
+      "texture2": "dimension2.render",
+      "depth2": "dimension2.depth"
+    }
+  },
+  {
+    "id": "cradle",
+    "type": "cradle"
   }
 ]
