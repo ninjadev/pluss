@@ -7,7 +7,7 @@
   "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
   "music": {
     "path": "res/music.mp3",
-    "bpm": 130,
+    "bpm": 190,
     "subdivision": 12,
     "BEANOffset": 0
   },
