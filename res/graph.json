@@ -10,11 +10,16 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render"
+      "A": "SpinningCube.render",
+      "B": "squiggles.render"
     }
   },
   {
     "id": "SpinningCube",
     "type": "spinningCube"
+  },
+  {
+    "id": "squiggles",
+    "type": "squiggles"
   }
 ]
