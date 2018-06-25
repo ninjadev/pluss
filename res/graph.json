@@ -11,7 +11,8 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "SpinningCube.render",
-      "B": "squiggles.render"
+      "B": "squiggles.render",
+      "C": "sleekAngles.render"
     }
   },
   {
@@ -21,5 +22,9 @@
   {
     "id": "squiggles",
     "type": "squiggles"
+  },
+  {
+    "id": "sleekAngles",
+    "type": "sleekAngles"
   }
 ]
