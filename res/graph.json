@@ -12,7 +12,8 @@
     "connected": {
       "A": "SpinningCube.render",
       "B": "squiggles.render",
-      "C": "sleekAngles.render"
+      "C": "sleekAngles.render",
+      "D": "ninjadevtext.render"
     }
   },
   {
@@ -26,5 +27,9 @@
   {
     "id": "sleekAngles",
     "type": "sleekAngles"
+  },
+  {
+    "id": "ninjadevtext",
+    "type": "ninjadevtext"
   }
 ]
