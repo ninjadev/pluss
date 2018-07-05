@@ -90,22 +90,26 @@
             easeIn(0.1, 0, rotationTimer) / i * Math.cos(shakeTimer)
             );
         this.ctx.save();
-        this.ctx.rotate(-rotation);
+        this.ctx.rotate(-rotation); 
         this.ctx.fillStyle = this.gradient[((999999 * this.gradient.length + i - this.frame) | 0) % this.gradient.length];
         if(i - 1 < roundsTarget) {
           this.ctx.fillStyle = 'white';
         }
-        let word = rotationTimer < 0.5 ? 'Ninjadev' : '2';
-        if(BEAN > 1968) {
+        let word = easeIn(0, 1, rotationTimer) < 0.5 ? 'Ninjadev' : '2';
+        if(word === 'Ninjadev') {
+          word = word.slice(
+            0, easeOut(word.length, 0, rotationTimer - 0.5));
+        }
+        if(BEAN >= 1968 + 0) {
           word += '0';
         }
-        if(BEAN > 1968 + 12 + 6) {
+        if(BEAN >= 1968 + 12 + 6) {
           word += '1';
         }
-        if(BEAN > 1968 + 24 + 12) {
+        if(BEAN >= 1968 + 24 + 12) {
           word += '8';
         }
-        if(rotationTimer >= 0.5) {
+        if(easeIn(0, 1, rotationTimer) >= 0.5) {
           this.ctx.rotate(Math.PI);
         }
         this.ctx.fillText(word, 0 , 0);
