@@ -71,6 +71,9 @@
         this.ctx.translate(offset, offset);
         this.ctx.rotate(-rotation);
         this.ctx.fillStyle = this.gradient[((999999 * this.gradient.length + i - this.frame) | 0) % this.gradient.length];
+        if(i == 0) {
+          this.ctx.fillStyle = 'white';
+        }
         this.ctx.fillText('Ninjadev', 0 , 0);
         this.ctx.strokeText('Ninjadev', 0 , 0);
         this.ctx.rotate(rotation);
