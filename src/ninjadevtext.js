@@ -1,4 +1,7 @@
 (function(global) {
+
+  const FFB = FRAME_FOR_BEAN;
+
   class ninjadevtext extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -62,21 +65,52 @@
       this.ctx.fillStyle = 'white';
       this.ctx.strokeStyle = 'black';
       this.ctx.lineWidth = 0.05;
-      this.ctx.translate(8, 4.5);
+      const startTimer = (this.frame - FFB(1908)) / (FFB(1920) - FFB(1908));
       const offset = -1 / 5;
-      const rounds = 30;
-      const rotation = Math.sin(this.frame / 60 / 60 * 190 * Math.PI / 2) / 4;
-      this.ctx.translate(-rounds * offset, -rounds * offset);
-      for(let i = rounds; i >= 0; i--) {
+
+      this.ctx.translate(7 + offset, 4 + offset);
+
+      const rounds = 35;
+      const rotationTimer = (this.frame - FFB(1956)) / (FFB(1968) - FFB(1956));
+      const rotation = easeIn(Math.PI / 16, -Math.PI, rotationTimer);
+      this.ctx.translate(
+          easeIn(0, 1 - offset, rotationTimer),
+          easeIn(0, 0.5 - offset, rotationTimer));
+      this.ctx.translate(-(rounds + 1) * offset, -(rounds + 1) * offset);
+      const roundsTarget = 
+        smoothstep(
+          easeIn(rounds, 0, startTimer),
+          rounds / 2,
+          rotationTimer * 2) - easeIn(0, rounds / 2, rotationTimer);
+      for(let i = rounds; i >= roundsTarget; i--) {
         this.ctx.translate(offset, offset);
+        const shakeTimer = (i - this.frame) / 60 / 60 * 190 * Math.PI * 2 * 2;
+        this.ctx.translate(
+            easeIn(0.1, 0, rotationTimer) / i * Math.sin(shakeTimer),
+            easeIn(0.1, 0, rotationTimer) / i * Math.cos(shakeTimer)
+            );
+        this.ctx.save();
         this.ctx.rotate(-rotation);
         this.ctx.fillStyle = this.gradient[((999999 * this.gradient.length + i - this.frame) | 0) % this.gradient.length];
-        if(i == 0) {
+        if(i - 1 < roundsTarget) {
           this.ctx.fillStyle = 'white';
         }
-        this.ctx.fillText('Ninjadev', 0 , 0);
-        this.ctx.strokeText('Ninjadev', 0 , 0);
-        this.ctx.rotate(rotation);
+        let word = rotationTimer < 0.5 ? 'Ninjadev' : '2';
+        if(BEAN > 1968) {
+          word += '0';
+        }
+        if(BEAN > 1968 + 12 + 6) {
+          word += '1';
+        }
+        if(BEAN > 1968 + 24 + 12) {
+          word += '8';
+        }
+        if(rotationTimer >= 0.5) {
+          this.ctx.rotate(Math.PI);
+        }
+        this.ctx.fillText(word, 0 , 0);
+        this.ctx.strokeText(word, 0 , 0);
+        this.ctx.restore();
       }
 
       this.ctx.restore();
