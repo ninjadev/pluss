@@ -15,24 +15,29 @@
       this.output.magFilter = THREE.LinearFilter;
 
       this.lines = [];
-      for(let i = 0; i < 32; i++) {
-        let x = Math.random() * 16;
-        let y = Math.random() * 9;
-        const line = [x, y];
-        for(let j = 0; j < 2; j++) {
-          const r = 0.5 + Math.random();
-          const angle = Math.random()  * 2 * Math.PI;
-          x += r * Math.cos(angle);
-          y += r * Math.sin(angle);
-          line.push(x);
-          line.push(y);
-        }
-        this.lines.push(line);
+      for(let i = 0; i < 20; i+=2) {
+        for(let j = 0.1; j < 100; j+=2) {
+          const r = 0.2;
+          const angle = Math.random() * Math.PI * 2;
+          let x = i + r * Math.sin(angle);
+          let y = j + r * Math.cos(angle);
+          const line = [x, y];
+          for(let k = 0; k < 2; k++) {
+            const r = 0.5 + Math.random() * 0.25;
+            const angle = Math.random()  * 2 * Math.PI;
+            if(k == 0) {
+              line.unshift(y + r * Math.sin(angle));
+              line.unshift(x + r * Math.cos(angle));
+            } else {
+              line.push(x + r * Math.cos(angle));
+              line.push(y + r * Math.sin(angle));
+            }
+          }
+          this.lines.push(line);
 
-        const angle = Math.random() * 2 * Math.PI;
-        const speed = Math.random() * 0.005;
-        line.dx = Math.cos(angle) * speed;
-        line.dy = Math.sin(angle) * speed;
+          line.dx = 0;
+          line.dy = -.01;
+        }
       }
     }
 
