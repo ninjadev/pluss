@@ -17,7 +17,8 @@
       "E": "intro.render",
       "F": "scannerShader.render",
       "G": "dimentionMultiplexerShader.render",
-      "H": "cradle.render"
+      "H": "cradle.render",
+      "I": "yoyo.render"
     }
   },
   {
@@ -85,5 +86,9 @@
   {
     "id": "cradle",
     "type": "cradle"
+  },
+  {
+    "id": "yoyo",
+    "type": "yoyo"
   }
 ]
