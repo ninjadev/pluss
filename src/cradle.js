@@ -33,8 +33,6 @@
       this.ctx.globalCompositeOperation = 'source-over';
       this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
 
-      this.circleEndSize = smoothstep(0, 1, (this.frame - 827) / (996 - 827));
-
       var colors = ["#729C34", "#265B6A"];
 
       for (var i = 0; i < 5; i++)
@@ -45,7 +43,7 @@
         this.ctx.ellipse(
           -4 * GU + 3 * i * GU,
           4.5 * GU,
-          GU + GU * Math.pow((this.frame - FRAME_FOR_BEAN(1152)) / 90, 7),
+          GU + GU * Math.pow((this.frame - FRAME_FOR_BEAN(3475)) / 90, 7),
           GU,
           1, 0, Math.PI * 2);
         this.ctx.lineWidth = 0.5 * GU ;

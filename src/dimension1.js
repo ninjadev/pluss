@@ -9,7 +9,7 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(40, 40, 40) ,new THREE.MeshPhongMaterial({ color: 0xFF256F }));
+      this.cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20) ,new THREE.MeshPhongMaterial({ color: 0xFF256F }));
       this.scene.add(this.cube);
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),

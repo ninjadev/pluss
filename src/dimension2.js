@@ -9,7 +9,7 @@
         }
       });
 
-           this.cube = new THREE.Mesh(new THREE.BoxGeometry(25, 25, 25),new THREE.MeshPhongMaterial({ color: 0xFF256F }));
+      this.cube = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 14),new THREE.MeshPhongMaterial({ color: 0xFF256F }));
       this.scene.add(this.cube);
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
@@ -25,7 +25,7 @@
       light2.position.set(-50, -50, 50);
       this.scene.add(light2);
 
-      this.camera2 = new THREE.PerspectiveCamera( 45, 16 / 9, 50, 150 );
+      this.camera2 = new THREE.PerspectiveCamera( 45, 16 / 9, 50, 450 );
       this.camera2.position.z = 100;
 
       this.targetDepthTexture = new THREE.DepthTexture();

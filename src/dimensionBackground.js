@@ -10,13 +10,13 @@
       });
 
       this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x6F256F }));
-      this.scene.add(this.cube);
+      //this.scene.add(this.cube);
       this.cube2 = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),new THREE.MeshPhongMaterial({ color: 0x530E53 }));
       this.cube2.position.set(30, 20, 0);
-      this.scene.add(this.cube2);
+      //this.scene.add(this.cube2);
       this.cube3 = new THREE.Mesh(new THREE.BoxGeometry(30, 5, 5),new THREE.MeshPhongMaterial({ color: 0x8A458A }));
       this.cube3.position.set(-30, 30, 0);
-      this.scene.add(this.cube3);
+      //this.scene.add(this.cube3);
 
       this.dimentionlens_model = new THREE.Object3D();
       var loadObject = function (objPath, material, three_object) {
@@ -39,9 +39,9 @@
 
       loadObject('res/dimentionlens.obj', bestMaterial, this.dimentionlens_model );
       this.scene.add( this.dimentionlens_model );
-      this.dimentionlens_model.scale.x = 24;
-      this.dimentionlens_model.scale.y = 24;
-      this.dimentionlens_model.scale.z = 24;
+      this.dimentionlens_model.scale.x = 14;
+      this.dimentionlens_model.scale.y = 14;
+      this.dimentionlens_model.scale.z = 14;
 
       this.stage_model = new THREE.Object3D();
       var loadObject = function (objPath, material, three_object) {
@@ -64,13 +64,14 @@
 
       loadObject('res/stage.obj', bestMaterial, this.stage_model );
       this.scene.add( this.stage_model );
-      this.stage_model.scale.x = 4;
-      this.stage_model.scale.y = 4;
-      this.stage_model.scale.z = 4;
+      this.stage_model.scale.x = 18;
+      this.stage_model.scale.y = 18;
+      this.stage_model.scale.z = 18;
       this.stage_model.position.y = -12;
       this.stage_model.position.z = 100;
-
-
+      this.stage_model.rotation.x = Math.PI / 2 * 0.37;
+      this.stage_model.position.y = -19;
+      this.stage_model.position.z = -60;
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
                                  new THREE.MeshPhongMaterial({ color: 0x666666 })); // A background of max size ish. Useful to know how large that would be :)
@@ -86,7 +87,7 @@
           cube.position.x = - 120 + i * 4;
           cube.position.z = - 60 + j * 4;
           cube.position.y = Math.random() * 3 - j;
-          this.scene.add(cube);
+          //this.scene.add(cube);
         }
       }
 
@@ -95,7 +96,7 @@
       light.position.set(50, 50, 50);
       this.scene.add(light);
 
-      this.camera2 = new THREE.PerspectiveCamera( 45, 16 / 9, 0.001, 150 );
+      this.camera2 = new THREE.PerspectiveCamera( 45, 16 / 9, 50, 450 );
       this.camera2.position.z = 100;
 
       this.targetDepthTexture = new THREE.DepthTexture();
@@ -113,7 +114,7 @@
       this.cube3.rotation.x = Math.sin(frame / 10);
       this.cube3.rotation.y = -Math.cos(frame / 10);
 
-      this.dimentionlens_model.position.x = 0.5 * 80 * Math.sin(frame / 30);
+      this.dimentionlens_model.position.x = 0.35 * 80 * Math.sin(frame / 30);
       this.dimentionlens_model.position.y = 0;
       this.dimentionlens_model.position.z = 15;
       this.dimentionlens_model.rotation.y = frame / 20;
