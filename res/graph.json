@@ -18,7 +18,8 @@
       "F": "scannerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
-      "I": "yoyo.render"
+      "I": "yoyo.render",
+      "J": "ZentangleVisionShader.render"
     }
   },
   {
@@ -90,5 +91,19 @@
   {
     "id": "yoyo",
     "type": "yoyo"
+  },
+  {
+    "id": "ZentangleVision",
+    "type": "zentangleVision"
+  },
+  {
+    "id": "ZentangleVisionShader",
+    "type": "ZentangleVisionShaderNode",
+    "options": {
+      "shader": "ZentangleVisionShader"
+    },
+    "connected": {
+      "texture": "ZentangleVision.render"
+    }
   }
 ]
