@@ -19,7 +19,8 @@
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
       "I": "yoyo.render",
-      "J": "ZentangleVisionShader.render"
+      "J": "bird.render",
+      "K": "ZentangleVisionShader.render"
     }
   },
   {
@@ -105,5 +106,9 @@
     "connected": {
       "texture": "ZentangleVision.render"
     }
+  },
+  {
+    "id": "bird",
+    "type": "bird"
   }
 ]
