@@ -19,7 +19,7 @@
       this.uniforms.tDepth1.value = this.inputs.depth1.getValue();
       this.uniforms.tDiffuse2.value = this.inputs.texture2.getValue();
       this.uniforms.tDepth2.value = this.inputs.depth2.getValue();
-      this.uniforms.cameraNear.value = 50;
+      this.uniforms.cameraNear.value = 0.001;
       this.uniforms.cameraFar.value = 150;
       this.uniforms.blastDistance.value = 40;
 //      this.uniforms.blastDistance.value = frame % 350;

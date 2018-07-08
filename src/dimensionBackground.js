@@ -35,8 +35,7 @@
         });
       };
 
-      var bestMaterial = new THREE.MeshPhongMaterial({color: 0x4A6B43});
-      //var bestMaterial = new THREE.MeshBasicMaterial({ color: 0x000fff });
+      var bestMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
 
       loadObject('res/dimentionlens.obj', bestMaterial, this.dimentionlens_model );
       this.scene.add( this.dimentionlens_model );
@@ -44,11 +43,39 @@
       this.dimentionlens_model.scale.y = 24;
       this.dimentionlens_model.scale.z = 24;
 
+      this.stage_model = new THREE.Object3D();
+      var loadObject = function (objPath, material, three_object) {
+        var objLoader = new THREE.OBJLoader();
+        Loader.loadAjax(objPath, function(text) {
+          var object = objLoader.parse(text);
+          object.traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+              child.material = material;
+              child.material.side = THREE.DoubleSide;
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+          three_object.add(object);
+        });
+      };
+
+      var bestMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
+
+      loadObject('res/stage.obj', bestMaterial, this.stage_model );
+      this.scene.add( this.stage_model );
+      this.stage_model.scale.x = 4;
+      this.stage_model.scale.y = 4;
+      this.stage_model.scale.z = 4;
+      this.stage_model.position.y = -12;
+      this.stage_model.position.z = 100;
+
+
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
                                  new THREE.MeshPhongMaterial({ color: 0x666666 })); // A background of max size ish. Useful to know how large that would be :)
       this.bg.position.z = -49; // just within the cameras view
-      this.scene.add(this.bg);
+      //this.scene.add(this.bg);
 
       for (var i = 0; i < 60; i++)
       {
@@ -68,7 +95,7 @@
       light.position.set(50, 50, 50);
       this.scene.add(light);
 
-      this.camera2 = new THREE.PerspectiveCamera( 45, 16 / 9, 50, 150 );
+      this.camera2 = new THREE.PerspectiveCamera( 45, 16 / 9, 0.001, 150 );
       this.camera2.position.z = 100;
 
       this.targetDepthTexture = new THREE.DepthTexture();
