@@ -133,6 +133,20 @@
 
       this.ctx.save();
       this.ctx.scale(GU / 1920 * 16, GU / 1920 * 16);
+
+      const X = 10;
+      const Y = 16;
+      const r = 24;
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      for(let i = 0; i < X; i++) {
+        for(let j = 0; j < Y; j++) {
+          const x = (i + 0.5 * (j % 2))  / (X - 1) * 1920;
+          const y = j / (Y - 1) * 1080;
+          this.ctx.fillRect(x - r / 2, y - r / 2, r, r);
+        }
+      }
+
+
       for(let i = 0; i < 2; i++) {
         this.ctx.save();
         const colors = [shadowColors, regularColors][i];
