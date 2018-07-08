@@ -14,10 +14,15 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
+      this.makeNewLines();
+
+    }
+
+    makeNewLines() {
       this.lines = [];
       for(let i = 0; i < 20; i+=2) {
         for(let j = 0.1; j < 100; j+=2) {
-          const r = 0.2;
+          const r =  0.2;
           const angle = Math.random() * Math.PI * 2;
           let x = i + r * Math.sin(angle);
           let y = j + r * Math.cos(angle);
@@ -36,20 +41,17 @@
           this.lines.push(line);
 
           line.dx = 0;
-          line.dy = -.01;
+          line.dy = 0;
         }
       }
     }
 
     update(frame) {
       super.update(frame);
-      for(let line of this.lines) {
-        line[0] += line.dx; 
-        line[2] += line.dx; 
-        line[4] += line.dx; 
-        line[1] += line.dy; 
-        line[3] += line.dy; 
-        line[5] += line.dy; 
+      this.frame = frame;
+
+      if(BEAT && BEAN % 24 == 0) {
+        this.makeNewLines();
       }
     }
 
@@ -65,8 +67,11 @@
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
+      this.ctx.translate(0, -this.frame / 100);
 
       this.ctx.save();
+
+
       this.ctx.translate(0.05, 0.15);
       this.ctx.beginPath();
       this.ctx.strokeStyle = '#082244';
