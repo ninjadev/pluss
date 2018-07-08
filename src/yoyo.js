@@ -33,6 +33,10 @@
       this.ctx.save();
       this.ctx.scale(GU, GU);
 
+      this.ctx.translate(8, 4.5);
+      const cameraZoom = smoothstep(0.1, 1, (this.frame - FRAME_FOR_BEAN(4320)) / (FRAME_FOR_BEAN(4332) - FRAME_FOR_BEAN(4320)))
+      this.ctx.scale(cameraZoom, cameraZoom);
+
       const green = '#00ffc6';
       const yellow = '#fffc00';
       const pink = '#ff00ea';
@@ -75,18 +79,21 @@
       }
 
 
+      this.ctx.save();
       this.ctx.fillStyle = colors[0];
-      this.ctx.fillRect(0, 0, 16, 9);
+      this.ctx.scale(1 / cameraZoom, 1 / cameraZoom);
+      this.ctx.fillRect(-80, -4.5, 160, 9);
 
       this.ctx.fillStyle = 'white';
 
-      for(let i = 0; i < 16; i++) {
-        this.ctx.fillRect(i + 0.5, 0, 0.1, 9);
+      const amount = 16;
+      for(let i = 0; i < amount; i++) {
+        this.ctx.fillRect(((999999 + i - 0.5 - this.frame / 20) % amount) - amount / 2, -4.5, 0.1, 9);
       }
+      this.ctx.restore();
 
       for(let i = 0; i < 3; i++) {
         this.ctx.save();
-        this.ctx.translate(8, 4.5);
         let scale = 1 + (3 - i) + 0.5 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
         if(i == 2) {
           scale = 0.5 + (3 - i) - 0.25 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
