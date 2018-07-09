@@ -21,7 +21,8 @@
       "H": "cradle.render",
       "I": "yoyo.render",
       "J": "bird.render",
-      "K": "ZentangleVisionShader.render"
+      "K": "ZentangleVisionShader.render",
+      "L": "WaveyPop.render"
     }
   },
   {
@@ -117,6 +118,13 @@
     "type": "sleekstadeeNode",
     "options": {
       "shader": "sleekstadee"
+    }
+  },
+  {
+    "id": "WaveyPop",
+    "type": "WaveyPopNode",
+    "options": {
+      "shader": "WaveyPop"
     }
   }
 ]
