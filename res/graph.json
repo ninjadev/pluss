@@ -13,6 +13,7 @@
       "A": "SpinningCube.render",
       "B": "squiggles.render",
       "C": "sleekAngles.render",
+      "C_three": "sleekstadee.render",
       "D": "ninjadevtext.render",
       "E": "intro.render",
       "F": "scannerShader.render",
@@ -110,5 +111,12 @@
   {
     "id": "bird",
     "type": "bird"
+  },
+  {
+    "id": "sleekstadee",
+    "type": "sleekstadeeNode",
+    "options": {
+      "shader": "sleekstadee"
+    }
   }
 ]
