@@ -8,10 +8,9 @@ function ParticleSystem(options) {
   this.blendMode = options.blendMode || 'source-over';
 
   this.gravity = options.gravity || {x: 0, y: 0};
-  this.size = options.size || 0.36;
   this.friction = options.friction || 0.99;
   this.spawnIndex = 0;
-  this.T = options.life || 100;
+  this.T = options.life || 120;
 
   this.shapeFunctions = [
     this.renderHalfStrokedArc,
@@ -39,6 +38,7 @@ function ParticleSystem(options) {
       t: 0,
       shapeFunction: this.shapeFunctions[i % this.shapeFunctions.length],
       color: this.colors[i % this.colors.length],
+      size: 0.36,
     };
   }
 }
@@ -65,25 +65,35 @@ ParticleSystem.prototype.render = function(ctx) {
   for (let i = 0; i < this.numParticles; i++) {
     const p = this.particles[i];
     ctx.globalAlpha = Math.min(1, p.t / 20);
-    p.shapeFunction(ctx, p.x, p.y, this.size, p.rotation, p.color);
+    p.shapeFunction(ctx, p.x, p.y, p.size, p.rotation, p.color);
   }
   ctx.restore();
 };
 
-ParticleSystem.prototype.spawn = function(x, y) {
+ParticleSystem.prototype.spawn = function(x, y, dx=null, dy=null, rotation=null, rotationalSpeed=null, size=0.36) {
   const p = this.particles[this.spawnIndex];
   p.x = x;
   p.y = y;
+  if (dx === null || dy === null || rotation === null || rotationalSpeed === null) {
+    const randomAngle = Math.random() * Math.PI * 2;
+    p.dx = 0.04 * Math.cos(randomAngle);
+    p.dy = 0.04 * Math.sin(randomAngle);
+    p.x += 8 * p.dx;  // offset initial position
+    p.y += 8 * p.dy;  // offset initial position
+    p.rotation = Math.random() * Math.PI * 2;
+    p.rotationalSpeed = 0.05 * (0.5 - Math.random());
+  } else {
+    p.dx = dx;
+    p.dy = dy;
+    p.rotation = rotation;
+    p.rotationalSpeed = rotationalSpeed;
+  }
   p.shapeFunction = this.shapeFunctions[Math.floor(Math.random() * this.shapeFunctions.length)];
   p.color = this.colors[Math.floor(Math.random() * this.colors.length)];
-  const randomAngle = Math.random() * Math.PI * 2;
-  p.dx = 0.05 * Math.cos(randomAngle);
-  p.dy = 0.05 * Math.sin(randomAngle);
-  p.rotation = randomAngle;
-  p.rotationalSpeed = 0.05 * (0.5 - Math.random());
+  p.size = size;
   p.t = this.T;
   this.spawnIndex++;
-  if (this.spawnIndex > this.numParticles - 1) {
+  if (this.spawnIndex >= this.particles.length) {
     this.spawnIndex = 0;
   }
 };

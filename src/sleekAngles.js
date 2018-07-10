@@ -22,8 +22,10 @@
     update(frame) {
       super.update(frame);
       this.ps.update();
-      if (BEAN % 24 === 0) {
-        this.ps.spawn(8, 4.5);
+      if (BEAT && BEAN % 24 === 0) {
+        for (let i = 0; i < 2; i++) {
+          this.ps.spawn(8, 4.5);
+        }
       }
       this.frame = frame;
     }
@@ -44,7 +46,6 @@
       this.ctx.lineWidth = 0.1;
 
       this.renderTriangles(this.frame);
-      this.renderPluses(this.frame);
 
       this.ps.render(this.ctx);
 
@@ -76,18 +77,6 @@
         this.ctx.closePath();
         this.ctx.fill();
         this.ctx.stroke();
-      }
-    }
-
-    renderPluses(frame) {
-      const color = '#1C999D';
-      const radius = 0.24;
-
-      for (let i = 0; i < 4; i++) {
-        const x = 8 + 9 * Math.cos(i * 2 * Math.PI / 4 + Math.PI / 4);
-        const y = 4.5 + 4.5 * Math.cos(i * Math.PI + Math.PI / 4);
-        const rotation = i + 4 * frame / 60;
-        //this.renderPlus(x, y, radius, rotation, color);
       }
     }
   }
