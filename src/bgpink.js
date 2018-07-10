@@ -32,24 +32,29 @@
     render(renderer) {
       this.ctx.globalCompositeOperation = 'source-over';
       this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
+      
+      var colors = ["#1E2930", "#ff52bb"];
 
-      var colors = ["#DAD4EA", "#181D16"];
-      this.ctx.fillStyle = colors[1];
+      this.ctx.beginPath();
+      this.ctx.fillStyle = colors[0];
       this.ctx.rect(-1 * GU , - 1 * GU, 18 * GU, 11 * GU);
-      this.ctx.stroke();
+      this.ctx.fill(); 
+      this.ctx.fillStyle = colors[1];
 
-      for (var i = 0; i < 10; i++)
+      for (var i = 0; i < 51; i++)
       {
+        var i_mod = i + (-this.frame/ 20 % 20);
         this.ctx.strokeStyle = colors[0];
         this.ctx.beginPath();
-        this.ctx.lineWidth = 0.35 * GU ;
+        this.ctx.lineWidth = 0.4 * GU ;
         this.ctx.beginPath();
-        this.ctx.moveTo(0,i * GU);
-        for (var j = 0; j < 14; j++)
+        this.ctx.moveTo(i_mod * GU, -(i % 2) / 2 * GU);
+        for (var j = 0; j < 11; j++)
         {
-          this.ctx.lineTo(j * GU * 1.6, (j % 2) * GU + i * GU);
+          this.ctx.lineTo((j % 2) * GU + i_mod * GU, j * GU - (i % 2) * GU);
         }
-        this.ctx.stroke();
+        //this.ctx.stroke();
+        this.ctx.fill();
       }
 
       this.output.needsUpdate = true;
