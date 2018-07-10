@@ -23,7 +23,7 @@
       super.update(frame);
       this.ps.update();
       if (BEAN % 24 === 0) {
-        this.ps.spawn(8, 4.5, 2);
+        this.ps.spawn(8, 4.5);
       }
       this.frame = frame;
     }

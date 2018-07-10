@@ -1,8 +1,7 @@
 function ParticleSystem(options) {
   options = options || {};
-  this.numParticles = 0;
   this.particles = [];
-  this.maxParticles = options.maxParticles || 256;
+  this.numParticles = options.numParticles || 256;
   this.colors = options.colors || ['#1C999D', '#FF9A66', '#F778A1', '#65FE65', '#40C6D9', '#FFF768', '#B07FBB'];
 
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
@@ -11,6 +10,7 @@ function ParticleSystem(options) {
   this.gravity = options.gravity || {x: 0, y: 0};
   this.size = options.size || 0.36;
   this.friction = options.friction || 0.99;
+  this.spawnIndex = 0;
   this.T = options.life || 100;
 
   this.shapeFunctions = [
@@ -28,7 +28,7 @@ function ParticleSystem(options) {
     this.renderHalfFilledArc,
   ];
 
-  for (let i = 0; i < this.maxParticles; i++) {
+  for (let i = 0; i < this.numParticles; i++) {
     this.particles[i] = {
       x: 0,
       y: 0,
@@ -46,20 +46,8 @@ function ParticleSystem(options) {
 
 ParticleSystem.prototype.update = function() {
   for (let i = 0; i < this.numParticles; i++) {
-    let p = this.particles[i];
-    if (p.t <= 0 || p.y < -this.size) {
-      this.numParticles--;
-      const q = this.particles[this.numParticles];
-      p.x = q.x;
-      p.y = q.y;
-      p.dx = q.dx;
-      p.dy = q.dy;
-      p.rotation = q.rotation;
-      p.rotationalSpeed = q.rotationalSpeed;
-      p.t = q.t;
-      p.shapeFunction = q.shapeFunction;
-      p.color = q.color;
-    } else {
+    const p = this.particles[i];
+    if (p.t > 0) {
       p.x += p.dx - this.gravity.x;
       p.y += p.dy - this.gravity.y;
       p.rotation += p.rotationalSpeed;
@@ -82,21 +70,21 @@ ParticleSystem.prototype.render = function(ctx) {
   ctx.restore();
 };
 
-ParticleSystem.prototype.spawn = function(x, y, num) {
-  for (let i = 0; i < num; i++) {
-    if (this.numParticles >= this.maxParticles - 1) return;
-    this.numParticles++;
-    const p = this.particles[this.numParticles];
-    p.x = x;
-    p.y = y;
-    p.shapeFunction = this.shapeFunctions[Math.floor(Math.random() * this.shapeFunctions.length)];
-    p.color = this.colors[Math.floor(Math.random() * this.colors.length)];
-    const randomAngle = Math.random() * Math.PI * 2;
-    p.dx = 0.05 * Math.cos(randomAngle);
-    p.dy = 0.05 * Math.sin(randomAngle);
-    p.rotation = randomAngle;
-    p.rotationalSpeed = 0.05 * (0.5 - Math.random());
-    p.t = this.T;
+ParticleSystem.prototype.spawn = function(x, y) {
+  const p = this.particles[this.spawnIndex];
+  p.x = x;
+  p.y = y;
+  p.shapeFunction = this.shapeFunctions[Math.floor(Math.random() * this.shapeFunctions.length)];
+  p.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+  const randomAngle = Math.random() * Math.PI * 2;
+  p.dx = 0.05 * Math.cos(randomAngle);
+  p.dy = 0.05 * Math.sin(randomAngle);
+  p.rotation = randomAngle;
+  p.rotationalSpeed = 0.05 * (0.5 - Math.random());
+  p.t = this.T;
+  this.spawnIndex++;
+  if (this.spawnIndex > this.numParticles - 1) {
+    this.spawnIndex = 0;
   }
 };
 
