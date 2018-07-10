@@ -14,11 +14,19 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
+      this.ps = new global.ParticleSystem();
+
       this.frame = 0;
     }
 
     update(frame) {
       super.update(frame);
+      this.ps.update();
+      if (BEAT && BEAN % 24 === 0) {
+        for (let i = 0; i < 2; i++) {
+          this.ps.spawn(8, 4.5);
+        }
+      }
       this.frame = frame;
     }
 
@@ -38,7 +46,8 @@
       this.ctx.lineWidth = 0.1;
 
       this.renderTriangles(this.frame);
-      this.renderPluses(this.frame);
+
+      this.ps.render(this.ctx);
 
       this.ctx.restore();
       this.output.needsUpdate = true;
@@ -68,24 +77,6 @@
         this.ctx.closePath();
         this.ctx.fill();
         this.ctx.stroke();
-      }
-    }
-
-    renderPluses(frame) {
-      this.ctx.fillStyle = '#1C999D';
-
-      const thickness = 0.12;
-      const diameter = thickness * 4;
-      for (let i = 0; i < 4; i++) {
-        this.ctx.save();
-        this.ctx.translate(
-          8 + 9 * Math.cos(i * 2 * Math.PI / 4 + Math.PI / 4),
-          4.5 + 4.5 * Math.cos(i * Math.PI + Math.PI / 4)
-        );
-        this.ctx.rotate(i + 4 * frame / 60);
-        this.ctx.fillRect(-diameter / 2, -thickness / 2, diameter, thickness);
-        this.ctx.fillRect(-thickness / 2, -diameter / 2, thickness, diameter);
-        this.ctx.restore();
       }
     }
   }
