@@ -74,21 +74,35 @@
           var nr = 255 - progression * r / 10;
           var ng = 255 - progression * g / 10;
           var nb = 255 - progression * b / 10;
-          ctx.fillStyle = `rgb(${nr|0}, ${ng|0}, ${nb|0})`;
-          ctx.beginPath();
-          ctx.ellipse(
-            GU * (8 + x + dot / dots_per_level * dx * (1 +  Math.sin(dot / dots_per_level * Math.PI) * 0.3 * (level%2?1:-1))),
-            GU * (8.9 - y - dot / dots_per_level * dy) - GU,
-            0.02 * GU,
-            0.02 * GU,
-            0, 0, Math.PI * 2);
-          //ctx.closePath();
-          ctx.fill();
+          const calcX = GU * (8 + x + dot / dots_per_level * dx * (1 +  Math.sin(dot / dots_per_level * Math.PI) * 0.3 * (level%2?1:-1)));
+          const calcY = GU * (8.9 - y - dot / dots_per_level * dy) - GU;
+          if(calcX <= 8 * GU) {
+              ctx.fillStyle = `rgb(${nr|0}, ${ng|0}, ${nb|0})`;
+              ctx.fillRect(calcX, calcY, 0.02 * GU, 0.02 * GU);
+              /*
+              ctx.beginPath();
+              ctx.ellipse(
+                calcX,
+                calcY,
+                0.02 * GU,
+                0.02 * GU,
+                0, 0, Math.PI * 2);
+              //ctx.closePath();
+              ctx.fill();
+              */
+          }
         }
         return;
       }
 
       draw_branch(0, 0, this.dots, this.dots_per_level, 0, 1, this.ctx);
+
+      this.ctx.save();
+      this.ctx.translate(8 * GU, 4.5 * GU);
+      this.ctx.scale(-1, 1);
+      this.ctx.translate(-8 * GU, -4.5 * GU);
+      this.ctx.drawImage(this.canvas, 0, 0);
+      this.ctx.restore();
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
