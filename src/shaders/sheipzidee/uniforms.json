@@ -1,4 +1,5 @@
 {
-    "tDiffuse": { "type": "t", "value": null },
+    "iChannel1": { "type": "t", "value": null },
+    "iChannel2": { "type": "t", "value": null },
     "frame": { "type": "f", "value": 0.0 }
 }
