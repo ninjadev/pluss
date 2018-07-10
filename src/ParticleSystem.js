@@ -65,6 +65,7 @@ ParticleSystem.prototype.render = function(ctx) {
   for (let i = 0; i < this.numParticles; i++) {
     const p = this.particles[i];
     ctx.globalAlpha = Math.min(1, p.t / 20);
+    p.shapeFunction(ctx, p.x + 0.05, p.y + 0.05, p.size, p.rotation, 'black');
     p.shapeFunction(ctx, p.x, p.y, p.size, p.rotation, p.color);
   }
   ctx.restore();
