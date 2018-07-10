@@ -35,7 +35,8 @@
       "L": "WaveyPop.render",
       "M": "greetz.render",
       "N": "sheipz.render",
-      "O": "sheipzidee.render"
+      "O": "sheipzidee.render",
+      "P": "NinetiesPatterns.render"
     }
   },
   {
@@ -164,6 +165,13 @@
     "type": "sheipzideeNode",
     "options": {
       "shader": "sheipzidee"
+    }
+  },
+  {
+    "id": "NinetiesPatterns",
+    "type": "NinetiesPatternsNode",
+    "options": {
+      "shader": "NinetiesPatterns"
     }
   }
 ]
