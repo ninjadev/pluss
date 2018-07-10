@@ -3,7 +3,17 @@
     "id": "root",
     "type": "NIN.RootNode",
     "connected": {
-      "screen": "sceneSwitcherNode.render"
+      "screen": "PostProcessing.render"
+    }
+  },
+  {
+    "id": "PostProcessing",
+    "type": "PostProcessingNode",
+    "options": {
+      "shader": "PostProcessing"
+    },
+    "connected": {
+      "tDiffuse": "sceneSwitcherNode.render"
     }
   },
   {
