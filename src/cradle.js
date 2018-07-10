@@ -43,7 +43,7 @@
         this.ctx.ellipse(
           -4 * GU + 3 * i * GU,
           4.5 * GU,
-          GU + GU * Math.pow((this.frame - FRAME_FOR_BEAN(3475)) / 90, 7),
+          GU + GU * Math.pow((this.frame - FRAME_FOR_BEAN(3850)) / 90, 7),
           GU,
           1, 0, Math.PI * 2);
         this.ctx.lineWidth = 0.5 * GU ;
