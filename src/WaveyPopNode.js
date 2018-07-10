@@ -2,6 +2,10 @@
   class WaveyPopNode extends NIN.ShaderNode {
     constructor(id, options) {
       super(id, options);
+      this.startBEAN = 672;
+      this.endBean = 864;
+      this.easeOutBEANS = 32;
+
       this.sync = 0.0;
       this.transition = 0.0;
       this.numBalls = 0.0;
@@ -14,24 +18,24 @@
       }
 
       // Fade in and out transition
-      if (BEAN == 2688) {
+      if (BEAN == this.startBEAN) {
         this.transition = 1.0;
       }
-      else if (BEAN >= 2688 && BEAN < 2860) {
+      else if (BEAN >= this.startBEAN && BEAN < (this.endBean - this.easeOutBEANS)) {
         this.transition *= 0.95;
       }
-      else if (BEAN == 2860) {
+      else if (BEAN == (this.endBean - this.easeOutBEANS)) {
         this.transition = 0.1;
       }
-      else if (BEAN >= 2860) {
+      else if (BEAN >= (this.endBean - this.easeOutBEANS)) {
         this.transition *= 1.1;
       }
 
       // Number of balls to show
-      if (BEAN == 2688) {
+      if (BEAN == this.startBEAN) {
         this.numBalls = 0.0;
       }
-      else if (BEAN > 2688 && BEAN % 16 == 0) {
+      else if (BEAN > this.startBEAN && BEAN % 16 == 0) {
         this.numBalls += 1.0;
       }
 
