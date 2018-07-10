@@ -44,10 +44,10 @@
         this.ctx.beginPath();
         this.ctx.lineWidth = 0.35 * GU ;
         this.ctx.beginPath();
-        this.ctx.moveTo(0,i * GU);
+        this.ctx.moveTo(-GU,-GU + i * GU);
         for (var j = 0; j < 14; j++)
         {
-          this.ctx.lineTo(j * GU * 1.6, (j % 2) * GU + i * GU);
+          this.ctx.lineTo(-GU + j * GU * 1.6, -GU + (j % 2) * GU + i * GU);
         }
         this.ctx.stroke();
       }

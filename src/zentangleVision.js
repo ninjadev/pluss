@@ -19,7 +19,7 @@
       this.camera.position.z = 100;
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
-                                 new THREE.MeshBasicMaterial({ color: 0x666666 })); // A background of max size ish. Useful to know how large that would be :)
+                                 new THREE.MeshBasicMaterial({ color: 0x111111 })); // A background of max size ish. Useful to know how large that would be :)
       this.bg.position.z = -49; // just within the cameras view
       this.scene.add(this.bg);
 
@@ -29,9 +29,9 @@
         {
           var cube = new THREE.Mesh(new THREE.BoxGeometry(4 + 4 * Math.random(), 4 + 4 * Math.random(), 4 + 4 * Math.random()),
                                      new THREE.MeshBasicMaterial({ color: 0x6F256F }));
-          cube.material.color.r = Math.random() * 0.5 + 0.45;
-          cube.material.color.g = Math.random() * 0.5 + 0.45;
-          cube.material.color.b = Math.random() * 0.5 + 0.45;
+          cube.material.color.r = Math.random() * 0.84 + 0.16;
+          cube.material.color.g = Math.random() * 0.84 + 0.16;
+          cube.material.color.b = Math.random() * 0.84 + 0.16;
           cube.position.x = - 50 + i * 10;
           cube.position.z = - 80 + j * 20;
           cube.position.y = Math.random() * 3 - j * 3 ;

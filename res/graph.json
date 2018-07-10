@@ -123,6 +123,9 @@
       "three_scene": "ZentangleVision.render",
       "bgzigzag": "bgzigzag.render",
       "bgrightarrow": "bgrightarrow.render",
+      "bgpink": "bgpink.render",
+      "bgblue": "bgblue.render",
+      "bgpants": "bgpants.render",
       "squiggles": "squiggles.render"
     }
   },
@@ -144,6 +147,22 @@
   {
     "id": "bgrightarrow",
     "type": "bgrightarrow"
+  },
+  {
+    "id": "bgpink",
+    "type": "bgpink"
+  },
+  {
+    "id": "bgpink",
+    "type": "bgpink"
+  },
+  {
+    "id": "bgblue",
+    "type": "bgblue"
+  },
+  {
+    "id": "bgpants",
+    "type": "bgpants"
   },
   {
     "id": "WaveyPop",
