@@ -109,7 +109,10 @@
       "shader": "ZentangleVisionShader"
     },
     "connected": {
-      "texture": "ZentangleVision.render"
+      "three_scene": "ZentangleVision.render",
+      "bgzigzag": "bgzigzag.render",
+      "bgrightarrow": "bgrightarrow.render",
+      "squiggles": "squiggles.render"
     }
   },
   {
@@ -122,6 +125,14 @@
     "options": {
       "shader": "sleekstadee"
     }
+  },
+  {
+    "id": "bgzigzag",
+    "type": "bgzigzag"
+  },
+  {
+    "id": "bgrightarrow",
+    "type": "bgrightarrow"
   },
   {
     "id": "WaveyPop",
