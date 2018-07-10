@@ -12,6 +12,8 @@ function ParticleSystem(options) {
   this.spawnIndex = 0;
   this.T = options.life || 120;
 
+  this.random = new Random(666);
+
   this.shapeFunctions = [
     this.renderHalfStrokedArc,
     this.renderHexagon,
@@ -76,21 +78,21 @@ ParticleSystem.prototype.spawn = function(x, y, dx=null, dy=null, rotation=null,
   p.x = x;
   p.y = y;
   if (dx === null || dy === null || rotation === null || rotationalSpeed === null) {
-    const randomAngle = Math.random() * Math.PI * 2;
+    const randomAngle = this.random() * Math.PI * 2;
     p.dx = 0.04 * Math.cos(randomAngle);
     p.dy = 0.04 * Math.sin(randomAngle);
     p.x += 8 * p.dx;  // offset initial position
     p.y += 8 * p.dy;  // offset initial position
-    p.rotation = Math.random() * Math.PI * 2;
-    p.rotationalSpeed = 0.05 * (0.5 - Math.random());
+    p.rotation = randomAngle;
+    p.rotationalSpeed = 0.05 * (0.5 - this.random());
   } else {
     p.dx = dx;
     p.dy = dy;
     p.rotation = rotation;
     p.rotationalSpeed = rotationalSpeed;
   }
-  p.shapeFunction = this.shapeFunctions[Math.floor(Math.random() * this.shapeFunctions.length)];
-  p.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+  p.shapeFunction = this.shapeFunctions[Math.floor(this.random() * this.shapeFunctions.length)];
+  p.color = this.colors[Math.floor(this.random() * this.colors.length)];
   p.size = size;
   p.t = this.T;
   this.spawnIndex++;
