@@ -61,12 +61,15 @@
 
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
-      this.ctx.font = 'bold 3px Arial';
+      this.ctx.font = '2.3px lemonmilkbold';
+      let offset = -1 / 5;
+      if(this.frame >= 3103) {
+        this.ctx.font = '3px lemonmilkbold';
+      }
       this.ctx.fillStyle = 'white';
       this.ctx.strokeStyle = 'black';
       this.ctx.lineWidth = 0.05;
       const startTimer = (this.frame - FFB(1908)) / (FFB(1920) - FFB(1908));
-      const offset = -1 / 5;
 
       this.ctx.translate(7 + offset, 4 + offset);
 
