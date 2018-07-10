@@ -2,12 +2,15 @@ uniform float frame;
 uniform float sync;
 uniform float transition;
 uniform float numBalls;
+uniform vec3 transCol;
 
 uniform sampler2D tDiffuse;
-
 varying vec2 p;
+
 float time = frame / 60.0;
-float musicSync = sin(frame * 2. * acos(-1.) / 60. / 60. * 190.);
+float musicSync = frame * 2. * acos(-1.) / 60. / 60. * 190.;
+
+float PI = acos(-1.);
 
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
@@ -104,7 +107,7 @@ float pattern(vec2 p) {
 
     r = max(abs(p.x) - 0.075, abs(p.y) - 0.25);
 
-    return r  - musicSync * 0.075 ;
+    return r  - sin(musicSync) * 0.075;
 }
 
 float dots(vec2 p) {
@@ -160,28 +163,27 @@ float cutout(vec2 p) {
 
     r = max(r, -(holes));
 
-    return r - musicSync * 0.065;
+    return r - sin(musicSync * 0.5) * 0.065 - sync * 0.05;
 }
 
 float balls(vec2 p) {
-    vec2 q = p;
-
+    float rep = 0.515;
 
     p.x -= 0.5;
-    p.y -= 0.25;
+    p.y -= rep * 2.5;
 
     p.x -= sin(p.y * 10. + time) * 0.02;
 
-    float rep = 0.515;
-
     float py = floor(p.y / rep);
+
+    p.x += mod(py, 2.) * 0.15;
 
     p.y = mod(p.y, rep);
     p.y -= rep * 0.5;
 
-    float r = length(p) - (0.25 - musicSync * 0.01) * (1. - transition);
+    float r = length(p) - (0.25 - sin(musicSync * 0.5) * 0.0025) * (1. - transition);
 
-    r = max(r, -(py - rep * 6.) - rep * numBalls);
+    r = max(r, -(py * rep) - rep * numBalls);
 
     return r;
 }
@@ -211,8 +213,8 @@ void main() {
         pat_shadow * pat * cut * cut_shadow * hole_shadow * ball_line * vec3(1., 0.15, 0.5) +
         (1. - pat) * cut * hole * ball_line * vec3(0.25, 1.0, 0.25) +
         (1. - cut) * ball_line * (p.x * 0.25 + 0.65) * vec3(0.5, (1. - p.x) * 0.85, 1.5) * 1.75 +
-        (1. - hole) * cut * dots_pat * cut_shadow * ball_line +
-        (1. - ball_line) * vec3(0.25, 1.0, 1.25) - (1. - ball_outline)
+        (1. - hole) * cut * dots_pat * cut_shadow * ball_line * mix(vec3(1.), transCol, clamp(transition, 0., 1.)) +
+        (1. - ball_line) * vec3(0.25, 1.0, 1.25) - (1. - ball_outline) * 0.15
     );
 
     gl_FragColor = vec4(col, 1.0);
