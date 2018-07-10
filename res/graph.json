@@ -23,7 +23,9 @@
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
       "L": "WaveyPop.render",
-      "M": "greetz.render"
+      "M": "greetz.render",
+      "N": "sheipz.render",
+      "O": "sheipzidee.render"
     }
   },
   {
@@ -131,5 +133,16 @@
   {
     "id": "greetz",
     "type": "greetz"
+  },
+  {
+    "id": "sheipz",
+    "type": "sheipz"
+  },
+  {
+    "id": "sheipzidee",
+    "type": "sheipzideeNode",
+    "options": {
+      "shader": "sheipzidee"
+    }
   }
 ]

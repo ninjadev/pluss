@@ -28,7 +28,6 @@
         this.ctx.save();
         const shadowSize = 0.05;
         this.ctx.translate(shadowSize, shadowSize * 3);
-        this.ctx.fillStyle = 'blue';
         this.ctx.save();
         fn(blue);
         this.ctx.restore();
