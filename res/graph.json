@@ -22,7 +22,8 @@
       "I": "yoyo.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
-      "L": "WaveyPop.render"
+      "L": "WaveyPop.render",
+      "M": "greetz.render"
     }
   },
   {
@@ -126,5 +127,9 @@
     "options": {
       "shader": "WaveyPop"
     }
+  },
+  {
+    "id": "greetz",
+    "type": "greetz"
   }
 ]
