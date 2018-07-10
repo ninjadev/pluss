@@ -1,5 +1,5 @@
 (function(global) {
-  class bgrightarrow extends NIN.Node {
+  class bgpink extends NIN.Node {
     constructor(id, options) {
       super(id, {
         outputs: {
@@ -33,26 +33,23 @@
       this.ctx.globalCompositeOperation = 'source-over';
       this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
 
-      var colors = ["#FF6666", "#272D33"];
-
+      var colors = ["#DAD4EA", "#181D16"];
       this.ctx.fillStyle = colors[1];
       this.ctx.rect(-1 * GU , - 1 * GU, 18 * GU, 11 * GU);
       this.ctx.stroke();
 
-      for (var i = 0; i < 21; i++)
+      for (var i = 0; i < 10; i++)
       {
-        var i_mod = i + (-this.frame/ 20 % 20);
         this.ctx.strokeStyle = colors[0];
         this.ctx.beginPath();
-        this.ctx.lineWidth = 0.4 * GU ;
+        this.ctx.lineWidth = 0.35 * GU ;
         this.ctx.beginPath();
-        this.ctx.moveTo(i_mod * GU, 0);
-        for (var j = 0; j < 11; j++)
+        this.ctx.moveTo(0,i * GU);
+        for (var j = 0; j < 14; j++)
         {
-          this.ctx.lineTo((j % 2) * GU + i_mod * GU, j * GU);
+          this.ctx.lineTo(j * GU * 1.6, (j % 2) * GU + i * GU);
         }
         this.ctx.stroke();
-        this.ctx.fill();
       }
 
       this.output.needsUpdate = true;
@@ -60,5 +57,5 @@
     }
   }
 
-  global.bgrightarrow = bgrightarrow;
+  global.bgpink = bgpink;
 })(this);

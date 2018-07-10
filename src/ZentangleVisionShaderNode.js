@@ -25,8 +25,8 @@
         this.uniforms.tDiffuse.value = this.inputs.three_scene.getValue();
         this.uniforms.z1.value = this.z1;
         this.uniforms.z2.value = this.inputs.squiggles.getValue();
-        this.uniforms.z4.value = this.inputs.bgzigzag.getValue();
-        this.uniforms.z3.value = this.inputs.bgrightarrow.getValue();
+        this.uniforms.z3.value = this.inputs.bgzigzag.getValue();
+        this.uniforms.z4.value = this.inputs.bgrightarrow.getValue();
         this.uniforms.z5.value = this.z5;
         this.uniforms.z6.value = this.z6;
         this.uniforms.frame.value = frame;
