@@ -122,7 +122,7 @@
 
       // Rotation particles
       if (spinProgress >= 0 && spinProgress < 1) {
-        const particleIntensity = Math.max(0, Math.sin(lerp(0.2, 1, spinProgress) * Math.PI) - 0.1);
+        const particleIntensity = Math.max(0, Math.sin(lerp(0.2, 1, spinProgress) * Math.PI) - 0.35);
         for (let i = 0; i < 1; i++) {
           if (this.random() < particleIntensity) {
             const angle = this.random() * Math.PI * 2;
@@ -210,10 +210,15 @@
         const triangleRotationOffset = smoothstep(0, Math.PI / 2, triangleRotationProgress);
 
         for (let i = 0; i < 4; i++) {
-          const outProgress = (frame - FRAME_FOR_BEAN(958 + 2 * i)) / (FRAME_FOR_BEAN(976 + 2 * i) - FRAME_FOR_BEAN(958 + i * 2));
-          const outFactor = Math.max(0, Math.sin(lerp(0, 1, outProgress) * Math.PI));
+          const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
+          const outProgress2 = (frame - FRAME_FOR_BEAN(996 + 3 * i)) / (FRAME_FOR_BEAN(1008 + 3 * i) - FRAME_FOR_BEAN(998 + 3 * i));
+          const outFactor = Math.max(
+            0,
+            Math.sin(lerp(0, 1, outProgress1) * Math.PI),
+            Math.sin(lerp(0, 1, outProgress2) * Math.PI)
+          );
 
-          const angle = i * 2 * Math.PI / 4 + Math.PI / 4 - triangleRotationOffset;
+          const angle = i * 2 * Math.PI / 4 + Math.PI / 4 - triangleRotationOffset - smoothstep(0, Math.PI / 4, outProgress2);
 
           let offsetX = 8 + diamondSizeFactor * Math.cos(angle) +
              1.5 * outFactor * Math.cos(angle);
@@ -254,9 +259,12 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(2, 2);
+          }
         } else if (BEAN === 1040) {
           this.plusParticleSystem.spawn(
             14,  // x
@@ -264,9 +272,12 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(14, 2);
+          }
         } else if (BEAN === 1044) {
           this.plusParticleSystem.spawn(
             2,  // x
@@ -274,9 +285,12 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(2, 7);
+          }
         } else if (BEAN === 1052) {
           this.plusParticleSystem.spawn(
             14,  // x
@@ -284,9 +298,12 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(14, 7);
+          }
         }
       }
     }

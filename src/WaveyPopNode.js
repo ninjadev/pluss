@@ -14,7 +14,7 @@
       this.maxBalls = 4;
       this.ballBEANsync = 24;
       this.fromColor = new THREE.Vector3(0., 0.6039215686274509, 0.807843137254902);
-      this.toColor = new THREE.Vector3(0.996078431372549, 0.9058823529411765, 0.28627450980392155);
+      this.toColor = new THREE.Vector3(0.8980392156862745, 0.3725490196078431, 0.6431372549019608);
     }
 
     update(frame) {
