@@ -84,7 +84,7 @@
       } else if (BEAN < 12 * 4 * 48) {
         selectedScene = this.inputs.N;
       } else if (BEAN < 12 * 4 * 50) {
-        selectedScene = this.inputs.E;
+        selectedScene = this.inputs.O;
       } else if (BEAN < 12 * 4 * 60) {
         selectedScene = this.inputs.P;
       } else if (BEAN < 12 * 4 * 70) {

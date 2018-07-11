@@ -4,6 +4,10 @@ uniform sampler2D iChannel2;
 uniform float frame;
 varying vec2 vUv;
 
+float sdCylinder(vec3 p, vec3 c) {
+      return length(p.xz - c.xy) - c.z;
+}
+
 float sdSphere( in vec3 p, in vec4 s ) {
     return length(p-s.xyz) - s.w;
 }
@@ -100,13 +104,26 @@ vec2 map(vec3 p) {
     float sphere = sdSphere(p, vec4(0., 0., 0., .5));
     float angle = 60. / 180. * pi;
     float triangle = sdPyramid4(p + vec3(-1.25, .5, 0.), vec3(sin(angle), cos(angle), .5)); 
-    float ground = sdBox(p + vec3(0., 10.5, 0.), vec3(20., 10., 1.));
-    vec2 shapes = vec2(min(triangle, min(sphere, box)), 1.);
+    float shapes = min(min(triangle, box), sphere); 
+    float ground = 9999999.;
+
+    if(frame > 3636.5) {
+        float spacing = 0.15;
+        shapes = max(shapes, -sdBox(p, vec3(10., spacing / 4., 10.)));
+        shapes = max(shapes, -sdBox(p + vec3(0., spacing, 0.), vec3(10., spacing / 4., 10.)));
+        shapes = max(shapes, -sdBox(p + vec3(0., -spacing, 0.), vec3(10., spacing / 4., 10.)));
+    } else if(frame > 3446.5) {
+        ground = min(sdCylinder(p, vec3(-1.25, 0., .1)), min(sdCylinder(p, vec3(0., 0., .1)), sdCylinder(p, vec3(1.25, 0., .1))));
+    } else {
+        ground = sdBox(p + vec3(0., 10.5, 0.), vec3(20., 10., 1.));
+    }
+
+    vec2 shapes_ = vec2(shapes, 1.);
     vec2 ground_ = vec2(ground, 2.);
 
     vec2 result;
-    if(shapes.x < ground_.x) {
-        result = shapes;
+    if(shapes_.x < ground_.x) {
+        result = shapes_;
     } else {
         result = ground_;
     }
@@ -314,6 +331,9 @@ vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist)
 
 vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
     vec3 col = vec3(255., 155., 189.) / 255.;
+    if(frame > 3636.5) {
+        col = mix(vec3(1.), vec3(0.), sign(sin(rd.x * 40.)));
+    }
     float mindist = 0.01;
     float maxdist = 40.0;
 
@@ -349,8 +369,22 @@ void main() {
     float radius = 4.2;
     float height = 0.;
     float targetHeight = 0.;
-    if(frame > 3446.5) {
-        angle = -8.5 + frame / 100.;
+
+    float letterbox = 0.15;
+    if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
+        gl_FragColor = vec4(vec3(.1), 1.);
+        return;
+    }
+    if(frame > 3636.5) {
+        angle = -18.6 + frame / 200.;
+        radius = 3.8;
+        height = .25;
+    } else if(frame > 3459.5) {
+        angle = -14.3 + frame / 60.;
+        radius = 5.;
+        height = -1. + mix(0., 2., (frame - 3459.) / 60.);
+    } else if(frame > 3446.5) {
+        angle = -5.5 + frame / 100.;
         radius = 3.;
         height = -.1;
     } else if(frame > 3307.5) {
