@@ -36,7 +36,9 @@
       "M": "greetz.render",
       "N": "sheipz.render",
       "O": "sheipzidee.render",
-      "P": "NinetiesPatterns.render"
+      "P": "NinetiesPatterns.render",
+      "Q": "sheipz2.render",
+      "R": "sheipzidee2.render"
     }
   },
   {
@@ -180,10 +182,21 @@
     "type": "sheipz"
   },
   {
+    "id": "sheipz2",
+    "type": "sheipz2"
+  },
+  {
     "id": "sheipzidee",
     "type": "sheipzideeNode",
     "options": {
       "shader": "sheipzidee"
+    }
+  },
+  {
+    "id": "sheipzidee2",
+    "type": "sheipzideeNode2",
+    "options": {
+      "shader": "sheipzidee2"
     }
   },
   {
