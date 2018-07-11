@@ -16,7 +16,16 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.ps = new global.ParticleSystem({friction: 0.982});
+      this.ps = new global.ParticleSystem({friction: 0.982, numParticles: 128});
+      this.plusParticleSystem = new global.ParticleSystem(
+        {
+          friction: 1,
+          numParticles: 4,
+          life: 20,
+          colors: ['#40C6D9']
+        }
+      );
+      this.plusParticleSystem.shapeFunctions = [this.plusParticleSystem.renderPlus];
 
       this.frame = 0;
     }
@@ -24,6 +33,9 @@
     update(frame) {
       super.update(frame);
       this.ps.update();
+
+      this.spawnPluses(this.frame);
+      this.plusParticleSystem.update();
       /*
       if (BEAT && BEAN % 24 === 0) {
         for (let i = 0; i < 2; i++) {
@@ -55,6 +67,7 @@
       this.renderTriangles(this.frame);
 
       this.ps.render(this.ctx);
+      this.plusParticleSystem.render(this.ctx);
 
       this.ctx.restore();
       this.output.needsUpdate = true;
@@ -72,19 +85,38 @@
 
       const throb = Math.sin(2 * 2 * Math.PI * (frame - startFrame) / (FRAME_FOR_BEAN(912) - startFrame));
 
-      const popupProgres = (frame - startFrame) / (squeeze1Frame - startFrame);
-      const stopThrobbingFactor = lerp(1, 0, (frame - spinStartFrame) / (spinEndFrame - spinStartFrame));
+      const popupProgress = (frame - startFrame) / (squeeze1Frame - startFrame);
       const diamondSizeFactor = (
-        2.75 * elasticOut(0, 1, 1.2, popupProgres) +
-        0.1 * throb * lerp(0, 1, (frame - squeeze1Frame) / (squeeze2Frame - squeeze1Frame)) * stopThrobbingFactor
+        2.75 * elasticOut(0, 1, 1.2, popupProgress) +
+        0.1 * throb * lerp(0, 1, (frame - squeeze1Frame) / (squeeze2Frame - squeeze1Frame))
       );
-      let horizontalScaler = 1 + 0.06 * throb * stopThrobbingFactor;
-      let verticalScaler = 1 - 0.1 * throb * stopThrobbingFactor;
+      let horizontalScaler = 1 + 0.06 * throb;
+      let verticalScaler = 1 - 0.1 * throb;
 
       const spinProgress = (frame - spinStartFrame) / (spinEndFrame - spinStartFrame);
       let rotation = smoothstep(0, 1.5 * Math.PI, spinProgress);
 
       const shrinkProgress = (frame - shrinkStartFrame) / (shrinkEndFrame - shrinkStartFrame);
+
+      // Popup particles
+      if (popupProgress >= 0 && popupProgress < 0.33) {
+        const particleIntensity = Math.max(0, Math.sin(lerp(0.2, 1, popupProgress) * Math.PI));
+        for (let i = 0; i < 2; i++) {
+          if (this.random() < particleIntensity) {
+            const angle = this.random() * Math.PI * 2;
+            const radius = Math.max(3, 0.9 + 2.7 * this.random());
+            this.ps.spawn(
+              8 + Math.cos(angle) * radius,  // x
+              4.5 + Math.sin(angle) * radius,  // y
+              (0.3 + 0.7 * particleIntensity) * 0.2 * Math.cos(angle),  // dx
+              (0.3 + 0.7 * particleIntensity) * 0.2 * Math.sin(angle),  // dy
+              angle,  // rotation
+              particleIntensity * lerp(-0.1, 0.1, this.random()),  // rotationalSpeed
+              lerp(0.3, 0.6, this.random())  // size
+            );
+          }
+        }
+      }
 
       // Rotation particles
       if (spinProgress >= 0 && spinProgress < 1) {
@@ -100,7 +132,7 @@
               (0.3 + 0.7 * particleIntensity) * 0.2 * Math.sin(angle + Math.PI / 2),  // dy
               angle,  // rotation
               particleIntensity * lerp(0.08, 0.25, this.random()),  // rotationalSpeed
-              lerp(0.2, 0.52, this.random())  // size
+              lerp(0.3, 0.6, this.random())  // size
             );
           }
         }
@@ -176,6 +208,52 @@
         this.ctx.closePath();
         this.ctx.fill();
         this.ctx.stroke();
+      }
+    }
+
+    spawnPluses(frame) {
+      if (BEAT) {
+        if (BEAN === 1028) {
+          this.plusParticleSystem.spawn(
+            2,  // x
+            2,  // y
+            0,  // dx
+            0,  // dy
+            0,  // rotation
+            0.08,  // rotationalSpeed
+            0.8  // size
+          );
+        } else if (BEAN === 1040) {
+          this.plusParticleSystem.spawn(
+            14,  // x
+            7,  // y
+            0,  // dx
+            0,  // dy
+            0,  // rotation
+            0.08,  // rotationalSpeed
+            0.8  // size
+          );
+        } else if (BEAN === 1044) {
+          this.plusParticleSystem.spawn(
+            14,  // x
+            2,  // y
+            0,  // dx
+            0,  // dy
+            0,  // rotation
+            0.08,  // rotationalSpeed
+            0.8  // size
+          );
+        } else if (BEAN === 1052) {
+          this.plusParticleSystem.spawn(
+            2,  // x
+            7,  // y
+            0,  // dx
+            0,  // dy
+            0,  // rotation
+            0.08,  // rotationalSpeed
+            0.8  // size
+          );
+        }
       }
     }
   }
