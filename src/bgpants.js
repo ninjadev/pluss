@@ -42,7 +42,7 @@
 
       var r3o2 = Math.sqrt(3) / 2;
 
-      var orange_height = 0.30 * GU;
+      var orange_height = 0.60 * GU;
       var orange_width = orange_height / (Math.sqrt(3) / 2);
       var white_height = 0.2 * GU;
       var white_width = white_height / r3o2;
@@ -52,8 +52,8 @@
         for (var j = 0; j < 14; j++)
         {
 
-          var pos_x = i * GU * 0.5625;
-          var pos_y = j * GU + GU * ((this.frame % 40) / 40) - 4 * GU;
+          var pos_x = i * GU * 0.5 / r3o2;
+          var pos_y = j * GU + GU * ((this.frame % 60) / 30) - 4 * GU;
           if ((i + j) % 2 == 0)
           {
             // Orange triangle
