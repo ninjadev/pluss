@@ -30,9 +30,40 @@ float hash(float posh){
     return fract(sin(dot(p,vec2(12.9898,78.233))) * 43758.5453);
 }
 
+vec3 hash3( vec2 p ){
+    vec3 q = vec3( dot(p,vec2(127.1,311.7)),
+           dot(p,vec2(269.5,183.3)),
+           dot(p,vec2(419.2,371.9)) );
+  return fract(sin(q)*43758.5453);
+}
+
+float voronoise( in vec2 x, float u, float v ){
+    vec2 p = floor(x);
+    vec2 f = fract(x);
+
+  float k = 1.0+63.0*pow(1.0-v,4.0);
+
+  float va = 0.0;
+  float wt = 0.0;
+    for( int j=-2; j<=2; j++ )
+    for( int i=-2; i<=2; i++ )
+    {
+        vec2 g = vec2( float(i),float(j) );
+    vec3 o = hash3( p + g )*vec3(u,u,1.0);
+    vec2 r = g - f + o.xy;
+    float d = dot(r,r);
+    float ww = pow( 1.0-smoothstep(0.0,1.414,sqrt(d)), k );
+    va += o.z*ww;
+    wt += ww;
+    }
+
+    return va/wt;
+}
+
 
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+
 vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
 
 float noise(vec3 P){
@@ -103,6 +134,60 @@ float noise(vec3 P){
   return 2.2 * n_xyz;
 }
 
+
+//
+// CRAZY MTV PATTERN
+//
+
+vec3 crazyMtvPattern(vec2 p) {
+    float size = patternSize;
+
+    float yellow = voronoise(p * 80. * size, -1.5, 1.) - 0.5;
+    float yellow_border = max(yellow, -(yellow + 0.15));
+    yellow_border = smoothstep(0., 0.01, yellow_border);
+    yellow = smoothstep(0., 0.01, yellow);
+
+    float orange = voronoise(p * 80. * size + 50., -1.2, 1.) - 0.5;
+    float orange_border = max(orange, -(orange + 0.1));
+    orange_border = smoothstep(0., 0.01, orange_border);
+
+    orange = smoothstep(0., 0.01, orange);
+
+    float purple = voronoise(p * 20. * size + 200., -2.6, 1.) - 0.5;
+    purple = smoothstep(0., 0.01, purple);
+
+    return (
+        vec3(1., 0.6, 0.05) * (1. - yellow) * yellow_border * purple  * orange_border +
+        vec3(0.4, 0., 0.4) * (1. - purple) * orange * yellow_border * yellow * orange_border +
+        vec3(1., 1., 0.) * (1. - orange) * yellow_border * yellow * orange_border +
+        vec3(1.) * (1. - orange_border)
+
+    );
+}
+
+
+//
+// GEOPARD PATTERN
+//
+
+vec3 geopardPattern(vec2 p) {
+    float size = patternSize;
+
+    float geopard = voronoise(p * 200. * size, 0.9, 1.) - 0.35;
+    geopard = smoothstep(0., 0.025, geopard);
+
+    float geopard_shadow = voronoise(p * 200. * size - vec2(1.25 * size), 0.9, 1.) - 0.35;
+    geopard_shadow = smoothstep(0., 0.025, geopard_shadow);
+
+    float shade = noise(vec3(p * 0.5, 9.)) * 0.5;
+
+    return (
+        vec3(1., 0.05 + (p.y + 0.5) * 0.2, 0. + shade) * geopard +
+        vec3(0.015, 0.20 - shade * 0.4, 0.15 + abs(p.x) * 0.05) * (1. - geopard)
+        - (1. - geopard_shadow) * 0.215
+    );
+}
+
 //
 // ZEBRA PATTERN
 //
@@ -116,12 +201,16 @@ vec3 zebraPattern(vec2 p) {
     p.y = mod(p.y, rep);
     p.y -= 0.5 * rep;
 
-    float zebra = abs(p.y) - 0.005;
-    zebra = smoothstep(0.0, 0.045, zebra);
+    float zebra = abs(p.y) - 0.01;
+    zebra = smoothstep(0.0, 0.015, zebra);
 
-    return (
+    float zebra_shadow = abs(p.y) - 0.01;
+    zebra_shadow = smoothstep(0.0, 0.05, zebra_shadow);
+
+    return 1.35 - (
         vec3(0.15 + q.y * 0.4 + 0.25, 1. + q.x * 0.15, 0.5 + p.x * 0.25) * zebra +
         vec3(1., 0.25, 0.25) * (1. - zebra)
+        + (1. - zebra_shadow) * 0.2
     );
 }
 
@@ -190,6 +279,12 @@ void main() {
     }
     else if (effectNum == 1.0) {
         currentPattern = zebraPattern(p);
+    }
+    else if (effectNum == 2.0) {
+        currentPattern = geopardPattern(p);
+    }
+    else if (effectNum == 3.0) {
+        currentPattern = crazyMtvPattern(p);
     }
 
     gl_FragColor = vec4(currentPattern, 0.);

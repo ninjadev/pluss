@@ -9,7 +9,7 @@
     update(frame) {
       this.uniforms.frame.value = frame;
       this.uniforms.patternSize.value = this.patternSize;
-      this.uniforms.effectNum.value = (Math.sin((frame / 60.) * 5.) > 0.) ? 0. : 1.;
+      this.uniforms.effectNum.value = 1.;
     }
   }
 
