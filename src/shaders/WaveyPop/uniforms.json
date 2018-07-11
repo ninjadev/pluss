@@ -1,0 +1,8 @@
+{
+    "tDiffuse": { "type": "t", "value": null },
+    "frame": { "type": "f", "value": 0.0 },
+    "sync": { "type": "f", "value": 0.0 },
+    "transition": { "type": "f", "value": 0.0 },
+    "numBalls": { "type": "f", "value": 0.0 },
+    "transCol": { "type": "fv3", "value": null }
+}
