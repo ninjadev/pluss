@@ -36,14 +36,17 @@
     }
 
     render() {
-      this.ctx.fillStyle = '#FEE749';
+      const yellow = '#FEE749';
+      const pink = '#E55FA4';
+
+      this.ctx.fillStyle = pink;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
-      this.ctx.fillStyle = '#E55FA4';
-      this.ctx.strokeStyle = '#000';
-      this.ctx.lineWidth = 0.1;
+      this.ctx.strokeStyle = yellow;
+      this.ctx.lineWidth = 0.025;
+      this.ctx.fillStyle = yellow;
 
       this.renderTriangles(this.frame);
 
@@ -55,24 +58,88 @@
     }
 
     renderTriangles(frame) {
-      const startFrame = FRAME_FOR_BEAN(864);
-      const endFrame = FRAME_FOR_BEAN(912);
-      const progress = (frame - startFrame) / (endFrame - startFrame);
+      let diamondSizeFactor = 0;//2.75 + 0.1 * throb;
 
-      const throb = Math.sin(2 * Math.PI * progress * 2);
+      const startFrame = FRAME_FOR_BEAN(864);  // start, appear square
+      const squeeze1Frame = FRAME_FOR_BEAN(888);  // squeeze 1, rotate slightly clockwise
+      const squeeze2Frame = FRAME_FOR_BEAN(900);  // squeeze 2, rotate slightly anti-clockwise
+      const spinStartFrame = FRAME_FOR_BEAN(912);  // 360 spin start
+      const spinEndFrame = FRAME_FOR_BEAN(936);  // 360 spin end
 
-      const sizeFactor = 2.75 + 0.1 * throb;
+      const throb = Math.sin(2 * 2 * Math.PI * (frame - startFrame) / (FRAME_FOR_BEAN(912) - startFrame));
 
+      const popupProgres = (frame - startFrame) / (squeeze1Frame - startFrame);
+      diamondSizeFactor = 2.75 * elasticOut(0, 1, 1.2, popupProgres) + 0.1 * throb * lerp(0, 1, (frame - squeeze1Frame) / (squeeze2Frame - squeeze1Frame));
+      let horizontalScaler = 1 + 0.06 * throb;
+      let verticalScaler = 1 - 0.1 * throb;
+      let rotation = smoothstep(0, 2 * Math.PI, (frame - spinStartFrame) / (spinEndFrame - spinStartFrame));
+
+      let diamondPoints = [];
       for (let i = 0; i < 4; i++) {
+        const angle = (i * 2 * Math.PI / 4 + rotation) % (Math.PI * 2);
+        diamondPoints.push(
+          {
+            x: 8 + horizontalScaler * diamondSizeFactor * Math.cos(angle),
+            y: 4.5 + verticalScaler * diamondSizeFactor * Math.sin(angle),
+            angle: angle,
+          }
+        );
+      }
+      diamondPoints.sort(function(a, b) {
+        return a.angle - b.angle;
+      });
+      let uppermostPoint = diamondPoints[0];
+      let uppermostPointIndex = 0;
+      for (let i = 0; i < diamondPoints.length; i++) {
+        if (diamondPoints[i].y < uppermostPoint.y) {
+          uppermostPoint = diamondPoints[i];
+          uppermostPointIndex = i
+        }
+      }
+      let orderedDiamondPoints = [];
+      for (let i = 0; i < diamondPoints.length; i++) {
+        orderedDiamondPoints.push(diamondPoints[(uppermostPointIndex + i) % diamondPoints.length])
+      }
+      const rightmostPoint = orderedDiamondPoints[1];
+      const lowermostPoint = orderedDiamondPoints[2];
+      const leftmostPoint = orderedDiamondPoints[3];
+
+      let polygons = [
+        [ // top left
+          {x: 0, y: 0},
+          {x: uppermostPoint.x, y: 0},
+          uppermostPoint,
+          leftmostPoint,
+          {x: 0, y: leftmostPoint.y},
+        ],
+        [ // top right
+          {x: 16, y: 0},
+          {x: 16, y: rightmostPoint.y},
+          rightmostPoint,
+          uppermostPoint,
+          {x: uppermostPoint.x, y: 0},
+        ],
+        [ // bottom right
+          {x: 16, y: 9},
+          {x: lowermostPoint.x, y: 9},
+          lowermostPoint,
+          rightmostPoint,
+          {x: 16, y: rightmostPoint.y},
+        ],
+        [ // bottom left
+          {x: 0, y: 9},
+          {x: 0, y: leftmostPoint.y},
+          leftmostPoint,
+          lowermostPoint,
+          {x: lowermostPoint.x, y: 9},
+        ],
+      ];
+
+      for (let polygon of polygons) {
         this.ctx.beginPath();
-        let offsetX = 8 + sizeFactor * Math.cos(i * 2 * Math.PI / 4 + Math.PI / 4);
-        let offsetY = 4.5 + sizeFactor * Math.sin(i * 2 * Math.PI / 4 + Math.PI / 4);
-        this.ctx.moveTo(offsetX, offsetY);
-        for (let j = 0; j < 3; j++) {
-          this.ctx.lineTo(
-            offsetX + sizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 4 + i * Math.PI / 2),
-            offsetY + sizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 4 + i * Math.PI / 2)
-          );
+        this.ctx.moveTo(polygon[0].x, polygon[0].y);
+        for (let i = 1; i < polygon.length; i++) {
+          this.ctx.lineTo(polygon[i].x, polygon[i].y);
         }
         this.ctx.closePath();
         this.ctx.fill();
