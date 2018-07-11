@@ -1,6 +1,7 @@
 uniform float frame;
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
+uniform sampler2D sprinkles;
 
 float dist_from_center(vec2 vUv){
     // 0-> 0.25 ---- 0->1.0
@@ -9,5 +10,6 @@ float dist_from_center(vec2 vUv){
 
 // 0.5, 0.5 i midten 
 void main() {
-    gl_FragColor = vec4(vUv,0.5 + sin(frame / 60.0), pow(max(0.0, dist_from_center(vUv)), 0.5));
+    //gl_FragColor = vec4(vUv,0.5 + sin(frame / 60.0), pow(max(0.0, dist_from_center(vUv)), 0.5));
+    gl_FragColor = texture2D(sprinkles, vUv);
 }

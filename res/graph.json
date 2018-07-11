@@ -201,11 +201,18 @@
     }
   },
   {
+    "id": "sprinkles",
+    "type": "sprinkles"
+  },
+  {
     "id": "TestShader",
     "type":"TestShaderNode", 
     "options":{
       "shader": "TestShader"
-    } 
+    },
+    "connected": {
+      "sprinkles": "sprinkles.render"
+    }
   },
   {
     "id": "IceCream",

@@ -56,6 +56,7 @@
       this.scene.add(light);
 
       this.camera.position.z = 100;
+      console.log(options.inputs.TestShader);
     }
 
     update(frame) {
