@@ -14,20 +14,25 @@ function ParticleSystem(options) {
 
   this.random = new Random(666);
 
-  this.shapeFunctions = [
-    this.renderHalfStrokedArc,
-    this.renderHexagon,
-    this.renderJaggedLine,
-    this.renderPlus,
-    this.renderQuarterStrokedArc,
-    this.renderSquare,
-    this.renderStar,
-    this.renderQuarterFilledArc,
-    this.renderTriangle,
-    this.renderWavyLine,
-    this.renderWideRectangle,
-    this.renderHalfFilledArc,
+  const shapes = options.shapes || [
+    'HalfStrokedArc',
+    'Hexagon',
+    'JaggedLine',
+    'Plus',
+    'QuarterStrokedArc',
+    'Square',
+    'Star',
+    'QuarterFilledArc',
+    'Triangle',
+    'WavyLine',
+    'WideRectangle',
+    'HalfFilledArc',
   ];
+
+  this.shapeFunctions = [];
+  for(let shape of shapes) {
+    this.shapeFunctions.push(this['render' + shape]);
+  }
 
   for (let i = 0; i < this.numParticles; i++) {
     this.particles[i] = {
