@@ -85,22 +85,76 @@
             });
           },
         },
-        L: {
+        H: {
+          width: 1.75,
+          render: t => {
+            drawWithShadow(color => {
+              const size = lerp(0, 0.75, t);
+              const w = 1.75;
+              this.ctx.fillStyle = color || green;
+              this.ctx.fillRect(
+                  -1. / 2 - size / 2,
+                  lerp(-10, -1, t),
+                  size,
+                  2);
+              this.ctx.fillStyle = color || purple;
+              this.ctx.fillRect(
+                lerp(-10, -w / 2, t),
+                -size / 2,
+                w,
+                size);
+              this.ctx.fillStyle = color || green;
+              this.ctx.fillRect(
+                  1. / 2 - size / 2,
+                  lerp(-10, -1, t),
+                  size,
+                  2);
+            });
+          },
+        },
+        F: {
           width: 1.5,
           render: t => {
             drawWithShadow(color => {
-              this.ctx.fillStyle = color || green;
               const size = lerp(0, 0.75, t);
+              this.ctx.fillStyle = color || purple;
+              this.ctx.fillRect(
+                lerp(-10, -0.75, t),
+                +0.25 - 0.75 / 2 - size / 2,
+                1.25,
+                size);
+              this.ctx.fillStyle = color || green;
+              this.ctx.fillRect(
+                lerp(-10, -0.75, t),
+                -0.25 - 0.75 / 2 - size / 2,
+                1.5,
+                size);
+              this.ctx.fillStyle = color || green;
               this.ctx.fillRect(
                   -0.75 / 2 - size / 2,
                   lerp(-10, -1, t),
                   size,
                   2);
+            });
+          },
+        },
+        L: {
+          width: 1.5,
+          render: t => {
+            drawWithShadow(color => {
+              const size = lerp(0, 0.75, t);
+              this.ctx.fillStyle = color || purple;
               this.ctx.fillRect(
                 lerp(-10, -0.75, t),
                 0.25 + 0.75 / 2 - size / 2,
                 1.5,
                 size);
+              this.ctx.fillStyle = color || green;
+              this.ctx.fillRect(
+                  -0.75 / 2 - size / 2,
+                  lerp(-10, -1, t),
+                  size,
+                  2);
             });
           },
         },
@@ -334,6 +388,19 @@
             });
           }
         },
+        T: {
+          width: 1.5,
+          render: t => {
+            drawWithShadow(color => {
+              this.ctx.fillStyle = color || green;
+              const width = lerp(0, 0.75, t);
+              const crossbar = lerp(0, 1.5, t);
+              const height = easeIn(2, 1, t) + easeOut(-2, 1, t);
+              this.ctx.fillRect(-width / 2,  -height / 2, width, height);
+              this.ctx.fillRect(-crossbar / 2, -1, crossbar, 0.75);
+            });
+          },
+        },
         I: {
           width: 0.75,
           render: t => {
@@ -529,7 +596,7 @@
 
       if(BEAN < 3024) {
         this.renderScene([
-            {word: 'LoGICOMA', at: 2784 + 48},
+            {word: 'FAIRLIGHT', at: 2784 + 48},
             {word: 'MR. DoOB', at: 2832 + 48},
             {word: 'DESiRE', at: 2880 + 48},
             {word: 'POo-BRAIN', at: 2928 + 48},
