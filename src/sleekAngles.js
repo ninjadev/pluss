@@ -21,7 +21,7 @@
         {
           friction: 1,
           numParticles: 4,
-          life: 20,
+          life: 24,
           colors: ['#40C6D9']
         }
       );
@@ -226,7 +226,7 @@
         } else if (BEAN === 1040) {
           this.plusParticleSystem.spawn(
             14,  // x
-            7,  // y
+            2,  // y
             0,  // dx
             0,  // dy
             0,  // rotation
@@ -235,8 +235,8 @@
           );
         } else if (BEAN === 1044) {
           this.plusParticleSystem.spawn(
-            14,  // x
-            2,  // y
+            2,  // x
+            7,  // y
             0,  // dx
             0,  // dy
             0,  // rotation
@@ -245,7 +245,7 @@
           );
         } else if (BEAN === 1052) {
           this.plusParticleSystem.spawn(
-            2,  // x
+            14,  // x
             7,  // y
             0,  // dx
             0,  // dy
