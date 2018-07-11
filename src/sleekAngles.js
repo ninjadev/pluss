@@ -62,8 +62,6 @@
     }
 
     renderTriangles(frame) {
-      let diamondSizeFactor = 0;//2.75 + 0.1 * throb;
-
       const startFrame = FRAME_FOR_BEAN(864);
       const squeeze1Frame = FRAME_FOR_BEAN(888);
       const squeeze2Frame = FRAME_FOR_BEAN(900);
@@ -76,7 +74,7 @@
 
       const popupProgres = (frame - startFrame) / (squeeze1Frame - startFrame);
       const stopThrobbingFactor = lerp(1, 0, (frame - spinStartFrame) / (spinEndFrame - spinStartFrame));
-      diamondSizeFactor = (
+      const diamondSizeFactor = (
         2.75 * elasticOut(0, 1, 1.2, popupProgres) +
         0.1 * throb * lerp(0, 1, (frame - squeeze1Frame) / (squeeze2Frame - squeeze1Frame)) * stopThrobbingFactor
       );
