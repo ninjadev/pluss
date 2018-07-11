@@ -1,12 +1,9 @@
 (function(global) {
   class IceCream extends NIN.THREENode {
     constructor(id, options) {
-      super(id, {
-        camera: options.camera,
-        outputs: {
-          render: new NIN.TextureOutput()
-        }
-      });
+      options.inputs = { TestShader: new NIN.TextureInput() };
+      options.outputs = { render: new NIN.TextureOutput() };
+      super(id, options);
       this.planeUpdater = function (container, camera){
         if (container.kind == "sphere")
         {

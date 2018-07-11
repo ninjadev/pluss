@@ -201,8 +201,18 @@
     }
   },
   {
+    "id": "TestShader",
+    "type":"TestShaderNode", 
+    "options":{
+      "shader": "TestShader"
+    } 
+  },
+  {
     "id": "IceCream",
-    "type": "IceCream"
+    "type": "IceCream",
+    "connected": {
+      "TestShader": "TestShader.render"
+    }
   },
   {
     "id": "NinetiesPatterns",
