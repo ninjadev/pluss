@@ -267,8 +267,8 @@
           }
         } else if (BEAN === 1040) {
           this.plusParticleSystem.spawn(
-            14,  // x
-            2,  // y
+            2,  // x
+            7,  // y
             0,  // dx
             0,  // dy
             0,  // rotation
@@ -280,8 +280,8 @@
           }
         } else if (BEAN === 1044) {
           this.plusParticleSystem.spawn(
-            2,  // x
-            7,  // y
+            14,  // x
+            2,  // y
             0,  // dx
             0,  // dy
             0,  // rotation
