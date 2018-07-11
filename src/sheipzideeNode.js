@@ -5,7 +5,7 @@
     }
 
     update(frame) {
-      this.uniforms.frame.value = frame;
+      this.uniforms.frame.value = frame - 76.;
     }
   }
 

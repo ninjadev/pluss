@@ -64,21 +64,21 @@
         selectedScene = this.inputs.C;
       } else if (BEAN < 12 * 4 * 27) {
         selectedScene = this.inputs.C_three;
-      } else if (BEAN < 12 * 4 * 40) {
+      } else if (BEAN < 12 * 4 * 41) {
         selectedScene = this.inputs.D;
-      } else if (BEAN < 12 * 4 * 42) {
+      } else if (BEAN < 12 * 4 * 43) {
         selectedScene = this.inputs.D_transision;
-      } else if (BEAN < 12 * 4 * 43.5) {
+      } else if (BEAN < 12 * 4 * 44.5) {
         selectedScene = this.inputs.N;
-      } else if (BEAN < 12 * 4 * 44) {
+      } else if (BEAN < 12 * 4 * 45) {
         selectedScene = this.inputs.O;
-      } else if (BEAN < 12 * 4 * 45.5) {
+      } else if (BEAN < 12 * 4 * 46.5) {
         selectedScene = this.inputs.N;
-      } else if (BEAN < 12 * 4 * 46) {
+      } else if (BEAN < 12 * 4 * 47) {
         selectedScene = this.inputs.O;
-      } else if (BEAN < 12 * 4 * 48) {
+      } else if (BEAN < 12 * 4 * 49) {
         selectedScene = this.inputs.N;
-      } else if (BEAN < 12 * 4 * 50) {
+      } else if (BEAN < 12 * 4 * 51) {
         selectedScene = this.inputs.O;
       } else if (BEAN < 12 * 4 * 51.5) {
         selectedScene = this.inputs.Q;
