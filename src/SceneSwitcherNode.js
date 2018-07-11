@@ -55,16 +55,10 @@
       } else if (BEAN < 12 * 4 * 18) {
         selectedScene = this.inputs.L;
 
-      } else if (BEAN < 12 * 4 * 27.5) {
+      } else if (BEAN < 1056) {
         selectedScene = this.inputs.C;
-      } else if (BEAN < 12 * 4 * 28) {
+      } else if (BEAN < 12 * 4 * 31) {
         selectedScene = this.inputs.C_three;
-
-      } else if (BEAN < 12 * 4 * 29.5) {
-        selectedScene = this.inputs.C;
-      } else if (BEAN < 12 * 4 * 30) {
-        selectedScene = this.inputs.C_three;
-
       } else if (BEAN < 12 * 4 * 31.5) {
         selectedScene = this.inputs.C;
       } else if (BEAN < 12 * 4 * 32) {

@@ -66,8 +66,10 @@ ParticleSystem.prototype.render = function(ctx) {
   ctx.globalCompositeOperation = this.blendMode;
   for (let i = 0; i < this.numParticles; i++) {
     const p = this.particles[i];
-    ctx.globalAlpha = Math.min(1, p.t / 20);
+    const alpha = Math.min(1, p.t / 20);
+    ctx.globalAlpha = Math.pow(alpha, 3);
     p.shapeFunction(ctx, p.x + 0.05, p.y + 0.05, p.size, p.rotation, 'black');
+    ctx.globalAlpha = alpha;
     p.shapeFunction(ctx, p.x, p.y, p.size, p.rotation, p.color);
   }
   ctx.restore();
