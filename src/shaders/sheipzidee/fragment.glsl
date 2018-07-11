@@ -4,6 +4,10 @@ uniform sampler2D iChannel2;
 uniform float frame;
 varying vec2 vUv;
 
+float sdCylinder(vec3 p, vec3 c) {
+      return length(p.xz - c.xy) - c.z;
+}
+
 float sdSphere( in vec3 p, in vec4 s ) {
     return length(p-s.xyz) - s.w;
 }
@@ -100,13 +104,26 @@ vec2 map(vec3 p) {
     float sphere = sdSphere(p, vec4(0., 0., 0., .5));
     float angle = 60. / 180. * pi;
     float triangle = sdPyramid4(p + vec3(-1.25, .5, 0.), vec3(sin(angle), cos(angle), .5)); 
-    float ground = sdBox(p + vec3(0., 10.5, 0.), vec3(20., 10., 1.));
-    vec2 shapes = vec2(min(triangle, min(sphere, box)), 1.);
+    float shapes = min(min(triangle, box), sphere); 
+    float ground = 9999999.;
+
+    if(frame > 3636.5) {
+        float spacing = 0.15;
+        shapes = max(shapes, -sdBox(p, vec3(10., spacing / 4., 10.)));
+        shapes = max(shapes, -sdBox(p + vec3(0., spacing, 0.), vec3(10., spacing / 4., 10.)));
+        shapes = max(shapes, -sdBox(p + vec3(0., -spacing, 0.), vec3(10., spacing / 4., 10.)));
+    } else if(frame > 3446.5) {
+        ground = min(sdCylinder(p, vec3(-1.25, 0., .1)), min(sdCylinder(p, vec3(0., 0., .1)), sdCylinder(p, vec3(1.25, 0., .1))));
+    } else {
+        ground = sdBox(p + vec3(0., 10.5, 0.), vec3(20., 10., 1.));
+    }
+
+    vec2 shapes_ = vec2(shapes, 1.);
     vec2 ground_ = vec2(ground, 2.);
 
     vec2 result;
-    if(shapes.x < ground_.x) {
-        result = shapes;
+    if(shapes_.x < ground_.x) {
+        result = shapes_;
     } else {
         result = ground_;
     }
@@ -182,6 +199,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     float focc = 1.0;
     float fsha = 1.;
 
+    vec3 green = vec3(14., 92., 73.) / 255.;
     vec3 yellow = vec3(255., 252., 0.) / 255.;
 
     if(m < 1.5) {
@@ -225,14 +243,20 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
         mateS *= 1.5;
         mateS *= 1.0 + 0.5*ff*ff;
         mateS *= 1.0-0.5*be;
+
+        mateS = green;
         
         mateD = vec3(1.0,0.8,0.4);
         mateD *= dis;
         mateD *= 0.015;
         mateD += vec3(0.8,0.4,0.3)*0.15*be;
+
+        mateD = vec3(1.);
         
         mateK = vec2( 60.0, 0.7 + 2.0*dis );
         
+        mateK = vec2(0.);
+
         float f = clamp( dot( -rd, nor ), 0.0, 1.0 );
         f = 1.0-pow( f, 8.0 );
         f = 1.0 - (1.0-f)*(1.0-texture2D( iChannel2, 0.3*pos.xy ).x);
@@ -265,7 +289,14 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     col += 1.8*vec3(0.1,2.0,0.1)*bou*occ;                // bounce
 
     col *= mateD;
-    col = dif1 * vec3(1., 1., 0.);
+
+
+    if(m > 1.5) {
+        col = dif1 * green;
+        col = vec3(0.);
+    } else if(m > 0.5) {
+        col = dif1 * yellow;
+    }
 
 
     col += .4*sss*(vec3(0.15,0.1,0.05)+vec3(0.85,0.9,0.95)*dif1)*(0.05+0.95*occ)*mateS; // sss
@@ -300,6 +331,9 @@ vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist)
 
 vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
     vec3 col = vec3(255., 155., 189.) / 255.;
+    if(frame > 3636.5) {
+        col = mix(vec3(1.), vec3(0.), sign(sin(rd.x * 40.)));
+    }
     float mindist = 0.01;
     float maxdist = 40.0;
 
@@ -310,12 +344,10 @@ vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
     }
     
     float sun = clamp(dot(rd,sunDir),0.0,1.0);
-    /*
     col += 1.0*vec3(1.5,0.8,0.7)*pow(sun,4.0);
     col = pow( col, vec3(0.45) );
-    col = vec3(1.05,1.0,1.0)*col*(0.7+0.3*col*(3.0-2.0*col)) + vec3(0.0,0.0,0.04);
+    col = mix(col, vec3(1.05,1.0,1.0)*col*(0.7+0.3*col*(3.0-2.0*col)) + vec3(0.0,0.0,0.04), 0.5);
     col *= 0.3 + 0.7*pow(16.0*q.x*q.y*(1.0-q.x)*(1.0-q.y),0.1);
-        */
     return clamp( col, 0.0, 1.0 );
 }
 
@@ -333,12 +365,33 @@ void main() {
     vec2 fragCoord = iResolution * vUv;
     float iTime = frame / 60.;
 
-    float angle = 4.3 + frame / 20.;
-    float radius = 5.;
+    float angle = (frame - 3926.) / 20.;
+    float radius = 4.2;
     float height = 0.;
-    if(frame > 3307.5) {
-        angle = 5.5 - frame / 60.;
-        height = 1.5;
+    float targetHeight = 0.;
+
+    float letterbox = 0.15;
+    if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
+        gl_FragColor = vec4(vec3(.1), 1.);
+        return;
+    }
+    if(frame > 3636.5) {
+        angle = -18.6 + frame / 200.;
+        radius = 3.8;
+        height = .25;
+    } else if(frame > 3459.5) {
+        angle = -14.3 + frame / 60.;
+        radius = 5.;
+        height = -1. + mix(0., 2., (frame - 3459.) / 60.);
+    } else if(frame > 3446.5) {
+        angle = -5.5 + frame / 100.;
+        radius = 3.;
+        height = -.1;
+    } else if(frame > 3307.5) {
+        radius = 8.;
+        angle = -7.3 - frame / 60.;
+        height = 3.5;
+        targetHeight = .5;
     }
 
     for(int m = 0; m < 2; m++) {
@@ -350,7 +403,7 @@ void main() {
             vec2 q = (fragCoord.xy+rr) / iResolution.xy;
 
             vec3 ro = vec3(radius * sin(angle), height, radius * cos(angle));
-            vec3 ta = vec3(.0, .0, 0.);
+            vec3 ta = vec3(.0, targetHeight, 0.);
             mat3 ca = setCamera(ro, ta, 0.);
             vec3 rd = normalize(ca * vec3(p, -2.8));
 
