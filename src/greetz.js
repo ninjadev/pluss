@@ -16,6 +16,11 @@
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
+      this.ps = new global.ParticleSystem({friction: 0.88, numParticles: 128, life: 35, shapes: [
+        'JaggedLine',
+        'WavyLine',
+        'WideRectangle',
+      ], colors: ['#666']});
 
       const green = '#00ffc6';
       const blue = '#1232ff';
@@ -372,14 +377,31 @@
     update(frame) {
       super.update(frame);
       this.frame = frame;
+
+      if(BEAT && BEAN % 48 == 24) {
+        for(let i = 0; i < 24; i++) {
+          const angle = i / 24 * Math.PI * 2;
+          const radius = 1 * Math.random();
+          this.ps.spawn(
+            8 + Math.cos(angle) * radius,  // x
+            4.5 + Math.sin(angle) * radius,  // y
+            (0.5 + 0.1 * Math.random()) * Math.cos(angle),  // dx
+            (0.5 + 0.1 * Math.random()) * Math.sin(angle),  // dy
+            angle,  // rotation
+            0,
+            0.5
+          );
+        }
+      }
+
+      this.ps.update();
     }
 
     renderScene(words) {
-      this.ctx.fillStyle = '#fffc00';
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
+
 
       this.ctx.translate(-0.5, -0.25);
       for(let i = 0; i < 2; i++) {
@@ -398,6 +420,30 @@
         this.ctx.fill();
         this.ctx.restore();
       }
+
+      this.ctx.save();
+      this.ctx.beginPath();
+      this.ctx.lineWidth = 0.07;
+      this.ctx.lineCap = 'round';
+      this.ctx.translate(12.5, -2.1);
+      this.ctx.strokeStyle = '#ffad6b';
+      this.ctx.rotate(Math.PI / 4);
+      for(let j = 0; j < 28; j++) {
+        for(let i = 13 - j / 5 * 3.5; i < 6 + j / 4 * 1.1; i++) {
+          const width = 0.01;
+          const x = (i + (j % 2 == 0 ? + 0.5 : 0)) / 3;
+          const y = j / 3;
+          this.ctx.moveTo(x, y);
+          this.ctx.lineTo(x + width, y);
+        }
+      }
+      this.ctx.stroke();
+      this.ctx.restore();
+
+      this.ctx.save();
+      this.ctx.translate(0.7, -0.15);
+      this.ps.render(this.ctx);
+      this.ctx.restore();
 
       let selected = words[0];
       for(let i = 0; i < words.length; i++) {
@@ -454,14 +500,41 @@
     }
 
     render() {
-      if(BEAN < 2976) {
+
+      this.ctx.fillStyle = '#fffc00';
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      
+      this.ctx.save();
+      this.ctx.scale(GU, GU);
+      this.ctx.translate(-this.frame / 40 % (2 * Math.PI * 2), 0);
+      this.ctx.beginPath();
+      this.ctx.rotate(Math.PI / 8);
+      this.ctx.globalAlpha = 0.5;
+      for(let i = -0; i < 30; i++) {
+        for(let j = -9; j < 10; j++) {
+          this.ctx.strokeStyle = '#f5ce18';
+          const length = 0.5;
+          this.ctx.moveTo(i - length / 2, j);
+          this.ctx.lineTo(i + length / 2,j);
+
+          this.ctx.moveTo(i, j - length / 2);
+          this.ctx.lineTo(i, j + length / 2);
+        }
+      }
+      this.ctx.lineWidth = 0.1;
+      this.ctx.lineCap = 'round';
+      this.ctx.stroke();
+      this.ctx.restore();
+
+      if(BEAN < 3024) {
         this.renderScene([
-            {word: 'LoGICOMA', at: 2784},
-            {word: 'MR. DOOB', at: 2832},
-            {word: 'DESiRE', at: 2880},
-            {word: 'POo-BRAIN', at: 2928},
+            {word: 'LoGICOMA', at: 2784 + 48},
+            {word: 'MR. DoOB', at: 2832 + 48},
+            {word: 'DESiRE', at: 2880 + 48},
+            {word: 'POo-BRAIN', at: 2928 + 48},
         ]);
-      } else if(BEAN < 3072) {
+      } else if(BEAN < 3072 + 48) {
         this.ctx.save();
         this.ctx.scale(0.5, 0.5);
         this.renderScene([
@@ -516,6 +589,44 @@
         ]);
 
         this.ctx.translate(-48 * GU, 9 * GU);
+        this.ctx.translate(-8 * GU, 0);
+        this.renderScene([
+            {word: 'LoGICOMA', at: 3072},
+            {word: 'MR. DOOB', at: 3072 + 24},
+            {word: 'LoGICOMA', at: 3072 + 2 * 24},
+            {word: 'MR. DOOB', at: 3072 + 3 * 24},
+        ]);
+        this.ctx.translate(16 * GU, 0);
+        this.renderScene([
+            {word: 'LoGICOMA', at: 3072},
+            {word: 'MR. DOOB', at: 3072 + 24},
+            {word: 'LoGICOMA', at: 3072 + 2 * 24},
+            {word: 'MR. DOOB', at: 3072 + 3 * 24},
+        ]);
+        this.ctx.translate(16 * GU, 0);
+        this.renderScene([
+            {word: 'LoGICOMA', at: 3072},
+            {word: 'MR. DOOB', at: 3072 + 24},
+            {word: 'LoGICOMA', at: 3072 + 2 * 24},
+            {word: 'MR. DOOB', at: 3072 + 3 * 24},
+        ]);
+        this.ctx.translate(16 * GU, 0);
+        this.renderScene([
+            {word: 'LoGICOMA', at: 3072},
+            {word: 'MR. DOOB', at: 3072 + 24},
+            {word: 'LoGICOMA', at: 3072 + 2 * 24},
+            {word: 'MR. DOOB', at: 3072 + 3 * 24},
+        ]);
+        this.ctx.translate(16 * GU, 0);
+        this.renderScene([
+            {word: 'LoGICOMA', at: 3072},
+            {word: 'MR. DOOB', at: 3072 + 24},
+            {word: 'LoGICOMA', at: 3072 + 2 * 24},
+            {word: 'MR. DOOB', at: 3072 + 3 * 24},
+        ]);
+
+        this.ctx.translate(-(48 + 16) * GU, 9 * GU);
+        this.ctx.translate(8 * GU, 0);
         this.renderScene([
             {word: 'LoGICOMA', at: 3072},
             {word: 'MR. DOOB', at: 3072 + 24},
@@ -545,6 +656,7 @@
         ]);
 
         this.ctx.translate(-48 * GU, 9 * GU);
+        this.ctx.translate(-8 * GU, 0);
         this.renderScene([
             {word: 'LoGICOMA', at: 3072},
             {word: 'MR. DOOB', at: 3072 + 24},
@@ -552,28 +664,6 @@
             {word: 'MR. DOOB', at: 3072 + 3 * 24},
         ]);
         this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: 'LoGICOMA', at: 3072},
-            {word: 'MR. DOOB', at: 3072 + 24},
-            {word: 'LoGICOMA', at: 3072 + 2 * 24},
-            {word: 'MR. DOOB', at: 3072 + 3 * 24},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: 'LoGICOMA', at: 3072},
-            {word: 'MR. DOOB', at: 3072 + 24},
-            {word: 'LoGICOMA', at: 3072 + 2 * 24},
-            {word: 'MR. DOOB', at: 3072 + 3 * 24},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: 'LoGICOMA', at: 3072},
-            {word: 'MR. DOOB', at: 3072 + 24},
-            {word: 'LoGICOMA', at: 3072 + 2 * 24},
-            {word: 'MR. DOOB', at: 3072 + 3 * 24},
-        ]);
-
-        this.ctx.translate(-48 * GU, 9 * GU);
         this.renderScene([
             {word: 'LoGICOMA', at: 3072},
             {word: 'MR. DOOB', at: 3072 + 24},
