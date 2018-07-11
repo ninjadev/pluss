@@ -30,7 +30,7 @@
       "F": "scannerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
-
+      "I": "IceCream.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
       "L": "WaveyPop.render",
@@ -199,6 +199,10 @@
     "options": {
       "shader": "sheipzidee2"
     }
+  },
+  {
+    "id": "IceCream",
+    "type": "IceCream"
   },
   {
     "id": "NinetiesPatterns",
