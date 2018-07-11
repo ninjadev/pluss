@@ -14,8 +14,80 @@
   "googleAnalyticsID": "Your GA ID",
   "labels": [
     {
-      "name": "Start",
-      "BEAN": 0
+      "name": "Intro 1",
+      "BEAN": 96
+    },
+    {
+      "name": "Intro 2",
+      "BEAN": 480
+    },
+    {
+      "name": "Intro 3",
+      "BEAN": 864
+    },
+    {
+      "name": "1234",
+      "BEAN": 1248
+    },
+    {
+      "name": "Dark 1",
+      "BEAN": 1296
+    },
+    {
+      "name": "Dark 2",
+      "BEAN": 1680
+    },
+    {
+      "name": "Revision",
+      "BEAN": 1968
+    },
+    {
+      "name": "Light 1",
+      "BEAN": 2064
+    },
+    {
+      "name": "Light 2",
+      "BEAN": 2448
+    },
+    {
+      "name": "Travel 1",
+      "BEAN": 2831
+    },
+    {
+      "name": "Travel 2",
+      "BEAN": 3216
+    },
+    {
+      "name": "Bridge 1",
+      "BEAN": 3600
+    },
+    {
+      "name": "Bridge 2",
+      "BEAN": 3984
+    },
+    {
+      "name": "Bridge X",
+      "BEAN": 4368
+    },
+    {
+      "name": "Light 3",
+      "BEAN": 4512
+    },
+    {
+      "name": "Light 4",
+      "BEAN": 4896
+    },
+    {
+      "name": "Outro",
+      "BEAN": 5184
+    },
+    {
+      "name": "Pickup",
+      "BEAN": 5424
+    },
+    {
+      "name": "NIN-JA-DEV",
+      "BEAN": 5568
     }
   ]
 }
