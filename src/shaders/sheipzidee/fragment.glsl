@@ -107,12 +107,12 @@ vec2 map(vec3 p) {
     float shapes = min(min(triangle, box), sphere); 
     float ground = 9999999.;
 
-    if(frame > 3636.5) {
+    if(frame > 3713.5 - 76.) {
         float spacing = 0.15;
         shapes = max(shapes, -sdBox(p, vec3(10., spacing / 4., 10.)));
         shapes = max(shapes, -sdBox(p + vec3(0., spacing, 0.), vec3(10., spacing / 4., 10.)));
         shapes = max(shapes, -sdBox(p + vec3(0., -spacing, 0.), vec3(10., spacing / 4., 10.)));
-    } else if(frame > 3446.5) {
+    } else if(frame > 3522.5 - 76.) {
         ground = min(sdCylinder(p, vec3(-1.25, 0., .1)), min(sdCylinder(p, vec3(0., 0., .1)), sdCylinder(p, vec3(1.25, 0., .1))));
     } else {
         ground = sdBox(p + vec3(0., 10.5, 0.), vec3(20., 10., 1.));

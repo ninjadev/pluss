@@ -1,4 +1,7 @@
 (function(global) {
+
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
+
   class yoyo extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -34,7 +37,7 @@
       this.ctx.scale(GU, GU);
 
       this.ctx.translate(8, 4.5);
-      const cameraZoom = smoothstep(0.1, 1, (this.frame - FRAME_FOR_BEAN(4320)) / (FRAME_FOR_BEAN(4332) - FRAME_FOR_BEAN(4320)))
+      const cameraZoom = smoothstep(0.1, 1, F(this.frame, 1296, 12));
       this.ctx.scale(cameraZoom, cameraZoom);
 
       const green = '#00ffc6';
@@ -58,24 +61,26 @@
 
         [green, lightPink, yellow, pink],
       ];
+
       let colors = colorsList[0];
       if(BEAN >= 4392) {
-        colors = colorsList[1];
-      }
-      if(BEAN >= 4392 + 8) {
-        colors = colorsList[2];
-      }
-      if(BEAN >= 92 * 48) {
+        colors = colorsList[8];
+      } else if(BEAN >= 33 * 48) {
+        colors = colorsList[8];
+      } else if(BEAN >= 32.5 * 48 - 4) {
+        colors = colorsList[7];
+      } else if(BEAN >= 31* 48) {
+        colors = colorsList[6];
+      } else if(BEAN >= 30.5 * 48 + 8) {
+        colors = colorsList[5];
+      } else if(BEAN >= 30.5 * 48) {
+        colors = colorsList[4];
+      } else if(BEAN >= 29 * 48) {
         colors = colorsList[3];
-      }
-      if(BEAN >= 4488) {
-        colors = colorsList[1];
-      }
-      if(BEAN >= 4488 + 8) {
+      } else if(BEAN >= 28.5 * 48 + 8) {
         colors = colorsList[2];
-      }
-      if(BEAN >= 94 * 48) {
-        colors = colorsList[3];
+      } else if(BEAN >= 28.5 * 48) {
+        colors = colorsList[1];
       }
 
 

@@ -73,15 +73,15 @@
         }
         if(j == 1) {
           const width = .5;
-          const h1 = easeOut(0, 9, F(this.frame, 2112, 24));
-          const h2 = easeOut(0, 9, F(this.frame, 2112 + 12, 24));
-          const h3 = easeOut(0, 9, F(this.frame, 2112 + 24, 24));
-          const h4 = easeOut(0, 9, F(this.frame, 2112 + 24, 12));
+          const h1 = easeOut(0, 9, F(this.frame, 48 + 2112, 24));
+          const h2 = easeOut(0, 9, F(this.frame, 48 + 2112 + 12, 24));
+          const h3 = easeOut(0, 9, F(this.frame, 48 + 2112 + 24, 24));
+          const h4 = easeOut(0, 9, F(this.frame, 48 + 2112 + 24, 12));
 
-          const w1 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 2208, 12));
-          const w2 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 2208 + 24, 12));
-          const w3 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 2208 + 24 * 2, 12));
-          const w4 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 2208 + 24 * 3, 12));
+          const w1 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 48 + 2208, 12));
+          const w2 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 48 + 2208 + 24, 12));
+          const w3 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 48 + 2208 + 24 * 2, 12));
+          const w4 = easeOut(width, 16 / 4 + width / 2, F(this.frame, 48 + 2208 + 24 * 3, 12));
           this.ctx.save();
           this.ctx.fillStyle = 'white';
           this.ctx.translate(0.15, 0);
@@ -97,13 +97,13 @@
           this.ctx.fillStyle = '#fffc00';
         }
         this.ctx.save();
-        this.ctx.translate(easeIn(0, -4, F(this.frame, 2064 - 24 - 8, 4)), 0);
+        this.ctx.translate(easeIn(0, -4, F(this.frame, 48 + 2064 - 24 - 8, 4)), 0);
         this.ctx.rotate(Math.PI / 4);
-        const hh = easeIn(1, 3, F(this.frame, 2064 - 4 - 4, 4));
-        const scale = easeOut(0, 1.5, F(this.frame, 2016, 12)) - easeIn(0, 0.5, F(this.frame, 2016, 12));
+        const hh = easeIn(1, 3, F(this.frame, 48 + 2064 - 4 - 4, 4));
+        const scale = easeOut(0, 1.5, F(this.frame, 48 + 2016, 12)) - easeIn(0, 0.5, F(this.frame, 48 + 2016, 12));
         this.ctx.scale(scale, scale);
-        if(j == 1 && BEAN >= 2208) {
-          this.ctx.lineWidth = easeOut(0.5, 1.0, F(this.frame, 2208, 12));
+        if(j == 1 && BEAN >= 2208 + 48) {
+          this.ctx.lineWidth = easeOut(0.5, 1.0, F(this.frame, 48 + 2208, 12));
           this.ctx.strokeRect(-0.5, -hh / 2, 1, hh);
         }
         this.ctx.fillRect(-0.5, -hh / 2, 1, hh);
@@ -112,10 +112,10 @@
         this.ctx.save();
         this.ctx.rotate(Math.PI / 4);
         this.ctx.beginPath();
-        let r = easeIn(0, Math.sqrt(2), F(this.frame, 2052 - 4, 4));
+        let r = easeIn(0, Math.sqrt(2), F(this.frame, 48 + 2052 - 4, 4));
         this.ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
-        if(j == 1 && BEAN >= 2208 + 24) {
-          this.ctx.lineWidth = easeOut(0.5, 1, F(this.frame, 2208 + 24, 12));
+        if(j == 1 && BEAN >= 2208 + 24 + 48) {
+          this.ctx.lineWidth = easeOut(0.5, 1, F(this.frame, 48 + 2208 + 24, 12));
           this.ctx.stroke();
         }
         this.ctx.fill();
@@ -129,7 +129,7 @@
         const targetR = (l/2) / Math.cos(30 / 180 * Math.PI);
         this.ctx.translate(4, -Math.sqrt(2) + targetR); //lerp(+Math.sqrt(2) - targetR, -Math.sqrt(2) + targetR, F(this.frame, 2064  + 8, 4)));
         //this.ctx.rotate(lerp(Math.PI * 2 / 3 / 2, Math.PI * 2 / 3, F(this.frame, 2064 + 8, 4)));
-        r = easeIn(0, targetR, F(this.frame, 2064 -  8, 8));
+        r = easeIn(0, targetR, F(this.frame, 48 + 2064 -  8, 8));
         for(let i = 0; i < 5; i++) {
           const x = r * Math.sin(i / 3 * Math.PI * 2);
           const y = -r * Math.cos(i / 3 * Math.PI * 2);
@@ -138,8 +138,8 @@
           }
           this.ctx.lineTo(x, y);
         }
-        if(j == 1 && BEAN >= 2208 + 48) {
-          this.ctx.lineWidth = easeOut(0.5, 1, F(this.frame, 2208 + 48, 12));
+        if(j == 1 && BEAN >= 2208 + 48 + 48) {
+          this.ctx.lineWidth = easeOut(0.5, 1, F(this.frame, 48 + 2208 + 48, 12));
           this.ctx.stroke();
         }
         this.ctx.fill();
@@ -150,9 +150,9 @@
 
       this.ctx.globalCompositeOperation = 'difference';
       this.ctx.fillStyle = 'white';
-      const width = easeOut(0, 16, F(this.frame, 2280, 24 - 6));
-      const width2 = easeOut(0, 16, F(this.frame, 2280 + 4, 24 - 8));
-      const width3 = easeOut(0, 16, F(this.frame, 2280 + 8, 24 - 10));
+      const width = easeOut(0, 16, F(this.frame, 48 + 2280, 24 - 6));
+      const width2 = easeOut(0, 16, F(this.frame, 48 + 2280 + 4, 24 - 8));
+      const width3 = easeOut(0, 16, F(this.frame, 48 + 2280 + 8, 24 - 10));
       this.ctx.fillRect(-8, -.5 + -0.5 / 4, width2, 0.25);
       this.ctx.fillRect(-8, -0.5 / 4, width, 0.25);
       this.ctx.fillRect(-8, .5 + -0.5 / 4, width3, 0.25);
