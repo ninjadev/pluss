@@ -122,7 +122,7 @@
 
       // Rotation particles
       if (spinProgress >= 0 && spinProgress < 1) {
-        const particleIntensity = Math.max(0, Math.sin(lerp(0.2, 1, spinProgress) * Math.PI) - 0.1);
+        const particleIntensity = Math.max(0, Math.sin(lerp(0.2, 1, spinProgress) * Math.PI) - 0.35);
         for (let i = 0; i < 1; i++) {
           if (this.random() < particleIntensity) {
             const angle = this.random() * Math.PI * 2;
@@ -254,8 +254,8 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(2, 2);
@@ -267,8 +267,8 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(14, 2);
@@ -280,8 +280,8 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(2, 7);
@@ -293,8 +293,8 @@
             0,  // dx
             0,  // dy
             0,  // rotation
-            0.08,  // rotationalSpeed
-            0.8  // size
+            0.0666,  // rotationalSpeed
+            1.4  // size
           );
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(14, 7);
