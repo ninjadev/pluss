@@ -42,7 +42,7 @@
 
       var r3o2 = Math.sqrt(3) / 2;
 
-      var orange_height = 0.60 * GU;
+      var orange_height = 0.30 * GU;
       var orange_width = orange_height / (Math.sqrt(3) / 2);
       var white_height = 0.2 * GU;
       var white_width = white_height / r3o2;
