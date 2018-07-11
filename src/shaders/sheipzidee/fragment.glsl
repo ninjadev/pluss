@@ -182,6 +182,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     float focc = 1.0;
     float fsha = 1.;
 
+    vec3 green = vec3(14., 92., 73.) / 255.;
     vec3 yellow = vec3(255., 252., 0.) / 255.;
 
     if(m < 1.5) {
@@ -225,14 +226,20 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
         mateS *= 1.5;
         mateS *= 1.0 + 0.5*ff*ff;
         mateS *= 1.0-0.5*be;
+
+        mateS = green;
         
         mateD = vec3(1.0,0.8,0.4);
         mateD *= dis;
         mateD *= 0.015;
         mateD += vec3(0.8,0.4,0.3)*0.15*be;
+
+        mateD = vec3(1.);
         
         mateK = vec2( 60.0, 0.7 + 2.0*dis );
         
+        mateK = vec2(0.);
+
         float f = clamp( dot( -rd, nor ), 0.0, 1.0 );
         f = 1.0-pow( f, 8.0 );
         f = 1.0 - (1.0-f)*(1.0-texture2D( iChannel2, 0.3*pos.xy ).x);
@@ -265,7 +272,14 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     col += 1.8*vec3(0.1,2.0,0.1)*bou*occ;                // bounce
 
     col *= mateD;
-    col = dif1 * vec3(1., 1., 0.);
+
+
+    if(m > 1.5) {
+        col = dif1 * green;
+        col = vec3(0.);
+    } else if(m > 0.5) {
+        col = dif1 * yellow;
+    }
 
 
     col += .4*sss*(vec3(0.15,0.1,0.05)+vec3(0.85,0.9,0.95)*dif1)*(0.05+0.95*occ)*mateS; // sss
@@ -310,12 +324,10 @@ vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
     }
     
     float sun = clamp(dot(rd,sunDir),0.0,1.0);
-    /*
     col += 1.0*vec3(1.5,0.8,0.7)*pow(sun,4.0);
     col = pow( col, vec3(0.45) );
-    col = vec3(1.05,1.0,1.0)*col*(0.7+0.3*col*(3.0-2.0*col)) + vec3(0.0,0.0,0.04);
+    col = mix(col, vec3(1.05,1.0,1.0)*col*(0.7+0.3*col*(3.0-2.0*col)) + vec3(0.0,0.0,0.04), 0.5);
     col *= 0.3 + 0.7*pow(16.0*q.x*q.y*(1.0-q.x)*(1.0-q.y),0.1);
-        */
     return clamp( col, 0.0, 1.0 );
 }
 
@@ -333,12 +345,19 @@ void main() {
     vec2 fragCoord = iResolution * vUv;
     float iTime = frame / 60.;
 
-    float angle = 4.3 + frame / 20.;
-    float radius = 5.;
+    float angle = (frame - 3926.) / 20.;
+    float radius = 4.2;
     float height = 0.;
-    if(frame > 3307.5) {
-        angle = 5.5 - frame / 60.;
-        height = 1.5;
+    float targetHeight = 0.;
+    if(frame > 3446.5) {
+        angle = -8.5 + frame / 100.;
+        radius = 3.;
+        height = -.1;
+    } else if(frame > 3307.5) {
+        radius = 8.;
+        angle = -7.3 - frame / 60.;
+        height = 3.5;
+        targetHeight = .5;
     }
 
     for(int m = 0; m < 2; m++) {
@@ -350,7 +369,7 @@ void main() {
             vec2 q = (fragCoord.xy+rr) / iResolution.xy;
 
             vec3 ro = vec3(radius * sin(angle), height, radius * cos(angle));
-            vec3 ta = vec3(.0, .0, 0.);
+            vec3 ta = vec3(.0, targetHeight, 0.);
             mat3 ca = setCamera(ro, ta, 0.);
             vec3 rd = normalize(ca * vec3(p, -2.8));
 
