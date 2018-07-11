@@ -257,6 +257,9 @@
             0.08,  // rotationalSpeed
             0.8  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(2, 2);
+          }
         } else if (BEAN === 1040) {
           this.plusParticleSystem.spawn(
             14,  // x
@@ -267,6 +270,9 @@
             0.08,  // rotationalSpeed
             0.8  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(14, 2);
+          }
         } else if (BEAN === 1044) {
           this.plusParticleSystem.spawn(
             2,  // x
@@ -277,6 +283,9 @@
             0.08,  // rotationalSpeed
             0.8  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(2, 7);
+          }
         } else if (BEAN === 1052) {
           this.plusParticleSystem.spawn(
             14,  // x
@@ -287,6 +296,9 @@
             0.08,  // rotationalSpeed
             0.8  // size
           );
+          for (let i = 0; i < 2; i++) {
+            this.ps.spawn(14, 7);
+          }
         }
       }
     }
