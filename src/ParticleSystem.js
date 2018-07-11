@@ -116,15 +116,29 @@ ParticleSystem.prototype.renderWideRectangle = function(ctx, x, y, radius, rotat
 };
 
 ParticleSystem.prototype.renderPlus = function(ctx, x, y, radius, rotation, color) {
-  const thickness = radius / 2;
-  const diameter = radius * 2;
+  const halfThickness = radius / 4;
 
   ctx.save();
   ctx.fillStyle = color;
   ctx.translate(x, y);
   ctx.rotate(rotation);
-  ctx.fillRect(-diameter / 2, -thickness / 2, diameter, thickness);
-  ctx.fillRect(-thickness / 2, -diameter / 2, thickness, diameter);
+
+  ctx.beginPath();
+  ctx.moveTo(-radius, -halfThickness);
+  ctx.lineTo(-halfThickness, -halfThickness);
+  ctx.lineTo(-halfThickness, -radius);
+  ctx.lineTo(halfThickness, -radius);
+  ctx.lineTo(halfThickness, -halfThickness);
+  ctx.lineTo(radius, -halfThickness);
+  ctx.lineTo(radius, halfThickness);
+  ctx.lineTo(halfThickness, halfThickness);
+  ctx.lineTo(halfThickness, radius);
+  ctx.lineTo(-halfThickness, radius);
+  ctx.lineTo(-halfThickness, halfThickness);
+  ctx.lineTo(-radius, halfThickness);
+  ctx.closePath();
+  ctx.fill();
+
   ctx.restore();
 };
 
