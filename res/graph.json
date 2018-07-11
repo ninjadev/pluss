@@ -21,22 +21,23 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "SpinningCube.render",
-      "B": "squiggles.render",
+
       "C": "sleekAngles.render",
       "C_three": "sleekstadee.render",
-      "D": "ninjadevtext.render",
+      "D": "yoyo.render",
+      "D_transision": "ninjadevtext.render",
       "E": "intro.render",
       "F": "scannerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
-      "I": "yoyo.render",
+
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
       "L": "WaveyPop.render",
       "M": "greetz.render",
       "N": "sheipz.render",
       "O": "sheipzidee.render",
-      "P": "NinetiesPatterns.render",
+
       "Q": "sheipz2.render",
       "R": "sheipzidee2.render"
     }
