@@ -10,7 +10,7 @@
 
       this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),
                                  new THREE.MeshBasicMaterial({ color: 0x444444 }));
-      //this.scene.add(this.cube);
+      this.scene.add(this.cube);
 
       var light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);

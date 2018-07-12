@@ -27,7 +27,7 @@
       "D": "yoyo.render",
       "D_transision": "ninjadevtext.render",
       "E": "intro.render",
-      "F": "scannerShader.render",
+      "F": "dimentionMultiplexerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
       "I": "IceCream.render",
@@ -76,13 +76,9 @@
       "shader": "scannerShader"
     },
     "connected": {
-      "texture": "scanner.render",
-      "depth": "scanner.depth"
+      "texture": "dimensionBackground.render",
+      "depth": "dimensionBackground.depth"
     }
-  },
-  {
-    "id": "scanner",
-    "type": "scanner"
   },
   {
     "id": "dimension1",
@@ -103,7 +99,7 @@
       "shader": "dimentionMultiplexerShader"
     },
     "connected": {
-      "textureBG": "dimensionBackground.render",
+      "textureBG": "scannerShader.render",
       "depthBG": "dimensionBackground.depth",
       "texture1": "dimension1.render",
       "depth1": "dimension1.depth",
