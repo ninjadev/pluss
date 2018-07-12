@@ -4,6 +4,12 @@
       options.inputs = { TestShader: new NIN.TextureInput() };
       options.outputs = { render: new NIN.TextureOutput() };
       super(id, options);
+      this.renderTarget = new THREE.WebGLRenderTarget(640, 360, {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        format: THREE.RGBAFormat
+      });
+      this.resize();
       this.planeUpdater = function (container, camera){
         if (container.kind == "sphere")
         {
@@ -37,8 +43,8 @@
       };
       this.cones = {};
       this.cones.white_cone = {};
-      this.patternMaterial = new THREE.MeshBasicMaterial({color:0x888888, side:THREE.DoubleSide});
-      this.patternMaterial.transparent = true;
+      this.patternMaterial = new THREE.MeshBasicMaterial();
+      //this.patternMaterial.transparent = true; 
       this.createIceSphere(this.cones.white_cone, {color:0x888888, side:THREE.DoubleSide}, 
                            this.patternMaterial,[0,0,0], 
                            5, this.scene);
@@ -57,7 +63,6 @@
       this.scene.add(light);
 
       this.camera.position.z = 100;
-      console.log(options.inputs.TestShader);
     }
 
     update(frame) {
@@ -65,6 +70,7 @@
       this.planeUpdater(this.cones.white_cone, this.camera);
       this.planeUpdater(this.cones.pink_cone, this.camera);
       this.planeUpdater(this.cones.brown_cone, this.camera); 
+      this.cones.white_cone.plane.material.transparent = true;
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
       this.camera.position.x = 100* Math.sin(frame/100); 
       this.camera.position.z = 100* Math.cos(frame/100); 
