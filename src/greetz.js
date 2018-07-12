@@ -316,6 +316,33 @@
             });
           }
         },
+        V: {
+          width: 2,
+          render: t => {
+            drawWithShadow(color => {
+              this.ctx.fillStyle = color || green;
+
+              const height = lerp(0, 2, t);
+              this.ctx.fillRect(-1, -height / 2, 2, height);
+
+              this.ctx.fillStyle = color || purple;
+
+              this.ctx.translate(0, lerp(10, 0, t));
+              this.ctx.beginPath();
+
+              this.ctx.translate(0, lerp(5, 0, t));
+              this.ctx.moveTo(-.25, 0.25);
+              this.ctx.lineTo(.25, -1.15);
+              this.ctx.lineTo(-.25, -1.15);
+
+              this.ctx.moveTo(1, -1);
+              this.ctx.lineTo(1, 1);
+              this.ctx.lineTo(0, 1);
+              this.ctx.lineTo(1, -1);
+              this.ctx.fill();
+            });
+          }
+        },
         P: {
           width: 1.25,
           render: () => {
@@ -596,9 +623,9 @@
 
       if(BEAN < 3024 + 48 * 2) {
         this.renderScene([
-            {word: 'LoGICOMA', at: 2784 + 48},
-            {word: 'MR. DoOB', at: 2832 + 48},
-            {word: 'DESiRE', at: 2880 + 48},
+            {word: 'NINJADEV', at: 2784 + 48},
+            {word: 'IS', at: 2832 + 48},
+            {word: 'BACK!', at: 2880 + 48},
             {word: 'POo-BRAIN', at: 2928 + 48},
             {word: 'LFT', at: 2976},
         ]);
