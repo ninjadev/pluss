@@ -209,15 +209,32 @@
         const triangleRotationProgress = (frame - FRAME_FOR_BEAN(982)) / (FRAME_FOR_BEAN(994) - FRAME_FOR_BEAN(982));
         const triangleRotationOffset = smoothstep(0, Math.PI / 2, triangleRotationProgress);
 
+        const firinMahLazorLeftProgress = (frame - FRAME_FOR_BEAN(1152)) / (FRAME_FOR_BEAN(1164) - FRAME_FOR_BEAN(1152))
+        const firinMahLazorLeft = firinMahLazorLeftProgress >= 0 && firinMahLazorLeftProgress < 1;
+        const firinMahLazorRightProgress = (frame - FRAME_FOR_BEAN(1172)) / (FRAME_FOR_BEAN(1188) - FRAME_FOR_BEAN(1172))
+        const firinMahLazorRight = firinMahLazorRightProgress >= 0 && firinMahLazorRightProgress < 1;
+        const lazorIntensity = Math.sqrt(
+          Math.max(
+            Math.sin(lerp(0, 1, firinMahLazorLeftProgress) * Math.PI),
+            Math.sin(lerp(0, 1, firinMahLazorRightProgress) * Math.PI)
+          )
+        );
+        const firinMahLazorOffsetX = (
+          0.2 * lazorIntensity * Math.cos(1.3 * frame) +
+          firinMahLazorLeft * 2.75 * Math.sin(lerp(0, 1, firinMahLazorLeftProgress) * Math.PI) -
+          firinMahLazorRight * 2.75 * Math.sin(lerp(0, 1, firinMahLazorRightProgress) * Math.PI)
+        );
+        const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.5 * frame);
+
         for (let i = 0; i < 4; i++) {
           const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
           const outProgress2 = (frame - FRAME_FOR_BEAN(996 + 3 * i)) / (FRAME_FOR_BEAN(1008 + 3 * i) - FRAME_FOR_BEAN(998 + 3 * i));
 
           const oneEightyProgress = [
-            (frame - FRAME_FOR_BEAN(1056 - 1)) / (FRAME_FOR_BEAN(1056 + 8) - FRAME_FOR_BEAN(1056)),
-            (frame - FRAME_FOR_BEAN(1076 - 1)) / (FRAME_FOR_BEAN(1076 + 8) - FRAME_FOR_BEAN(1076)),
-            (frame - FRAME_FOR_BEAN(1092 - 1)) / (FRAME_FOR_BEAN(1092 + 8) - FRAME_FOR_BEAN(1092)),
-            (frame - FRAME_FOR_BEAN(1116 - 1)) / (FRAME_FOR_BEAN(1116 + 8) - FRAME_FOR_BEAN(1116)),
+            (frame - FRAME_FOR_BEAN(1056 - 1)) / (FRAME_FOR_BEAN(1056 + 16) - FRAME_FOR_BEAN(1056)),
+            (frame - FRAME_FOR_BEAN(1076 - 1)) / (FRAME_FOR_BEAN(1076 + 9) - FRAME_FOR_BEAN(1076)),
+            (frame - FRAME_FOR_BEAN(1092 - 1)) / (FRAME_FOR_BEAN(1092 + 14) - FRAME_FOR_BEAN(1092)),
+            (frame - FRAME_FOR_BEAN(1116 - 2)) / (FRAME_FOR_BEAN(1116 + 14) - FRAME_FOR_BEAN(1116)),
           ][i];
 
           const outFactor = Math.max(
@@ -230,21 +247,36 @@
           const angle = i * 2 * Math.PI / 4 + Math.PI / 4 - triangleRotationOffset - smoothstep(0, Math.PI / 4, outProgress2);
           const triangleAngle = smoothstep(0, Math.PI, oneEightyProgress);
 
-          let offsetX = 8 + diamondSizeFactor * Math.cos(angle) +
-             1.5 * outFactor * Math.cos(angle);
-          let offsetY = 4.5 + diamondSizeFactor * Math.sin(angle) +
-             1.5 * outFactor * Math.sin(angle);
+          const horizontalScaler = 1 - 0.25 * lazorIntensity;
+          const verticalScaler = 1 + 0.45 * lazorIntensity;
+
+          let offsetX = 8 + horizontalScaler * diamondSizeFactor * Math.cos(angle) +
+             1.5 * outFactor * Math.cos(angle) + firinMahLazorOffsetX;
+          let offsetY = 4.5 + verticalScaler * diamondSizeFactor * Math.sin(angle) +
+             1.5 * outFactor * Math.sin(angle) + firinMahLazorOffsetY;
 
           const polygon = [{x: offsetX, y: offsetY}];
           for (let j = 0; j < 3; j++) {
             polygon.push(
               {
-                x: offsetX + diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
-                y: offsetY + diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
+                x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
+                y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
               }
             );
           }
           polygons.push(polygon)
+        }
+
+        // Draw lazor
+        if (firinMahLazorLeft || firinMahLazorRight) {
+          const lazorOffsetX = firinMahLazorRight * 6;
+          const lazorThickness = lazorIntensity;
+          this.ctx.save();
+          this.ctx.fillStyle = '#FF88CB';  // brighter pink
+          this.ctx.fillRect(lazorOffsetX, firinMahLazorOffsetY + 4.5 - lazorThickness / 2, 10, lazorThickness);
+          this.ctx.fillStyle = 'white';
+          this.ctx.fillRect(lazorOffsetX, firinMahLazorOffsetY + 4.5 - lazorThickness / 4, 10, lazorThickness / 2);
+          this.ctx.restore();
         }
       }
 
@@ -262,7 +294,7 @@
 
     spawnPluses(frame) {
       if (BEAT) {
-        if (BEAN === 1028 || BEAN === 1136) {
+        if (BEAN === 1028 || BEAN === 1128) {
           this.plusParticleSystem.spawn(
             2,  // x
             2,  // y
@@ -275,7 +307,7 @@
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(2, 2);
           }
-        } else if (BEAN === 1040 || BEAN === 1140) {
+        } else if (BEAN === 1040 || BEAN === 1136) {
           this.plusParticleSystem.spawn(
             2,  // x
             7,  // y
@@ -288,7 +320,7 @@
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(14, 2);
           }
-        } else if (BEAN === 1044 || BEAN === 1148) {
+        } else if (BEAN === 1044 || BEAN === 1140) {
           this.plusParticleSystem.spawn(
             14,  // x
             2,  // y
@@ -301,7 +333,7 @@
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(2, 7);
           }
-        } else if (BEAN === 1052 || BEAN === 1152) {
+        } else if (BEAN === 1052 || BEAN === 1148) {
           this.plusParticleSystem.spawn(
             14,  // x
             7,  // y
