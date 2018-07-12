@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class sleekAngles extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -64,13 +65,14 @@
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
+      this.ps.render(this.ctx);
+
       this.ctx.strokeStyle = pink;
       this.ctx.lineWidth = 0.025;
       this.ctx.fillStyle = pink;
 
       this.renderTriangles(this.frame);
 
-      this.ps.render(this.ctx);
       this.plusParticleSystem.render(this.ctx);
 
       this.ctx.restore();
@@ -111,6 +113,7 @@
           if (this.random() < particleIntensity) {
             const angle = this.random() * Math.PI * 2;
             const radius = Math.max(3, 0.9 + 2.7 * this.random());
+            /*
             this.ps.spawn(
               8 + Math.cos(angle) * radius,  // x
               4.5 + Math.sin(angle) * radius,  // y
@@ -120,6 +123,7 @@
               particleIntensity * lerp(-0.1, 0.1, this.random()),  // rotationalSpeed
               lerp(0.3, 0.6, this.random())  // size
             );
+            */
           }
         }
       }
@@ -131,6 +135,7 @@
           if (this.random() < particleIntensity) {
             const angle = this.random() * Math.PI * 2;
             const radius = Math.max(3, 0.9 + 2.7 * this.random());
+            /*
             this.ps.spawn(
               8 + Math.cos(angle) * radius,  // x
               4.5 + Math.sin(angle) * radius,  // y
@@ -140,6 +145,7 @@
               particleIntensity * lerp(0.08, 0.25, this.random()),  // rotationalSpeed
               lerp(0.3, 0.6, this.random())  // size
             );
+            */
           }
         }
       }
@@ -163,12 +169,12 @@
       for (let i = 0; i < diamondPoints.length; i++) {
         if (diamondPoints[i].y < uppermostPoint.y) {
           uppermostPoint = diamondPoints[i];
-          uppermostPointIndex = i
+          uppermostPointIndex = i;
         }
       }
       let orderedDiamondPoints = [];
       for (let i = 0; i < diamondPoints.length; i++) {
-        orderedDiamondPoints.push(diamondPoints[(uppermostPointIndex + i) % diamondPoints.length])
+        orderedDiamondPoints.push(diamondPoints[(uppermostPointIndex + i) % diamondPoints.length]);
       }
       const rightmostPoint = orderedDiamondPoints[1];
       const lowermostPoint = orderedDiamondPoints[2];
@@ -213,9 +219,9 @@
         const triangleRotationProgress = (frame - FRAME_FOR_BEAN(982)) / (FRAME_FOR_BEAN(994) - FRAME_FOR_BEAN(982));
         const triangleRotationOffset = smoothstep(0, Math.PI / 2, triangleRotationProgress);
 
-        const firinMahLazorLeftProgress = (frame - FRAME_FOR_BEAN(1152)) / (FRAME_FOR_BEAN(1164) - FRAME_FOR_BEAN(1152))
+        const firinMahLazorLeftProgress = (frame - FRAME_FOR_BEAN(1152)) / (FRAME_FOR_BEAN(1164) - FRAME_FOR_BEAN(1152));
         const firinMahLazorLeft = firinMahLazorLeftProgress >= 0 && firinMahLazorLeftProgress < 1;
-        const firinMahLazorRightProgress = (frame - FRAME_FOR_BEAN(1172)) / (FRAME_FOR_BEAN(1188) - FRAME_FOR_BEAN(1172))
+        const firinMahLazorRightProgress = (frame - FRAME_FOR_BEAN(1172)) / (FRAME_FOR_BEAN(1188) - FRAME_FOR_BEAN(1172));
         const firinMahLazorRight = firinMahLazorRightProgress >= 0 && firinMahLazorRightProgress < 1;
         const lazorIntensity = Math.sqrt(
           Math.max(
@@ -251,7 +257,7 @@
             0,
             Math.sin(lerp(0, 1, outProgress1) * Math.PI),
             Math.sin(lerp(0, 1, outProgress2) * Math.PI),
-            Math.sin(lerp(0, 1, oneEightyProgress) * Math.PI),
+            Math.sin(lerp(0, 1, oneEightyProgress) * Math.PI)
           );
 
           const angle = i * 2 * Math.PI / 4 +
@@ -293,7 +299,7 @@
 
             if (k >= stopPolygons) {
               if (k === numPolygons - 1 && this.random() > 0.66 && (triangleShooterProgress >= 0 && triangleShooterProgress <= 1.15)) {
-                this.ps.spawn(offsetX, offsetY);
+                //this.ps.spawn(offsetX, offsetY);
               }
               const polygon = {
                 points: [{x: offsetX, y: offsetY}],
@@ -348,23 +354,34 @@
       }
 
       for (let polygon of polygons) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
-        for (let i = 1; i < polygon.points.length; i++) {
-          this.ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
-        }
-        this.ctx.closePath();
-
         this.ctx.save();
-        this.ctx.fillStyle = polygon.color;
-        this.ctx.strokeStyle = polygon.color;
-        this.ctx.fill();
-        this.ctx.stroke();
+        for(let j = 0; j < 2; j++) {
+          this.ctx.save();
+          this.ctx.beginPath();
+          this.ctx.fillStyle = polygon.color;
+          this.ctx.strokeStyle = polygon.color;
+          if(j == 0) {
+            this.ctx.fillStyle = '#041bb7';
+            this.ctx.strokeStyle = '#041bb7';
+            let shadowSize = easeIn(0, 0.15, F(this.frame, 960 - 12, 12));
+            shadowSize = easeIn(shadowSize, 0, F(this.frame, 1128 - 12, 12));
+            this.ctx.translate(shadowSize, shadowSize);
+          }
+          this.ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
+          for (let i = 1; i < polygon.points.length; i++) {
+            this.ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
+          }
+
+          this.ctx.closePath();
+          this.ctx.fill();
+          j == 1 && this.ctx.stroke();
+          this.ctx.restore();
+        }
         this.ctx.restore();
       }
     }
 
-    spawnPluses(frame) {
+    spawnPluses() {
       if (BEAT) {
         if (BEAN === 1028 || BEAN === 1128) {
           this.plusParticleSystem.spawn(
@@ -377,7 +394,7 @@
             1.4  // size
           );
           for (let i = 0; i < 2; i++) {
-            this.ps.spawn(2, 2);
+            //this.ps.spawn(2, 2);
           }
         } else if (BEAN === 1040 || BEAN === 1136) {
           this.plusParticleSystem.spawn(
@@ -390,7 +407,7 @@
             1.4  // size
           );
           for (let i = 0; i < 2; i++) {
-            this.ps.spawn(14, 2);
+            //this.ps.spawn(14, 2);
           }
         } else if (BEAN === 1044 || BEAN === 1140) {
           this.plusParticleSystem.spawn(
@@ -403,7 +420,7 @@
             1.4  // size
           );
           for (let i = 0; i < 2; i++) {
-            this.ps.spawn(2, 7);
+            //this.ps.spawn(2, 7);
           }
         } else if (BEAN === 1052 || BEAN === 1148) {
           this.plusParticleSystem.spawn(
@@ -416,7 +433,7 @@
             1.4  // size
           );
           for (let i = 0; i < 2; i++) {
-            this.ps.spawn(14, 7);
+            //this.ps.spawn(14, 7);
           }
         }
       }

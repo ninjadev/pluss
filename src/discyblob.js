@@ -75,7 +75,7 @@
       this.ctx.save();
       this.ctx.scale(GU, GU);
       this.ctx.translate(8, 4.5);
-      const r = 2.8 + this.hihat * 0.2;
+      const r = easeIn(0, 2.8 + this.hihat * 0.2, F(this.frame, 96 - 12, 12));
       this.ctx.fillStyle = 'white';
       this.ctx.save();
       this.ctx.fillStyle = '#222';
@@ -92,6 +92,9 @@
       this.ctx.strokeStyle = '#222';
       this.ctx.lineWidth = 0.02;
       for(let j = 0; j < 2; j++) {
+        if(BEAN < 96) {
+          break;
+        }
         let x; let y;
         for(let i = 0; i < this.booms.length; i++) {
           const angle = Math.PI * 2 * i / this.booms.length;
