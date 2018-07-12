@@ -223,11 +223,11 @@
           )
         );
         const firinMahLazorOffsetX = (
-          0.2 * lazorIntensity * Math.cos(1.3 * frame) +
+          0.2 * lazorIntensity * Math.cos(1.1 * frame) +
           firinMahLazorLeft * 2.9 * Math.sin(lerp(0, 1, firinMahLazorLeftProgress) * Math.PI) -
           firinMahLazorRight * 2.9 * Math.sin(lerp(0, 1, firinMahLazorRightProgress) * Math.PI)
         );
-        const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.5 * frame);
+        const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.2 * frame);
 
         for (let i = 0; i < 4; i++) {
           const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
@@ -256,7 +256,7 @@
             smoothstep(0, Math.PI / 4, preFireProgress);
           const triangleAngle = smoothstep(0, Math.PI, oneEightyProgress);
 
-          const horizontalScaler = 1 - 0.25 * lazorIntensity;
+          const horizontalScaler = 1 - 0.35 * lazorIntensity;
           const verticalScaler = 1 + 0.45 * lazorIntensity;
 
           let offsetX = 8 + horizontalScaler * diamondSizeFactor * Math.cos(angle) +
@@ -290,18 +290,20 @@
           // Spawn lazor particles
           if (this.random() < lazorIntensity) {
             const direction = (firinMahLazorRight ? 1 : -1);
-            const horizontalSpeed = 0.1 * direction;
+            const horizontalSpeed = 0.3 * direction;
             const verticalSpeed = 0.01 * (1 - 2 * this.random());
-            this.ps.spawn(
-              8 + firinMahLazorOffsetX + 2.5 * direction + 8 * direction * this.random(), // x
+            const p = this.ps.spawn(
+              8 + firinMahLazorOffsetX + 2.4 * direction + 8 * direction * this.random(), // x
               4.5 + firinMahLazorOffsetY + - lazorThickness / 2 + this.random() * lazorThickness, // y
               horizontalSpeed,  // dx
               verticalSpeed,  // dy
               firinMahLazorLeft ? Math.PI : 0,  // rotation
               0, // rotationalSpeed
-              0.2, // size,
+              BEAT ? 0.15 : 0.34, // size,
               this.evenBrighterPink  // color
-            )
+            );
+            p.t = 28;
+            p.shapeFunction = BEAT ? this.ps.renderStar : this.ps.renderWideRectangle;
           }
         }
       }

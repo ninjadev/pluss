@@ -107,6 +107,7 @@ ParticleSystem.prototype.spawn = function(x, y, dx = null, dy = null, rotation =
   if (this.spawnIndex >= this.particles.length) {
     this.spawnIndex = 0;
   }
+  return p;
 };
 
 ParticleSystem.prototype.renderWideRectangle = function(ctx, x, y, radius, rotation, color) {
