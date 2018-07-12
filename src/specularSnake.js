@@ -55,12 +55,14 @@
 
       {
         const pi = Math.PI;
-        const x = (BEAN/10) % 24 - 3.5;
-        const y = (offset) => 3 + Math.sin((BEAN/10) + offset);
+        const t = BEAN/10;
+        const x = t % 24 - 3.5;
+        const y = (offset) => Math.sin(x + offset);
         const curve = Bezier.quadraticFromPoints(
-          {x: x-3, y: y(pi/2)},
-          {x: x,   y: y(0)},
-          {x: x+3, y: y(pi/2)}
+          {x: x-3, y: 3 + 1.5 * y(-pi/2)},
+          {x: x-1, y: 3 + y(-pi/4)},
+          {x: x+3, y: 3 + 0.3*y(pi/2)},
+          0.4
           );
         specularDraw(curve);
       }
