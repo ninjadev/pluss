@@ -113,14 +113,21 @@
       this.ctx.save();
       this.ctx.fillStyle = colors[0];
       this.ctx.scale(1 / cameraZoom, 1 / cameraZoom);
-      this.ctx.fillRect(-80, -4.5, 160, 9);
 
-      this.ctx.fillStyle = 'white';
-
-      const amount = 16;
-      for(let i = 0; i < amount; i++) {
-        this.ctx.fillRect(((999999 + i - 0.5 - this.frame / 20) % amount) - amount / 2, -4.5, 0.1, 9);
+      const drawOwnBackground = BEAN < 1680
+      if (drawOwnBackground) {
+        this.ctx.fillRect(-80, -4.5, 160, 9);
       }
+
+
+      if (drawOwnBackground) {
+        this.ctx.fillStyle = 'white';
+        const amount = 16;
+        for(let i = 0; i < amount; i++) {
+          this.ctx.fillRect(((999999 + i - 0.5 - this.frame / 20) % amount) - amount / 2, -4.5, 0.1, 9);
+        }
+      }
+
       this.ctx.restore();
 
       let shape = this.square;
