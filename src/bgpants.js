@@ -42,18 +42,39 @@
 
       var r3o2 = Math.sqrt(3) / 2;
 
-      var orange_height = 0.30 * GU;
-      var orange_width = orange_height / (Math.sqrt(3) / 2);
-      var white_height = 0.2 * GU;
-      var white_width = white_height / r3o2;
+      var orange_height_normal = 0.30 * GU;
+      var orange_height = orange_height_normal;
+      var white_height_normal = 0.2 * GU;
+      var white_height = white_height_normal;
 
+      
+
+      var orange_width = orange_height / (Math.sqrt(3) / 2);
+      var white_width = white_height / r3o2;
       for (var i = 0; i < 32; i++)
       {
         for (var j = 0; j < 14; j++)
         {
-
           var pos_x = i * GU * 0.5 / r3o2;
           var pos_y = j * GU + GU * ((this.frame % 60) / 30) - 4 * GU;
+
+          // Zoom
+          pos_x -= (8 - pos_x / GU) * 10 * smoothstep(1, 0, ((BEAN - 12 * 4 * 91.75) / (12 * 4 * (92 - 91.75 ))));
+          pos_y -= (4.5 - pos_y / GU) * 10 * smoothstep(1, 0, ((BEAN - 12 * 4 * 91.75) / (12 * 4 * (92 - 91.75 ))));
+
+          // Grow and define size
+          var dist_center = Math.sqrt(Math.pow(4.5 - pos_y / GU,2) + Math.pow(8 - pos_x / GU ,2));
+          var orange_height = smoothstep(0, orange_height_normal, ((BEAN - 12 * 4 * 91) / (12 * 4 * (91.10 - 91 ))) - (dist_center/4));
+          var orange_width = orange_height / (Math.sqrt(3) / 2);
+          var white_height = smoothstep(0, white_height_normal, ((BEAN - 12 * 4 * 91.25) / (12 * 4 * (91.35 - 91.25 ))) - (dist_center/4));
+          var white_width = white_height / r3o2;
+
+          // Drop down a bit starting from the center
+          pos_y += GU * smoothstep(0, 1, ((BEAN - 12 * 4 * 92) / (12 * 4 * (92.20 - 92 ))) - (dist_center/7));
+
+
+          //pos_y += white_height * 10;
+
           if ((i + j) % 2 == 0)
           {
             // Orange triangle

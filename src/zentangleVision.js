@@ -23,7 +23,7 @@
       this.bg.position.z = -49; // just within the cameras view
       this.scene.add(this.bg);
 
-      for (var i = 0; i < 10; i++)
+      /*for (var i = 0; i < 10; i++)
       {
         for (var j = 0; j < 10; j++)
         {
@@ -37,7 +37,7 @@
           cube.position.y = Math.random() * 3 - j * 3 ;
           this.scene.add(cube);
         }
-      }
+      }*/
     }
 
     update(frame) {
