@@ -7,14 +7,18 @@
       this.transition = 2.0;
       this.numBalls = 0;
 
-      // Constants
-      this.startBEAN = 672;
-      this.endBean = 864;
+      // Sync related, change these to match
+      // start and end BEANs of the placement of this scene
+      this.startBEAN = 4896;
+      this.endBean = 5183;
+
+      // Settings
+      this.ballBEANsync = 24;
+      this.startBallBEAN = this.startBEAN + this.ballBEANsync * 4;
       this.transitionBEANS = 24;
       this.maxBalls = 4;
-      this.ballBEANsync = 24;
-      this.fromColor = new THREE.Vector3(0., 0.6039215686274509, 0.807843137254902);
-      this.toColor = new THREE.Vector3(0.8980392156862745, 0.3725490196078431, 0.6431372549019608);
+      this.fromColor = new THREE.Vector3(0., 1., 0.7725490196078432);
+      this.toColor = new THREE.Vector3(0., 0.6039215686274509, 0.807843137254902);
     }
 
     update(frame) {
@@ -50,7 +54,7 @@
 
       // Number of balls to show
       this.numBalls = Math.floor((
-        (BEAN - this.startBEAN) / this.ballBEANsync)
+        (BEAN - this.startBallBEAN) / this.ballBEANsync)
       );
 
 
