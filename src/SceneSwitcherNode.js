@@ -36,6 +36,7 @@
       this.inputs.C.enabled = false;
       this.inputs.C_three.enabled = false;
       this.inputs.D.enabled = false;
+      this.inputs.D_transision.enabled = false;
       this.inputs.E.enabled = false;
       this.inputs.F.enabled = false;
       this.inputs.G.enabled = false;
@@ -64,7 +65,7 @@
         selectedScene = this.inputs.C;
       } else if (BEAN < 12 * 4 * 27) {
         selectedScene = this.inputs.C_three;
-      } else if (BEAN < 12 * 4 * 41) {
+      } else if (BEAN < 12 * 4 * 40.5) {
         selectedScene = this.inputs.D;
       } else if (BEAN < 12 * 4 * 43) {
         selectedScene = this.inputs.D_transision;
@@ -80,21 +81,21 @@
         selectedScene = this.inputs.N;
       } else if (BEAN < 12 * 4 * 51) {
         selectedScene = this.inputs.O;
-      } else if (BEAN < 12 * 4 * 51.5) {
+      } else if (BEAN < 12 * 4 * 52.5) {
         selectedScene = this.inputs.Q;
-      } else if (BEAN < 12 * 4 * 52) {
-        selectedScene = this.inputs.R;
       } else if (BEAN < 12 * 4 * 53) {
-        selectedScene = this.inputs.Q;
-      } else if (BEAN < 12 * 4 * 54) {
         selectedScene = this.inputs.R;
-      } else if (BEAN < 12 * 4 * 56) {
+      } else if (BEAN < 12 * 4 * 54) {
         selectedScene = this.inputs.Q;
-      } else if (BEAN < 12 * 4 * 58) {
+      } else if (BEAN < 12 * 4 * 55) {
+        selectedScene = this.inputs.R;
+      } else if (BEAN < 12 * 4 * 57) {
+        selectedScene = this.inputs.Q;
+      } else if (BEAN < 12 * 4 * 59) {
         selectedScene = this.inputs.R;
       } else if (BEAN < 12 * 4 * 59) {
         selectedScene = this.inputs.P;
-      } else if (BEAN < 12 * 4 * 70) {
+      } else if (BEAN < 12 * 4 * 67) {
         selectedScene = this.inputs.M;
       } else if (BEAN < 12 * 4 * 72) {
         selectedScene = this.inputs.F;
@@ -104,7 +105,7 @@
         selectedScene = this.inputs.I;
       } else if (BEAN < 12 * 4 * 98) {
         selectedScene = this.inputs.K;
-      } else if (BEAN < 12 * 4 * 100) {
+      } else if (BEAN < 12 * 4 * 102) {
         selectedScene = this.inputs.J;
       } else if (BEAN < 12 * 4 * 108) {
         selectedScene = this.inputs.L ;
