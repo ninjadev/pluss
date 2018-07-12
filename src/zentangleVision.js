@@ -19,7 +19,7 @@
       this.camera.position.z = 100;
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
-                                 new THREE.MeshBasicMaterial({ color: 0x111111 })); // A background of max size ish. Useful to know how large that would be :)
+                               new THREE.MeshBasicMaterial({ color: 0x111111 })); // A background of max size ish. Useful to know how large that would be :)
       this.bg.position.z = -49; // just within the cameras view
       this.scene.add(this.bg);
 
@@ -53,6 +53,12 @@
       loadObject('res/3.obj', flat_material_3, this.number3_raw );
       loadObject('res/4.obj', flat_material_4, this.number4_raw );
 
+      this.oneShoutBean = 4462;
+      this.twoShoutBean = 4476;
+      this.threeShoutBean = 4490;
+      this.fourShoutBean = 4500;
+      this.ShoutingOverBeab = 4512;
+
       this.number1 = new THREE.Object3D();
       this.number2 = new THREE.Object3D();
       this.number3 = new THREE.Object3D();
@@ -63,10 +69,6 @@
       this.number3.add(this.number3_raw);
       this.number4.add(this.number4_raw);
 
-      this.scene.add(this.number1);
-      this.scene.add(this.number2);
-      this.scene.add(this.number3);
-      this.scene.add(this.number4);
 
       this.number1_raw.position.x = 0.6 * GU;
       this.number2_raw.position.x = 0 * GU;
@@ -81,6 +83,26 @@
 
     update(frame) {
       super.update(frame);
+
+      // Remove when jumpint to earlier to make debugging easier
+      if(BEAN < this.oneShoutBean){
+        this.scene.remove(this.number1);
+        this.scene.remove(this.number2);
+        this.scene.remove(this.number3);
+        this.scene.remove(this.number4);
+      }
+      if(BEAN == this.oneShoutBean){
+        this.scene.add(this.number1);
+      }
+      if(BEAN == this.twoShoutBean){
+        this.scene.add(this.number2);
+      }
+      if(BEAN == this.threeShoutBean){
+        this.scene.add(this.number3);
+      }
+      if(BEAN == this.fourShoutBean){
+        this.scene.add(this.number4);
+      }
 
       this.cube.rotation.x = Math.sin(frame / 10);
       this.cube.rotation.y = Math.cos(frame / 10);
