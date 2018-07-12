@@ -20,8 +20,8 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render",
-
+      "A": "shadowizer.render",
+      "B": "SpinningCube.render",
       "C": "sleekAngles.render",
       "C_three": "sleekstadee.render",
       "D": "yoyo.render",
@@ -37,7 +37,6 @@
       "M": "greetz.render",
       "N": "sheipz.render",
       "O": "sheipzidee.render",
-
       "Q": "sheipz2.render",
       "R": "sheipzidee2.render"
     }
@@ -210,5 +209,24 @@
     "options": {
       "shader": "NinetiesPatterns"
     }
+  },
+  {
+    "id": "every",
+    "type": "every"
+  },
+  {
+    "id": "shadowizer",
+    "type": "shadowizerNode",
+    "options": {
+      "shader": "shadowizer"
+    },
+    "connected": {
+      "tDiffuse": "every.render",
+      "overlay": "discyblob.render"
+    }
+  },
+  {
+    "id": "discyblob",
+    "type": "discyblob"
   }
 ]

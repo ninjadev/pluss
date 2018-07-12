@@ -16,6 +16,32 @@
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
+
+      this.square = () => {
+        this.ctx.fillRect(-0.5, -0.5, 1, 1);
+      };
+
+      this.triangle = () => {
+        this.ctx.beginPath();
+        const radius = 1 / Math.sqrt(2);
+        for(let i = 0; i < 3; i++) {
+          const angle = Math.PI * 2 * i / 3;
+          const x = radius * Math.cos(angle);
+          const y = radius * Math.sin(angle);
+          if(i == 0) {
+            this.ctx.moveTo(x, y);
+          }
+          this.ctx.lineTo(x, y);
+        }
+        this.ctx.fill();
+      };
+
+      this.circle = () => {
+        this.ctx.beginPath();
+        const radius = 1 / Math.sqrt(2);
+        this.ctx.ellipse(0, 0, radius, radius, 0, 0, Math.PI * 2);
+        this.ctx.fill();
+      };
     }
 
     update(frame) {
@@ -97,6 +123,14 @@
       }
       this.ctx.restore();
 
+      let shape = this.square;
+
+      if(BEAN >= 31 * 48) {
+        shape = this.circle;
+      } else if(BEAN >= 29 * 48) {
+        shape = this.triangle;
+      }
+
       for(let i = 0; i < 3; i++) {
         this.ctx.save();
         let scale = 1 + (3 - i) + 0.5 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
@@ -109,11 +143,11 @@
         const shadowSize = 0.15;
         this.ctx.translate(shadowSize / scale, shadowSize / scale);
         this.ctx.rotate(Math.PI / 4 + this.frame / 50);
-        this.ctx.fillRect(-0.5, -0.5, 1, 1);
+        shape();
         this.ctx.restore();
         this.ctx.rotate(Math.PI / 4 + this.frame / 50);
         this.ctx.fillStyle = colors[1 + i];
-        this.ctx.fillRect(-0.5, -0.5, 1, 1);
+        shape();
         this.ctx.restore();
       }
 
