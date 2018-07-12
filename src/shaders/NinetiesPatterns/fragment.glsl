@@ -4,7 +4,14 @@ uniform sampler2D tDiffuse;
 uniform float frame;
 uniform float patternSize;
 uniform float patternSpeed;
+
 uniform float effectNum;
+
+uniform float patternA;
+uniform float patternB;
+
+uniform float currentTransition;
+uniform float transitionLerp;
 
 float time = frame / 60.;
 
@@ -196,7 +203,7 @@ vec3 zebraPattern(vec2 p) {
     p *= patternSize * 7.5;
 
     vec2 q = p;
-    p += noise(vec3(p + time * 0.01, 2.75));
+    p += noise(vec3(p + time * patternSpeed, 2.75));
 
     float rep = 0.1;
     p.y = mod(p.y, rep);
@@ -269,24 +276,65 @@ vec3 bananaPattern(vec2 p) {
 
 void main() {
     vec2 p = vUv;
+    vec2 q = p;
+
     p = 2. * p - 1.;
+
     p.x *= 16. / 9.;
 
+    vec3 currentPatternA;
+    vec3 currentPatternB;
 
-    vec3 currentPattern = vec3(0.5, 1., 0.5);
-
-    if (effectNum == 0.0) {
-        currentPattern = bananaPattern(p);
+    if (patternA == 0.) {
+        currentPatternA = bananaPattern(p);
     }
-    else if (effectNum == 1.0) {
-        currentPattern = zebraPattern(p);
+    else if (patternA == 1.) {
+        currentPatternA = zebraPattern(p);
     }
-    else if (effectNum == 2.0) {
-        currentPattern = geopardPattern(p);
+    else if (patternA == 2.) {
+        currentPatternA = geopardPattern(p);
     }
-    else if (effectNum == 3.0) {
-        currentPattern = crazyMtvPattern(p);
+    else if (patternA == 3.) {
+        currentPatternA = crazyMtvPattern(p);
     }
 
-    gl_FragColor = vec4(currentPattern, 0.);
+    if (patternB == 0.) {
+        currentPatternB = bananaPattern(p);
+    }
+    else if (patternB == 1.) {
+        currentPatternB = zebraPattern(p);
+    }
+    else if (patternB == 2.) {
+        currentPatternB = geopardPattern(p);
+    }
+    else if (patternB == 3.) {
+        currentPatternB = crazyMtvPattern(p);
+    }
+
+    vec3 col;
+
+    if (currentTransition == 0.) {
+      col = currentPatternA;
+    }
+    else if (currentTransition == 1.) {
+      col = mix(currentPatternA, currentPatternB, transitionLerp);
+    }
+    else if (currentTransition == 2.) {
+      q.x += sin(q.y * 20.) * 0.01;
+
+      float leftShift = q.x - transitionLerp;
+      leftShift = smoothstep(0., 0.01, leftShift);
+
+      col = currentPatternA * leftShift + currentPatternB * (1. - leftShift);
+    }
+    else if (currentTransition == 3.) {
+      q.x += sin(q.y * 20.) * 0.01;
+
+      float leftShift = q.x - (1. - transitionLerp);
+      leftShift = smoothstep(0., 0.01, leftShift);
+
+      col = currentPatternA * (1. - leftShift) + currentPatternB * leftShift;
+    }
+
+    gl_FragColor = vec4(col, 0.);
 }

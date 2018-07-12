@@ -3,5 +3,15 @@
     "frame": { "type": "f", "value": 0.0 },
     "patternSize": { "type": "f", "value": 0.0 },
     "patternSpeed": { "type": "f", "value": 0.0 },
-    "effectNum": { "type": "f", "value": 0.0 }
+    "effectNum": { "type": "f", "value": 0.0 },
+    "patternA": { "type": "f", "value": 0.0 },
+    "patternB": { "type": "f", "value": 0.0 },
+    "currentTransition": { "type": "f", "value": 0.0 },
+    "transitionLerp": { "type": "f", "value": 0.0 }
 }
+
+
+
+
+
+
