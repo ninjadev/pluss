@@ -121,26 +121,9 @@
         }
       }
 
-      this.ctx.globalAlpha = smoothstep(0, 1, F(this.frame, 192 + 12, 48));
-      this.ctx.globalAlpha = smoothstep(this.ctx.globalAlpha, 0, F(this.frame, 384 + 12, 48));
-      this.ctx.fillStyle = 'white';
-      this.ctx.font = '0.45pt lemonmilkbold';
-      this.ctx.textAlign = 'left';
-      this.ctx.fillStyle = '#222';
-      this.ctx.textBaseline = 'middle';
-      this.ctx.fillRect(-7.5, 1.5, 2.5, 2.5);
-      this.ctx.fillStyle = 'white';
-      this.ctx.fillText('Ntv', -7, 2.0);
-      this.ctx.fillText('logo', -7, 2.9);
-      this.ctx.translate(3, 0);
-      this.ctx.fillStyle = '#222';
-      this.ctx.fillRect(-7.5, 1.5, 9, 2.5);
-      this.ctx.fillStyle = 'white';
-      this.ctx.fillText('Placeholder name', -7, 2.0);
-      this.ctx.fillStyle = '#888';
-      this.ctx.fillText('Ninjadev', -7, 2.9);
 
       this.ctx.restore();
+
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
