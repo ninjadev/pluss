@@ -100,7 +100,7 @@
       this.ctx.restore();
       this.ctx.restore();
       this.output.needsUpdate = true;
-      this.outputs.render.setValue(this.inputs.bananas.getValue());
+      this.outputs.render.setValue(this.output);
     }
   }
 
