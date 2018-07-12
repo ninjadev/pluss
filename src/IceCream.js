@@ -50,6 +50,7 @@
       this.createIceSphere(this.cones.brown_cone, {color:0x8B4513, side:THREE.DoubleSide}, 
                            this.patternMaterial,[10,10,10], 
                            5, this.scene);
+      this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
 
       var light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);
@@ -64,6 +65,7 @@
       this.planeUpdater(this.cones.white_cone, this.camera);
       this.planeUpdater(this.cones.pink_cone, this.camera);
       this.planeUpdater(this.cones.brown_cone, this.camera); 
+      this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
       this.camera.position.x = 100* Math.sin(frame/100); 
       this.camera.position.z = 100* Math.cos(frame/100); 
       this.camera.lookAt(new THREE.Vector3(0,0,0));
