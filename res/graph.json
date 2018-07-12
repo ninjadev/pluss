@@ -31,6 +31,7 @@
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
       "I": "IceCream.render",
+      "I_bg": "arctic.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
       "L": "WaveyPop.render",
@@ -232,5 +233,9 @@
   {
     "id": "discyblob",
     "type": "discyblob"
+  },
+  {
+    "id": "arctic",
+    "type": "arctic"
   }
 ]
