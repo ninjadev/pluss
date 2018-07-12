@@ -370,7 +370,7 @@ void main() {
     float height = 0.;
     float targetHeight = 0.;
 
-    float letterbox = 0.15;
+    float letterbox = 0.119;
     if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
         gl_FragColor = vec4(vec3(.1), 1.);
         return;

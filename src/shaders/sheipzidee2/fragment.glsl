@@ -107,7 +107,7 @@ float smin(float a, float b) {
 }
 
 
-vec2 map(vec3 p) {
+vec2 map(vec3 p, float frame) {
     float a1 = -frame / 60. / 60. * 190. / 4. / 5. * pi * 2. + 1. / 5. * pi * 2.;
     float a2 = -frame / 60. / 60. * 190. / 4. / 5. * pi * 2. + 2. / 5. * pi * 2.;
     float a3 = -frame / 60. / 60. * 190. / 4. / 5. * pi * 2. + 3. / 5. * pi * 2.;
@@ -150,45 +150,45 @@ vec2 map(vec3 p) {
     return vec2(triangle, 1.);
 }
 
-vec3 calcNormal(in vec3 pos, in float eps ) {
+vec3 calcNormal(in vec3 pos, in float eps, in float frame) {
     vec2 e = vec2(1.0, -1.0) * 0.5773 * eps;
-    return normalize( e.xyy*map( pos + e.xyy).x + 
-                      e.yyx*map( pos + e.yyx).x + 
-                      e.yxy*map( pos + e.yxy).x + 
-                      e.xxx*map( pos + e.xxx).x );
+    return normalize( e.xyy*map(pos + e.xyy, frame).x + 
+                      e.yyx*map(pos + e.yyx, frame).x + 
+                      e.yxy*map(pos + e.yxy, frame).x + 
+                      e.xxx*map(pos + e.xxx, frame).x );
 }
 
 
-float calcAO(in vec3 pos, in vec3 nor) {
+float calcAO(in vec3 pos, in vec3 nor, in float frame) {
     float ao = 0.0;
     for(int i=0; i < 32; i++) {
         vec3 ap = forwardSF(float(i), 32.);
         float h = hash1(float(i));
         ap *= sign(dot(ap,nor)) * h * .1;
-        ao += clamp(map(pos + nor * 0.01 + ap).x * 3., 0., 1.);
+        ao += clamp(map(pos + nor * 0.01 + ap, frame).x * 3., 0., 1.);
     }
     ao /= 32.;
     
     return clamp(ao * 6., 0., 1.);
 }
 
-float calcSSS(in vec3 pos, in vec3 nor) {
+float calcSSS(in vec3 pos, in vec3 nor, in float frame) {
     float occ = 0.;
     for(int i = 0; i < 8; i++) {
         float h = 0.002 + 0.11 * float(i) / 7.;
         vec3 dir = normalize(sin(float(i) * 13.0 + vec3(0., 2.1, 4.2)));
         dir *= sign(dot(dir, nor));
-        occ += (h - map(pos - h * dir).x);
+        occ += (h - map(pos - h * dir, frame).x);
     }
     occ = clamp(1. - 11. * occ / 8., 0., 1.);    
     return occ * occ;
 }
 
-float calcSoftShadow(in vec3 ro, in vec3 rd, float k) { 
+float calcSoftShadow(in vec3 ro, in vec3 rd, float k, float frame) { 
     float res = 1.0;
     float t = 0.01;
     for(int i = 0; i < 32; i++) {
-        float h = map(ro + rd * t).x;
+        float h = map(ro + rd * t, frame).x;
         res = min(res, smoothstep(0., 1.,k * h / t));
         t += clamp(h, .04, .1);
         if(res < .01) {
@@ -200,11 +200,11 @@ float calcSoftShadow(in vec3 ro, in vec3 rd, float k) {
 
 vec3 sunDir = normalize(vec3(.2, .1, .02));
 
-vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
+vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m, float frame) {
     float eps = .002;
     
     vec3 pos = ro + t * rd;
-    vec3 nor = calcNormal(pos, eps);
+    vec3 nor = calcNormal(pos, eps, frame);
 
     /* diffuse ? */
     vec3 mateD = vec3(0.);
@@ -288,12 +288,12 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
   
     vec3 hal = normalize( sunDir-rd );
     float fre = clamp(1.0+dot(nor,rd), 0.0, 1.0 );
-    float occ = calcAO( pos, nor )*focc;
-    float sss = calcSSS( pos, nor );
+    float occ = calcAO(pos, nor, frame)*focc;
+    float sss = calcSSS(pos, nor, frame);
     sss = sss*occ + fre*occ + (0.5+0.5*fre)*pow(abs(-0.2),1.0)*occ;
     
     float dif1 = clamp( dot(nor,sunDir), 0.0, 1.0 );
-    float sha = calcSoftShadow( pos, sunDir, 20.0 ); 
+    float sha = calcSoftShadow(pos, sunDir, 20.0, frame); 
     dif1 *= sha*fsha;
     float spe1 = clamp( dot(nor,hal), 0.0, 1.0 );
 
@@ -338,13 +338,13 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
 }
 
 
-vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist) {
+vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist, float frame) {
     vec2 res = vec2(-1.0);
     
     float t = mindist;
     for(int i = 0; i < 256; i++) {
         vec3 p = ro + t*rd;
-        vec2 h = map(p);
+        vec2 h = map(p, frame);
         res = vec2(t,h.y);
 
         if( h.x<(0.001*t) ||  t>maxdist ) break;
@@ -355,16 +355,16 @@ vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist)
 }
 
 
-vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
+vec3 render(in vec3 ro, in vec3 rd, in vec2 q, in float frame) {
     vec3 blue = vec3(117., 210., 217.) / 255.;
     vec3 yellow = vec3(255., 252., 0.) / 255.;
     vec3 col = mix(blue, yellow, exitAmount);
     float mindist = 0.01;
     float maxdist = 40.0;
 
-    vec2 tm = intersect(ro, rd, mindist, maxdist);
+    vec2 tm = intersect(ro, rd, mindist, maxdist, frame);
     if( tm.y>-0.5 && tm.x < maxdist ) {
-        col = shade(ro, rd, tm.x, tm.y);
+        col = shade(ro, rd, tm.x, tm.y, frame);
         maxdist = tm.x;
     }
     
@@ -388,30 +388,56 @@ void main() {
     vec3 col = vec3(1.);
     vec2 iResolution = vec2(1920., 1080.);
     vec2 fragCoord = iResolution * vUv;
-    float iTime = frame / 60.;
 
     float angle = 0.;
     float radius = 10.8;
     float height = .25;
     float targetHeight = 0.;
 
-    float letterbox = 0.15 * (1. - exitAmount2);
+    float letterbox = 0.119 * (1. - exitAmount2);
+
+    float xRepeat = 1.;
+
     if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
         gl_FragColor = vec4(vec3(.1), 1.);
         return;
     }
+
+    float f1 = frame;
+    float f2 = frame;
+    float f3 = frame;
+    float f4 = frame;
+
     if(frame > 4318.5) {
         angle = 0.;
         radius = 10.8;
         height = .25;
-    } else if(frame > 4122.5) {
+    } else if(frame > 4141.5) {
         angle = -0.5 + frame / 100.;
+        angle = -0.5;
         radius = 20.;
         height = .0;
-    } else if(frame > 4091.5) {
+        xRepeat = 4.;
+        f3 = 4142.;
+        f2 = 4123.;
+        f1 = 4092.;
+    } else if(frame > 4122.5) {
         angle = -15.3 + frame / 100.;
+        angle = -15.3;
         radius = 15.;
         height = -5. + mix(0., 5., (frame - 4091.) / 20.);
+        height = 5.;
+        xRepeat = 4.;
+        f2 = 4123.;
+        f1 = 4092.;
+    } else if(frame > 4091.5) {
+        angle = -15.3 + frame / 100.;
+        angle = 15.3;
+        radius = 15.;
+        height = -5. + mix(0., 5., (frame - 4091.) / 20.);
+        height = -5.;
+        xRepeat = 4.;
+        f1 = 4092.;
     } else if(frame > 9999.5) {
         radius = 20.;
         angle = -19.3 - frame / 10.;
@@ -419,20 +445,39 @@ void main() {
         targetHeight = 0.;
     }
 
+    xRepeat /= 2.;
+
     for(int m = 0; m < 2; m++) {
         for( int n = 0; n < 2; n++) {
             vec2 rr = vec2(float(m), float(n)) / float(AA);
 
-            vec2 p = (-iResolution.xy + 2.0 * (fragCoord.xy + rr)) / iResolution.y;
+            vec2 p = (-iResolution.xy + 2.0 * (fragCoord.xy + rr)) / iResolution.x;
+            p *= xRepeat;
+            p.x = mod(p.x -mod(xRepeat, 2.) * 1., 1.) - 0.5;
+            p /= xRepeat;
+
+            p *= 16. / 9.;
 
             vec2 q = (fragCoord.xy+rr) / iResolution.xy;
+
+            float targetFrame = f1;
+
+            if(vUv.x / xRepeat >= 0.25) {
+                targetFrame = f2;
+            }
+            if(vUv.x / xRepeat >= 0.5) {
+                targetFrame = f3;
+            }
+            if(vUv.x / xRepeat >= 0.75) {
+                targetFrame = f4;
+            }
 
             vec3 ro = vec3(radius * sin(angle), height, radius * cos(angle));
             vec3 ta = vec3(.0, targetHeight, 0.);
             mat3 ca = setCamera(ro, ta, 0.);
             vec3 rd = normalize(ca * vec3(p, -2.8));
 
-            col += render(ro, rd, q);
+            col += render(ro, rd, q, targetFrame);
         }
     }
     col /= 5.;
