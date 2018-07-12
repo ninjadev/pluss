@@ -47,7 +47,10 @@
     "type": "spinningCube",
     "connected": {
       "squiggles": "squiggles.render",
-      "bananas": "NinetiesPatterns.render"
+      "bananas": "NinetiesPatterns.render",
+      "paint_n": "paint_n.render",
+      "paint_dv": "paint_dv.render",
+      "paint_n_3d": "paint_n_3d.render"
     }
   },
   {
@@ -237,5 +240,17 @@
   {
     "id": "arctic",
     "type": "arctic"
+  },
+  {
+    "id": "paint_n",
+    "type": "paint_n"
+  },
+  {
+    "id": "paint_dv",
+    "type": "paint_dv"
+  },
+  {
+    "id": "paint_n_3d",
+    "type": "paint_n_3d"
   }
 ]
