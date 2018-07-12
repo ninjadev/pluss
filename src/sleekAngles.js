@@ -27,6 +27,10 @@
       );
       this.plusParticleSystem.shapeFunctions = [this.plusParticleSystem.renderPlus];
 
+      this.pink = '#E55FA4';
+      this.brighterPink = '#FF88CB';
+      this.evenBrighterPink = '#FFDDFF';
+
       this.frame = 0;
     }
 
@@ -173,34 +177,34 @@
       let polygons;
       if (shrinkProgress < 1) {
         polygons = [
-          [ // top left
+          {points:[ // top left
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: lerp(0, uppermostPoint.y, shrinkProgress)},
             {x: uppermostPoint.x, y: lerp(0, uppermostPoint.y, shrinkProgress)},
             uppermostPoint,
             leftmostPoint,
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: leftmostPoint.y},
-          ],
-          [ // top right
+          ]},
+          {points:[ // top right
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: lerp(0, uppermostPoint.y, shrinkProgress)},
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: rightmostPoint.y},
             rightmostPoint,
             uppermostPoint,
             {x: uppermostPoint.x, y: lerp(0, uppermostPoint.y, shrinkProgress)},
-          ],
-          [ // bottom right
+          ]},
+          {points:[ // bottom right
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: lerp(9, lowermostPoint.y, shrinkProgress)},
             {x: lowermostPoint.x, y: lerp(9, lowermostPoint.y, shrinkProgress)},
             lowermostPoint,
             rightmostPoint,
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: rightmostPoint.y},
-          ],
-          [ // bottom left
+          ]},
+          {points:[ // bottom left
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: lerp(9, lowermostPoint.y, shrinkProgress)},
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: leftmostPoint.y},
             leftmostPoint,
             lowermostPoint,
             {x: lowermostPoint.x, y: lerp(9, lowermostPoint.y, shrinkProgress)},
-          ],
+          ]},
         ];
       } else {
         polygons = [];
@@ -220,22 +224,28 @@
           )
         );
         const firinMahLazorOffsetX = (
-          0.2 * lazorIntensity * Math.cos(1.3 * frame) +
+          0.2 * lazorIntensity * Math.cos(1.1 * frame) +
           firinMahLazorLeft * 2.9 * Math.sin(lerp(0, 1, firinMahLazorLeftProgress) * Math.PI) -
           firinMahLazorRight * 2.9 * Math.sin(lerp(0, 1, firinMahLazorRightProgress) * Math.PI)
         );
-        const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.5 * frame);
+        const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.2 * frame);
+
+        const preFireRotationProgress = (frame - FRAME_FOR_BEAN(1136)) / (FRAME_FOR_BEAN(1148) - FRAME_FOR_BEAN(1136));
+        const oneEightyProgresses = [
+          (frame - FRAME_FOR_BEAN(1055)) / (FRAME_FOR_BEAN(1072) - FRAME_FOR_BEAN(1056)),
+          (frame - FRAME_FOR_BEAN(1075)) / (FRAME_FOR_BEAN(1085) - FRAME_FOR_BEAN(1076)),
+          (frame - FRAME_FOR_BEAN(1091)) / (FRAME_FOR_BEAN(1106) - FRAME_FOR_BEAN(1092)),
+          (frame - FRAME_FOR_BEAN(1114)) / (FRAME_FOR_BEAN(1130) - FRAME_FOR_BEAN(1116)),
+        ];
+
+        const triangleShooter1Progress = (frame - FRAME_FOR_BEAN(1188)) / (FRAME_FOR_BEAN(1200) - FRAME_FOR_BEAN(1188));
+        const triangleShooter2Progress = (frame - FRAME_FOR_BEAN(1212)) / (FRAME_FOR_BEAN(1224) - FRAME_FOR_BEAN(1212));
 
         for (let i = 0; i < 4; i++) {
           const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
           const outProgress2 = (frame - FRAME_FOR_BEAN(996 + 3 * i)) / (FRAME_FOR_BEAN(1008 + 3 * i) - FRAME_FOR_BEAN(998 + 3 * i));
 
-          const oneEightyProgress = [
-            (frame - FRAME_FOR_BEAN(1056 - 1)) / (FRAME_FOR_BEAN(1056 + 16) - FRAME_FOR_BEAN(1056)),
-            (frame - FRAME_FOR_BEAN(1076 - 1)) / (FRAME_FOR_BEAN(1076 + 9) - FRAME_FOR_BEAN(1076)),
-            (frame - FRAME_FOR_BEAN(1092 - 1)) / (FRAME_FOR_BEAN(1092 + 14) - FRAME_FOR_BEAN(1092)),
-            (frame - FRAME_FOR_BEAN(1116 - 2)) / (FRAME_FOR_BEAN(1116 + 14) - FRAME_FOR_BEAN(1116)),
-          ][i];
+          const oneEightyProgress = oneEightyProgresses[i];
 
           const outFactor = Math.max(
             0,
@@ -244,16 +254,14 @@
             Math.sin(lerp(0, 1, oneEightyProgress) * Math.PI),
           );
 
-          const preFireProgress = (frame - FRAME_FOR_BEAN(1136)) / (FRAME_FOR_BEAN(1148) - FRAME_FOR_BEAN(1136));
-
           const angle = i * 2 * Math.PI / 4 +
             Math.PI / 4 -
             triangleRotationOffset -
             smoothstep(0, Math.PI / 4, outProgress2) +
-            smoothstep(0, Math.PI / 4, preFireProgress);
+            smoothstep(0, Math.PI / 4, preFireRotationProgress);
           const triangleAngle = smoothstep(0, Math.PI, oneEightyProgress);
 
-          const horizontalScaler = 1 - 0.25 * lazorIntensity;
+          const horizontalScaler = 1 - 0.35 * lazorIntensity;
           const verticalScaler = 1 + 0.45 * lazorIntensity;
 
           let offsetX = 8 + horizontalScaler * diamondSizeFactor * Math.cos(angle) +
@@ -261,16 +269,42 @@
           let offsetY = 4.5 + verticalScaler * diamondSizeFactor * Math.sin(angle) +
              1.5 * outFactor * Math.sin(angle) + firinMahLazorOffsetY;
 
-          const polygon = [{x: offsetX, y: offsetY}];
+          const polygon = {
+            points: [{x: offsetX, y: offsetY}],
+            color: this.pink,
+          };
           for (let j = 0; j < 3; j++) {
-            polygon.push(
+            polygon.points.push(
               {
                 x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
                 y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
               }
             );
           }
-          polygons.push(polygon)
+          polygons.push(polygon);
+
+          // Triangle shooter
+          const numPolygons = (i === 0 || i === 2 ? lerp(0, 6, triangleShooter1Progress) : lerp(0, 6, triangleShooter2Progress)) | 0;
+          let brightness = 1;
+          for (let k = 0; k < numPolygons; k++) {
+            brightness += 0.14;
+            const polygon = {
+              points: [{x: offsetX, y: offsetY}],
+              color: `rgb(${Math.min(255, 227 * brightness)}, ${Math.min(255, 94 * brightness)}, ${Math.min(255, 161 * brightness)})`
+            };
+            for (let j = 0; j < 3; j++) {
+              polygon.points.push(
+                {
+                  x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
+                  y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
+                  color: this.pink,
+                }
+              );
+            }
+            polygons.push(polygon);
+            offsetX += 0.95 * Math.cos(angle);
+            offsetY += 0.95 * Math.sin(angle);
+          }
         }
 
         // Draw lazor
@@ -278,23 +312,47 @@
           const lazorOffsetX = firinMahLazorRight * 6;
           const lazorThickness = lazorIntensity;
           this.ctx.save();
-          this.ctx.fillStyle = '#FF88CB';  // brighter pink
+          this.ctx.fillStyle = this.brighterPink;
           this.ctx.fillRect(lazorOffsetX, firinMahLazorOffsetY + 4.5 - lazorThickness / 2, 10, lazorThickness);
           this.ctx.fillStyle = 'white';
           this.ctx.fillRect(lazorOffsetX, firinMahLazorOffsetY + 4.5 - lazorThickness / 4, 10, lazorThickness / 2);
           this.ctx.restore();
+
+          // Spawn lazor particles
+          if (this.random() < lazorIntensity) {
+            const direction = (firinMahLazorRight ? 1 : -1);
+            const horizontalSpeed = 0.3 * direction;
+            const verticalSpeed = 0.01 * (1 - 2 * this.random());
+            const p = this.ps.spawn(
+              8 + firinMahLazorOffsetX + 2.4 * direction + 8 * direction * this.random(), // x
+              4.5 + firinMahLazorOffsetY + - lazorThickness / 2 + this.random() * lazorThickness, // y
+              horizontalSpeed,  // dx
+              verticalSpeed,  // dy
+              firinMahLazorLeft ? Math.PI : 0,  // rotation
+              0, // rotationalSpeed
+              BEAT ? 0.15 : 0.34, // size,
+              this.evenBrighterPink  // color
+            );
+            p.t = 28;
+            p.shapeFunction = BEAT ? this.ps.renderStar : this.ps.renderWideRectangle;
+          }
         }
       }
 
       for (let polygon of polygons) {
         this.ctx.beginPath();
-        this.ctx.moveTo(polygon[0].x, polygon[0].y);
-        for (let i = 1; i < polygon.length; i++) {
-          this.ctx.lineTo(polygon[i].x, polygon[i].y);
+        this.ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
+        for (let i = 1; i < polygon.points.length; i++) {
+          this.ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
         }
         this.ctx.closePath();
+
+        this.ctx.save();
+        this.ctx.fillStyle = polygon.color;
+        this.ctx.strokeStyle = polygon.color;
         this.ctx.fill();
         this.ctx.stroke();
+        this.ctx.restore();
       }
     }
 

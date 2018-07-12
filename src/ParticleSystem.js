@@ -80,7 +80,8 @@ ParticleSystem.prototype.render = function(ctx) {
   ctx.restore();
 };
 
-ParticleSystem.prototype.spawn = function(x, y, dx=null, dy=null, rotation=null, rotationalSpeed=null, size=0.36) {
+ParticleSystem.prototype.spawn = function(x, y, dx = null, dy = null, rotation = null, rotationalSpeed = null,
+                                          size = 0.36, color = null) {
   const p = this.particles[this.spawnIndex];
   p.x = x;
   p.y = y;
@@ -99,13 +100,14 @@ ParticleSystem.prototype.spawn = function(x, y, dx=null, dy=null, rotation=null,
     p.rotationalSpeed = rotationalSpeed;
   }
   p.shapeFunction = this.shapeFunctions[Math.floor(this.random() * this.shapeFunctions.length)];
-  p.color = this.colors[Math.floor(this.random() * this.colors.length)];
+  p.color = color || this.colors[Math.floor(this.random() * this.colors.length)];
   p.size = size;
   p.t = this.T;
   this.spawnIndex++;
   if (this.spawnIndex >= this.particles.length) {
     this.spawnIndex = 0;
   }
+  return p;
 };
 
 ParticleSystem.prototype.renderWideRectangle = function(ctx, x, y, radius, rotation, color) {
