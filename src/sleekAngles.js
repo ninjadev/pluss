@@ -212,13 +212,23 @@
         for (let i = 0; i < 4; i++) {
           const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
           const outProgress2 = (frame - FRAME_FOR_BEAN(996 + 3 * i)) / (FRAME_FOR_BEAN(1008 + 3 * i) - FRAME_FOR_BEAN(998 + 3 * i));
+
+          const oneEightyProgress = [
+            (frame - FRAME_FOR_BEAN(1056 - 1)) / (FRAME_FOR_BEAN(1056 + 8) - FRAME_FOR_BEAN(1056)),
+            (frame - FRAME_FOR_BEAN(1076 - 1)) / (FRAME_FOR_BEAN(1076 + 8) - FRAME_FOR_BEAN(1076)),
+            (frame - FRAME_FOR_BEAN(1092 - 1)) / (FRAME_FOR_BEAN(1092 + 8) - FRAME_FOR_BEAN(1092)),
+            (frame - FRAME_FOR_BEAN(1116 - 1)) / (FRAME_FOR_BEAN(1116 + 8) - FRAME_FOR_BEAN(1116)),
+          ][i];
+
           const outFactor = Math.max(
             0,
             Math.sin(lerp(0, 1, outProgress1) * Math.PI),
-            Math.sin(lerp(0, 1, outProgress2) * Math.PI)
+            Math.sin(lerp(0, 1, outProgress2) * Math.PI),
+            Math.sin(lerp(0, 1, oneEightyProgress) * Math.PI),
           );
 
           const angle = i * 2 * Math.PI / 4 + Math.PI / 4 - triangleRotationOffset - smoothstep(0, Math.PI / 4, outProgress2);
+          const triangleAngle = smoothstep(0, Math.PI, oneEightyProgress);
 
           let offsetX = 8 + diamondSizeFactor * Math.cos(angle) +
              1.5 * outFactor * Math.cos(angle);
@@ -229,8 +239,8 @@
           for (let j = 0; j < 3; j++) {
             polygon.push(
               {
-                x: offsetX + diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle),
-                y: offsetY + diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle),
+                x: offsetX + diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
+                y: offsetY + diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
               }
             );
           }
