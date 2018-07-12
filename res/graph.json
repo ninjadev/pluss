@@ -3,7 +3,7 @@
     "id": "root",
     "type": "NIN.RootNode",
     "connected": {
-      "screen": "PostProcessing.render"
+      "screen": "sprinkles.render"
     }
   },
   {
@@ -256,5 +256,9 @@
   {
     "id": "specularSnake",
     "type": "specularSnake"
+  },
+  {
+    "id": "sprinkles",
+    "type": "sprinkles"
   }
 ]
