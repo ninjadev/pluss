@@ -18,7 +18,7 @@
 
 
       this.keyframes = {};
-      const offset = 5500;
+      const offset = 5500 + 151;
 
       const getKeyframesForItem = item => {
         const keyframes = {
