@@ -2,8 +2,13 @@
   const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
 
   class spinningCube extends NIN.THREENode {
-    constructor(id) {
+    constructor(id, options) {
+     
       super(id, {
+        inputs: {
+          squiggles: new NIN.TextureInput(),
+          bananas: new NIN.TextureInput()
+        },
         outputs: {
           render: new NIN.TextureOutput()
         }
@@ -44,6 +49,8 @@
 
     render() {
       this.ctx.clearRect(0,0,16*GU,9*GU);
+      this.ctx.drawImage(this.inputs.squiggles.getValue().image, 0, 0);
+      // draw the logo
       this.ctx.save();
       this.ctx.translate(130,20);
       this.ctx.scale(GU,GU);
@@ -76,6 +83,8 @@
 
       this.ctx.restore();
       this.ctx.restore();
+      // this.ctx.globalCompositeOperation = "source-atop";
+
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }

@@ -43,7 +43,11 @@
   },
   {
     "id": "SpinningCube",
-    "type": "spinningCube"
+    "type": "spinningCube",
+    "connected": {
+      "squiggles": "squiggles.render",
+      "bananas": "NinetiesPatterns.render"
+    }
   },
   {
     "id": "squiggles",
