@@ -3,6 +3,7 @@ varying vec2 vUv;
 uniform sampler2D tDiffuse;
 uniform float frame;
 uniform float patternSize;
+uniform float patternSpeed;
 uniform float effectNum;
 
 float time = frame / 60.;
@@ -239,7 +240,7 @@ float banana_head_butt(vec2 p, float size) {
 vec3 bananaPattern(vec2 p) {
     float size = patternSize;
 
-    p -= time * 0.05;
+    p -= time * patternSpeed;
 
     // Repeat
     vec2 rep = vec2(size * 2.75);
