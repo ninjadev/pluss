@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class every extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -14,45 +15,11 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.booms = [];
-      for(let i = 0; i < 24; i++) {
-        this.booms[i] = 0;
-      }
-      this.i = 0;
-
-      this.blaster = 0;
     }
 
     update(frame) {
       super.update(frame);
       this.frame = frame;
-
-
-      this.blaster *= 0.7;
-      for(let i = 0; i < this.booms.length; i++) {
-        this.booms[i] *= 0.8;
-        this.booms[i] = Math.max(this.booms[i], 0.1);
-      }
-
-      const i = BEAN % 24;
-      if(BEAT) {
-        switch(i) {
-        case 4:
-        case 6:
-        case 8:
-        case 10:
-        case 14:
-        case 16:
-        case 18:
-        case 20:
-        case 22:
-          this.blaster = 1;
-          break;
-        default:
-          break;
-        }
-        this.booms[i] = this.blaster;
-      }
     }
 
     resize() {
@@ -61,45 +28,52 @@
     }
 
     render() {
-      this.ctx.fillStyle = 'white';
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
 
-      this.ctx.fillStyle = '#ccc';
-      const width = 0.02;
-      for(let i = 0; i < 19; i++) {
-        const x = i / 19  * 16;
-        this.ctx.fillRect(x - width / 2, 0, width, 9);
+      this.ctx.save();
+      if(BEAN >= 288 && BEAN < 480) {
+        this.ctx.translate(8, 4.5);
+        let scale = 1 + (this.frame - FRAME_FOR_BEAN(288)) / 60 / 60 * 190 / 4 / 4 / 2;
+        scale = Math.exp(scale) / 2.3;
+        scale = easeIn(scale, 1, F(this.frame, 432 -4, 4));
+        this.ctx.scale(scale, scale);
+        let rotation = ((this.frame - FRAME_FOR_BEAN(288)) / 900) % Math.PI * 2;
+        rotation = easeIn(rotation, Math.PI / 4, F(this.frame, 432 -4, 4));
+        if(BEAN >= 432) {
+          rotation = 0;
+        }
+        this.ctx.rotate(rotation);
+        this.ctx.translate(-8, -4.5);
       }
-      for(let j = 0; j < 9; j++) {
-        const y = j / 9 * 9;
-        this.ctx.fillRect(0, y - width / 2, 16, width);
+
+      this.ctx.fillStyle = 'white';
+      for(let i = -1; i < 17; i++) {
+        for(let j = -1; j < 10; j++) {
+          this.ctx.save();
+          this.ctx.globalCompositeOperation = 'xor';
+          this.ctx.translate(i + 1 / 2, j + 1 / 2);
+          let rotation = easeOut(0, Math.PI / 4, F(this.frame, 264, 12));
+          this.ctx.rotate(rotation);
+          let size = easeOut(0.9, 0.5, F(this.frame, 264, 12));
+          size = easeOut(size, 1.2, F(this.frame, 264 + 24, 12));
+          size = easeIn(size, 4.95, F(this.frame, 432 -4, 4));
+          size = easeIn(size, 6, F(this.frame, 432 + 24 -4, 4));
+          if(BEAN >= 480) {
+            const thisSize = ((BEAN  - 480) / 24 | 0) + 7;
+            const previousSize = size  - 1;
+            size = easeIn(previousSize * Math.sqrt(2), thisSize * Math.sqrt(2), F(this.frame, (BEAN - (BEAN % 24)) -4, 4));
+          }
+          size = easeIn(0, size, F(this.frame, 96 - 12 - 17 + i - 10 + j, 12));
+          this.ctx.fillRect(-size / 2, -size / 2, size, size);
+          this.ctx.restore();
+        }
       }
+      this.ctx.restore();
 
       this.ctx.translate(8, 4.5);
-
-      this.ctx.fillStyle = 'pink';
-      for(let j = 0; j < 2; j++) {
-        this.ctx.save();
-        const shadowSize = 0.05;
-        if(j == 0) {
-          this.ctx.translate(shadowSize * 3, shadowSize);
-          this.ctx.fillStyle = 'black';
-        }
-        for(let i = 0; i < this.booms.length; i++) {
-          const angle = Math.PI * 2 * i / this.booms.length;
-          const r = 3 * Math.abs(Math.sin(angle * ((BEAN - 48) / 48  | 0)));
-          const x = r * Math.cos(angle);
-          const y = r * Math.sin(angle);
-          const size = 0.5 * this.booms[i];
-          this.ctx.beginPath();
-          this.ctx.ellipse(x, y, size, size, 0, 0, Math.PI * 2);
-          this.ctx.fill();
-        }
-        this.ctx.restore();
-      }
 
       this.ctx.restore();
 

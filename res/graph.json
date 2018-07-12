@@ -20,7 +20,7 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "every.render",
+      "A": "shadowizer.render",
       "B": "SpinningCube.render",
       "C": "sleekAngles.render",
       "C_three": "sleekstadee.render",
@@ -213,5 +213,20 @@
   {
     "id": "every",
     "type": "every"
+  },
+  {
+    "id": "shadowizer",
+    "type": "shadowizerNode",
+    "options": {
+      "shader": "shadowizer"
+    },
+    "connected": {
+      "tDiffuse": "every.render",
+      "overlay": "discyblob.render"
+    }
+  },
+  {
+    "id": "discyblob",
+    "type": "discyblob"
   }
 ]
