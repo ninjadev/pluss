@@ -284,24 +284,32 @@
           polygons.push(polygon);
 
           // Triangle shooter
-          const numPolygons = (i === 0 || i === 2 ? lerp(0, 6, triangleShooter1Progress) : lerp(0, 6, triangleShooter2Progress)) | 0;
+          const triangleShooterProgress = (i === 0 || i === 2 ? triangleShooter1Progress : triangleShooter2Progress);
+          const numPolygons = lerp(0, 6, triangleShooterProgress) | 0;
+          const stopPolygons = lerp(0, 6, triangleShooterProgress - 9/6) | 0;
           let brightness = 1;
           for (let k = 0; k < numPolygons; k++) {
             brightness += 0.14;
-            const polygon = {
-              points: [{x: offsetX, y: offsetY}],
-              color: `rgb(${Math.min(255, 227 * brightness)}, ${Math.min(255, 94 * brightness)}, ${Math.min(255, 161 * brightness)})`
-            };
-            for (let j = 0; j < 3; j++) {
-              polygon.points.push(
-                {
-                  x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
-                  y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
-                  color: this.pink,
-                }
-              );
+
+            if (k >= stopPolygons) {
+              if (k === numPolygons - 1 && this.random() > 0.66 && (triangleShooterProgress >= 0 && triangleShooterProgress <= 1.15)) {
+                this.ps.spawn(offsetX, offsetY);
+              }
+              const polygon = {
+                points: [{x: offsetX, y: offsetY}],
+                color: `rgb(${Math.min(255, 227 * brightness)}, ${Math.min(255, 94 * brightness)}, ${Math.min(255, 161 * brightness)})`
+              };
+              for (let j = 0; j < 3; j++) {
+                polygon.points.push(
+                  {
+                    x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
+                    y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
+                    color: this.pink,
+                  }
+                );
+              }
+              polygons.push(polygon);
             }
-            polygons.push(polygon);
             offsetX += 0.95 * Math.cos(angle);
             offsetY += 0.95 * Math.sin(angle);
           }
