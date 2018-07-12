@@ -252,5 +252,9 @@
   {
     "id": "paint_n_3d",
     "type": "paint_n_3d"
+  },
+  {
+    "id": "specularSnake",
+    "type": "specularSnake"
   }
 ]
