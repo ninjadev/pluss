@@ -262,7 +262,7 @@
 
     spawnPluses(frame) {
       if (BEAT) {
-        if (BEAN === 1028) {
+        if (BEAN === 1028 || BEAN === 1136) {
           this.plusParticleSystem.spawn(
             2,  // x
             2,  // y
@@ -275,7 +275,7 @@
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(2, 2);
           }
-        } else if (BEAN === 1040) {
+        } else if (BEAN === 1040 || BEAN === 1140) {
           this.plusParticleSystem.spawn(
             2,  // x
             7,  // y
@@ -288,7 +288,7 @@
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(14, 2);
           }
-        } else if (BEAN === 1044) {
+        } else if (BEAN === 1044 || BEAN === 1148) {
           this.plusParticleSystem.spawn(
             14,  // x
             2,  // y
@@ -301,7 +301,7 @@
           for (let i = 0; i < 2; i++) {
             this.ps.spawn(2, 7);
           }
-        } else if (BEAN === 1052) {
+        } else if (BEAN === 1052 || BEAN === 1152) {
           this.plusParticleSystem.spawn(
             14,  // x
             7,  // y
