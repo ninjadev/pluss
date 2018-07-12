@@ -500,7 +500,7 @@
       this.ctx.translate(-0.5, -0.25);
       for(let i = 0; i < 2; i++) {
         this.ctx.save();
-        const shadowSize = 0.15;
+        const shadowSize = easeOut(0, 0.15, F(this.frame, 2832, 24));
         this.ctx.fillStyle = 'white';
         if(i == 0) {
           this.ctx.translate(shadowSize, shadowSize * 3);
@@ -524,11 +524,13 @@
       this.ctx.rotate(Math.PI / 4);
       for(let j = 0; j < 28; j++) {
         for(let i = 13 - j / 5 * 3.5; i < 6 + j / 4 * 1.1; i++) {
-          const width = 0.01;
-          const x = (i + (j % 2 == 0 ? + 0.5 : 0)) / 3;
-          const y = j / 3;
-          this.ctx.moveTo(x, y);
-          this.ctx.lineTo(x + width, y);
+          const width = easeOut(0, 0.01, F(this.frame, 2832 + i - 23 + j, 24));
+          if(width > 0.009) {
+            const x = (i + (j % 2 == 0 ? + 0.5 : 0)) / 3;
+            const y = j / 3;
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x + width, y);
+          }
         }
       }
       this.ctx.stroke();
@@ -606,16 +608,23 @@
       this.ctx.rotate(Math.PI / 8);
       this.ctx.globalAlpha = 0.5;
       for(let i = -0; i < 30; i++) {
-        for(let j = -9; j < 10; j++) {
-          this.ctx.strokeStyle = '#f5ce18';
-          const length = 0.5;
-          this.ctx.moveTo(i - length / 2, j);
-          this.ctx.lineTo(i + length / 2,j);
+        for(let j = -20; j < 10; j++) {
+          const scale = easeOut(0, 1, F(this.frame, 2832 + i / 2 + j / 2, 24));
+          if(scale) {
+            this.ctx.save();
+            this.ctx.translate(i, j);
+            this.ctx.scale(scale, scale);
+            const length = 0.5;
+            this.ctx.moveTo(- length / 2, 0);
+            this.ctx.lineTo(+ length / 2, 0);
 
-          this.ctx.moveTo(i, j - length / 2);
-          this.ctx.lineTo(i, j + length / 2);
+            this.ctx.moveTo(0, - length / 2);
+            this.ctx.lineTo(0, + length / 2);
+            this.ctx.restore();
+          }
         }
       }
+      this.ctx.strokeStyle = '#f5ce18';
       this.ctx.lineWidth = 0.1;
       this.ctx.lineCap = 'round';
       this.ctx.stroke();

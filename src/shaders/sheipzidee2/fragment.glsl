@@ -2,6 +2,8 @@
 uniform sampler2D iChannel1;
 uniform sampler2D iChannel2;
 uniform float frame;
+uniform float exitAmount;
+uniform float exitAmount2;
 varying vec2 vUv;
 
 float sdCylinder(vec3 p, vec3 c) {
@@ -99,7 +101,7 @@ const float pi = 3.1415927;
 
 
 float smin(float a, float b) {
-    float k = 2.;
+    float k = 4.;
     float res = exp( -k*a ) + exp( -k*b );
     return -log( res )/k;
 }
@@ -111,22 +113,41 @@ vec2 map(vec3 p) {
     float a3 = -frame / 60. / 60. * 190. / 4. / 5. * pi * 2. + 3. / 5. * pi * 2.;
     float a4 = -frame / 60. / 60. * 190. / 4. / 5. * pi * 2. + 4. / 5. * pi * 2.;
     float a5 = -frame / 60. / 60. * 190. / 4. / 5. * pi * 2. + 5. / 5. * pi * 2.;
-    float r1 = sin(1. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2.;
-    float r2 = sin(2. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2.;
-    float r3 = sin(3. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2.;
-    float r4 = sin(4. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2.;
-    float r5 = sin(5. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2.;
+    float r1 = -cos(1. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2. * (1. - exitAmount);
+    float r2 = -cos(2. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2. * (1. - exitAmount);
+    float r3 = -cos(3. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2. * (1. - exitAmount);
+    float r4 = -cos(4. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2. * (1. - exitAmount);
+    float r5 = -cos(5. / 5. - frame / 60. / 60. * 190. / 4. * pi * 2.) * 2. * (1. - exitAmount);
 
 
-    float s1 = sdSphere(p, vec4(r1 * sin(a1), r1 * cos(a1), 0., .75));
-    float s2 = sdSphere(p, vec4(r2 * sin(a2), r2 * cos(a2), 0., .75));
-    float s3 = sdSphere(p, vec4(r3 * sin(a3), r3 * cos(a3), 0., .75));
-    float s4 = sdSphere(p, vec4(r4 * sin(a4), r4 * cos(a4), 0., .75));
-    float s5 = sdSphere(p, vec4(r5 * sin(a5), r5 * cos(a5), 0., .75));
+    p = p + vec3(0., mix(0., -.5, exitAmount), mix(0., -4., exitAmount));
+    float s1;
+    float s2;
+    float s3;
+    float s4;
+    float s5;
+    if(frame >= 4091.5) {
+        s1 = sdBox(p + vec3(1.44 * r1 * sin(a1), 1.44 * r1 * cos(a1), 0.), vec3(.75 * (1. - exitAmount)));
+        s2 = sdBox(p + vec3(1.44 * r2 * sin(a2), 1.44 * r2 * cos(a2), 0.), vec3(.75 * (1. - exitAmount)));
+        s3 = sdBox(p + vec3(1.44 * r3 * sin(a3), 1.44 * r3 * cos(a3), 0.), vec3(.75 * (1. - exitAmount)));
+        s4 = sdBox(p + vec3(1.44 * r4 * sin(a4), 1.44 * r4 * cos(a4), 0.), vec3(.75 * (1. - exitAmount)));
+        s5 = sdBox(p + vec3(2. * r5 * sin(a5), 2. * r5 * cos(a5), 0.), vec3(.75 * (1. - exitAmount)));
+    } else {
+        s1 = sdSphere(p, vec4(r1 * sin(a1), r1 * cos(a1), 0., .75 * (1. - exitAmount)));
+        s2 = sdSphere(p, vec4(r2 * sin(a2), r2 * cos(a2), 0., .75 * (1. - exitAmount)));
+        s3 = sdSphere(p, vec4(r3 * sin(a3), r3 * cos(a3), 0., .75 * (1. - exitAmount)));
+        s4 = sdSphere(p, vec4(r4 * sin(a4), r4 * cos(a4), 0., .75 * (1. - exitAmount)));
+        s5 = sdSphere(p, vec4(r5 * sin(a5), r5 * cos(a5), 0., .75 * (1. - exitAmount)));
+    }
 
     float shapes = smin(smin(smin(smin(s1, s2), s3), s4), s5);
 
-    return vec2(shapes, 1.);
+    float rotateAmount = 1.2;
+    vec3 boxP = rotateY(pi / 4. * rotateAmount) * rotateX(pi / 4. * rotateAmount) * p;
+    float box = sdBox(boxP, vec3(exitAmount));
+    float topSubtract = sdBox(rotateZ(pi / 32.) * (p + vec3(0., -mix(3., 10.5, exitAmount), 0.)), vec3(5., 10. * exitAmount, 5.));
+    float triangle = max(smin(box, shapes), -topSubtract);
+    return vec2(triangle, 1.);
 }
 
 vec3 calcNormal(in vec3 pos, in float eps ) {
@@ -197,7 +218,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     float focc = 1.0;
     float fsha = 1.;
 
-    vec3 green = vec3(70., 255., 140.) / 255.;
+    vec3 green = vec3(0., 255., 198.) / 255.;
     vec3 blue = vec3(117., 210., 217.) / 255.;
 
     if(m < 1.5) {
@@ -311,6 +332,8 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
 
     col += mateE;
 
+    col += exitAmount;
+
     return col;        
 }
 
@@ -334,7 +357,8 @@ vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist)
 
 vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
     vec3 blue = vec3(117., 210., 217.) / 255.;
-    vec3 col = blue;
+    vec3 yellow = vec3(255., 252., 0.) / 255.;
+    vec3 col = mix(blue, yellow, exitAmount);
     float mindist = 0.01;
     float maxdist = 40.0;
 
@@ -366,33 +390,33 @@ void main() {
     vec2 fragCoord = iResolution * vUv;
     float iTime = frame / 60.;
 
-    float angle = (frame - 3926.) / 20.;
-    float radius = 4.2;
-    float height = 0.;
+    float angle = 0.;
+    float radius = 10.8;
+    float height = .25;
     float targetHeight = 0.;
 
-    float letterbox = 0.15;
+    float letterbox = 0.15 * (1. - exitAmount2);
     if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
         gl_FragColor = vec4(vec3(.1), 1.);
         return;
     }
-    if(frame > 3636.5) {
+    if(frame > 4318.5) {
         angle = 0.;
         radius = 10.8;
         height = .25;
-    } else if(frame > 3459.5) {
-        angle = -14.3 + frame / 60.;
-        radius = 5.;
-        height = -1. + mix(0., 2., (frame - 3459.) / 60.);
-    } else if(frame > 3446.5) {
-        angle = -5.5 + frame / 100.;
-        radius = 3.;
-        height = -.1;
-    } else if(frame > 3307.5) {
-        radius = 8.;
-        angle = -7.3 - frame / 60.;
-        height = 3.5;
-        targetHeight = .5;
+    } else if(frame > 4122.5) {
+        angle = -0.5 + frame / 100.;
+        radius = 20.;
+        height = .0;
+    } else if(frame > 4091.5) {
+        angle = -15.3 + frame / 100.;
+        radius = 15.;
+        height = -5. + mix(0., 5., (frame - 4091.) / 20.);
+    } else if(frame > 9999.5) {
+        radius = 20.;
+        angle = -19.3 - frame / 10.;
+        height = 1.5;
+        targetHeight = 0.;
     }
 
     for(int m = 0; m < 2; m++) {

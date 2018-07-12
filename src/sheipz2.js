@@ -68,22 +68,27 @@
       this.ctx.translate(8, 4.5);
 
       for(let j = 0; j < 2; j++) {
-        this.ctx.fillStyle = '#46ff8c';
+        this.ctx.fillStyle = '#00ffc6';
         const shadowSize = 0.1;
-        const r = 1;
+        const r = 0.8;
         this.ctx.save();
         if(j == 0) {
-          this.ctx.fillStyle = 'black';
+          this.ctx.fillStyle = '#fff600';
           this.ctx.translate(shadowSize * 2, shadowSize);
         }
         this.ctx.beginPath();
         for(let i = 0; i < 5; i++) {
           const angle = this.frame / 60 / 60 * 190 / 4 / 5 * Math.PI * 2 + i / 5 * Math.PI * 2;
-          const radius = Math.sin(i / 5 + this.frame / 60 / 60 * 190 / 4 * Math.PI * 2) * 3;
+          const radius = 1 * Math.sin(i / 5 + this.frame / 60 / 60 * 190 / 4 * Math.PI * 2) * 3;
           const x = radius * Math.sin(angle);
           const y = radius * Math.cos(angle);
-          this.ctx.moveTo(x, y);
-          this.ctx.ellipse(x, y, 1, 1, 0, 0, Math.PI * 2);
+          if(BEAN >=2544) {
+            const s = Math.sqrt(r * 2);
+            this.ctx.fillRect(x - s / 2, y - s / 2, s, s);
+          } else {
+            this.ctx.moveTo(x, y);
+            this.ctx.ellipse(x, y, r, r, 0, 0, Math.PI * 2);
+          }
         }
         this.ctx.fill();
         this.ctx.restore();
