@@ -27,6 +27,7 @@
       );
       this.plusParticleSystem.shapeFunctions = [this.plusParticleSystem.renderPlus];
 
+      this.pink = '#E55FA4';
       this.brighterPink = '#FF88CB';
       this.evenBrighterPink = '#FFDDFF';
 
@@ -176,34 +177,34 @@
       let polygons;
       if (shrinkProgress < 1) {
         polygons = [
-          [ // top left
+          {points:[ // top left
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: lerp(0, uppermostPoint.y, shrinkProgress)},
             {x: uppermostPoint.x, y: lerp(0, uppermostPoint.y, shrinkProgress)},
             uppermostPoint,
             leftmostPoint,
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: leftmostPoint.y},
-          ],
-          [ // top right
+          ]},
+          {points:[ // top right
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: lerp(0, uppermostPoint.y, shrinkProgress)},
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: rightmostPoint.y},
             rightmostPoint,
             uppermostPoint,
             {x: uppermostPoint.x, y: lerp(0, uppermostPoint.y, shrinkProgress)},
-          ],
-          [ // bottom right
+          ]},
+          {points:[ // bottom right
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: lerp(9, lowermostPoint.y, shrinkProgress)},
             {x: lowermostPoint.x, y: lerp(9, lowermostPoint.y, shrinkProgress)},
             lowermostPoint,
             rightmostPoint,
             {x: lerp(16, rightmostPoint.x, shrinkProgress), y: rightmostPoint.y},
-          ],
-          [ // bottom left
+          ]},
+          {points:[ // bottom left
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: lerp(9, lowermostPoint.y, shrinkProgress)},
             {x: lerp(0, leftmostPoint.x, shrinkProgress), y: leftmostPoint.y},
             leftmostPoint,
             lowermostPoint,
             {x: lowermostPoint.x, y: lerp(9, lowermostPoint.y, shrinkProgress)},
-          ],
+          ]},
         ];
       } else {
         polygons = [];
@@ -237,6 +238,9 @@
           (frame - FRAME_FOR_BEAN(1114)) / (FRAME_FOR_BEAN(1130) - FRAME_FOR_BEAN(1116)),
         ];
 
+        const triangleShooter1Progress = (frame - FRAME_FOR_BEAN(1188)) / (FRAME_FOR_BEAN(1200) - FRAME_FOR_BEAN(1188));
+        const triangleShooter2Progress = (frame - FRAME_FOR_BEAN(1212)) / (FRAME_FOR_BEAN(1224) - FRAME_FOR_BEAN(1212));
+
         for (let i = 0; i < 4; i++) {
           const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
           const outProgress2 = (frame - FRAME_FOR_BEAN(996 + 3 * i)) / (FRAME_FOR_BEAN(1008 + 3 * i) - FRAME_FOR_BEAN(998 + 3 * i));
@@ -265,16 +269,42 @@
           let offsetY = 4.5 + verticalScaler * diamondSizeFactor * Math.sin(angle) +
              1.5 * outFactor * Math.sin(angle) + firinMahLazorOffsetY;
 
-          const polygon = [{x: offsetX, y: offsetY}];
+          const polygon = {
+            points: [{x: offsetX, y: offsetY}],
+            color: this.pink,
+          };
           for (let j = 0; j < 3; j++) {
-            polygon.push(
+            polygon.points.push(
               {
                 x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
                 y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle),
               }
             );
           }
-          polygons.push(polygon)
+          polygons.push(polygon);
+
+          // Triangle shooter
+          const numPolygons = (i === 0 || i === 2 ? lerp(0, 6, triangleShooter1Progress) : lerp(0, 6, triangleShooter2Progress)) | 0;
+          let brightness = 1;
+          for (let k = 0; k < numPolygons; k++) {
+            brightness += 0.14;
+            const polygon = {
+              points: [{x: offsetX, y: offsetY}],
+              color: `rgb(${Math.min(255, 227 * brightness)}, ${Math.min(255, 94 * brightness)}, ${Math.min(255, 161 * brightness)})`
+            };
+            for (let j = 0; j < 3; j++) {
+              polygon.points.push(
+                {
+                  x: offsetX + horizontalScaler * diamondSizeFactor * Math.cos(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
+                  y: offsetY + verticalScaler * diamondSizeFactor * Math.sin(j * 2 * Math.PI / 4 - Math.PI / 2 + angle + triangleAngle + Math.PI),
+                  color: this.pink,
+                }
+              );
+            }
+            polygons.push(polygon);
+            offsetX += 0.95 * Math.cos(angle);
+            offsetY += 0.95 * Math.sin(angle);
+          }
         }
 
         // Draw lazor
@@ -311,13 +341,18 @@
 
       for (let polygon of polygons) {
         this.ctx.beginPath();
-        this.ctx.moveTo(polygon[0].x, polygon[0].y);
-        for (let i = 1; i < polygon.length; i++) {
-          this.ctx.lineTo(polygon[i].x, polygon[i].y);
+        this.ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
+        for (let i = 1; i < polygon.points.length; i++) {
+          this.ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
         }
         this.ctx.closePath();
+
+        this.ctx.save();
+        this.ctx.fillStyle = polygon.color;
+        this.ctx.strokeStyle = polygon.color;
         this.ctx.fill();
         this.ctx.stroke();
+        this.ctx.restore();
       }
     }
 
