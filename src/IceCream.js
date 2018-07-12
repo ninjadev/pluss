@@ -26,7 +26,7 @@
       this.createIceSphere = function(container, color, material, position, size, scene){
         container.mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 32, 32), 
                                         new THREE.MeshBasicMaterial(color));
-        container.plane = new THREE.Mesh(new THREE.PlaneGeometry(10,10,32), material);
+        container.plane = new THREE.Mesh(new THREE.PlaneGeometry(20,20,32), material);
         container.mesh.position.x = position[0];
         container.mesh.position.y = position[1];
         container.mesh.position.z = position[2];
@@ -37,7 +37,8 @@
       };
       this.cones = {};
       this.cones.white_cone = {};
-      this.patternMaterial = new THREE.ShaderMaterial(SHADERS.TestShader);
+      this.patternMaterial = new THREE.MeshBasicMaterial({color:0x888888, side:THREE.DoubleSide});
+      this.patternMaterial.map =this.inputs.TestShader.getValue(); 
       this.patternMaterial.transparent = true;
       this.createIceSphere(this.cones.white_cone, {color:0x888888, side:THREE.DoubleSide}, 
                            this.patternMaterial,[0,0,0], 
