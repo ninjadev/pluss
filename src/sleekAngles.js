@@ -229,16 +229,19 @@
         );
         const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.2 * frame);
 
+        const preFireRotationProgress = (frame - FRAME_FOR_BEAN(1136)) / (FRAME_FOR_BEAN(1148) - FRAME_FOR_BEAN(1136));
+        const oneEightyProgresses = [
+          (frame - FRAME_FOR_BEAN(1055)) / (FRAME_FOR_BEAN(1072) - FRAME_FOR_BEAN(1056)),
+          (frame - FRAME_FOR_BEAN(1075)) / (FRAME_FOR_BEAN(1085) - FRAME_FOR_BEAN(1076)),
+          (frame - FRAME_FOR_BEAN(1091)) / (FRAME_FOR_BEAN(1106) - FRAME_FOR_BEAN(1092)),
+          (frame - FRAME_FOR_BEAN(1114)) / (FRAME_FOR_BEAN(1130) - FRAME_FOR_BEAN(1116)),
+        ];
+
         for (let i = 0; i < 4; i++) {
           const outProgress1 = (frame - FRAME_FOR_BEAN(958)) / (FRAME_FOR_BEAN(976) - FRAME_FOR_BEAN(958));
           const outProgress2 = (frame - FRAME_FOR_BEAN(996 + 3 * i)) / (FRAME_FOR_BEAN(1008 + 3 * i) - FRAME_FOR_BEAN(998 + 3 * i));
 
-          const oneEightyProgress = [
-            (frame - FRAME_FOR_BEAN(1056 - 1)) / (FRAME_FOR_BEAN(1056 + 16) - FRAME_FOR_BEAN(1056)),
-            (frame - FRAME_FOR_BEAN(1076 - 1)) / (FRAME_FOR_BEAN(1076 + 9) - FRAME_FOR_BEAN(1076)),
-            (frame - FRAME_FOR_BEAN(1092 - 1)) / (FRAME_FOR_BEAN(1092 + 14) - FRAME_FOR_BEAN(1092)),
-            (frame - FRAME_FOR_BEAN(1116 - 2)) / (FRAME_FOR_BEAN(1116 + 14) - FRAME_FOR_BEAN(1116)),
-          ][i];
+          const oneEightyProgress = oneEightyProgresses[i];
 
           const outFactor = Math.max(
             0,
@@ -247,13 +250,11 @@
             Math.sin(lerp(0, 1, oneEightyProgress) * Math.PI),
           );
 
-          const preFireProgress = (frame - FRAME_FOR_BEAN(1136)) / (FRAME_FOR_BEAN(1148) - FRAME_FOR_BEAN(1136));
-
           const angle = i * 2 * Math.PI / 4 +
             Math.PI / 4 -
             triangleRotationOffset -
             smoothstep(0, Math.PI / 4, outProgress2) +
-            smoothstep(0, Math.PI / 4, preFireProgress);
+            smoothstep(0, Math.PI / 4, preFireRotationProgress);
           const triangleAngle = smoothstep(0, Math.PI, oneEightyProgress);
 
           const horizontalScaler = 1 - 0.35 * lazorIntensity;
