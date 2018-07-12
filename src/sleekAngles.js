@@ -221,8 +221,8 @@
         );
         const firinMahLazorOffsetX = (
           0.2 * lazorIntensity * Math.cos(1.3 * frame) +
-          firinMahLazorLeft * 2.75 * Math.sin(lerp(0, 1, firinMahLazorLeftProgress) * Math.PI) -
-          firinMahLazorRight * 2.75 * Math.sin(lerp(0, 1, firinMahLazorRightProgress) * Math.PI)
+          firinMahLazorLeft * 2.9 * Math.sin(lerp(0, 1, firinMahLazorLeftProgress) * Math.PI) -
+          firinMahLazorRight * 2.9 * Math.sin(lerp(0, 1, firinMahLazorRightProgress) * Math.PI)
         );
         const firinMahLazorOffsetY = 0.09 * lazorIntensity * Math.sin(1.5 * frame);
 
@@ -244,7 +244,13 @@
             Math.sin(lerp(0, 1, oneEightyProgress) * Math.PI),
           );
 
-          const angle = i * 2 * Math.PI / 4 + Math.PI / 4 - triangleRotationOffset - smoothstep(0, Math.PI / 4, outProgress2);
+          const preFireProgress = (frame - FRAME_FOR_BEAN(1136)) / (FRAME_FOR_BEAN(1148) - FRAME_FOR_BEAN(1136));
+
+          const angle = i * 2 * Math.PI / 4 +
+            Math.PI / 4 -
+            triangleRotationOffset -
+            smoothstep(0, Math.PI / 4, outProgress2) +
+            smoothstep(0, Math.PI / 4, preFireProgress);
           const triangleAngle = smoothstep(0, Math.PI, oneEightyProgress);
 
           const horizontalScaler = 1 - 0.25 * lazorIntensity;
