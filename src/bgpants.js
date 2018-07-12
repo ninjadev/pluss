@@ -59,8 +59,8 @@
           var pos_y = j * GU + GU * ((this.frame % 60) / 30) - 4 * GU;
 
           // Zoom
-          pos_x -= (8 - pos_x / GU) * 10 * smoothstep(1, 0, ((BEAN - 12 * 4 * 91.75) / (12 * 4 * (92 - 91.75 ))));
-          pos_y -= (4.5 - pos_y / GU) * 10 * smoothstep(1, 0, ((BEAN - 12 * 4 * 91.75) / (12 * 4 * (92 - 91.75 ))));
+          pos_x -= (8 - pos_x / GU) * 0.4 * GU * smoothstep(1, 0, ((BEAN - 12 * 4 * 91.75) / (12 * 4 * (92 - 91.75 ))));
+          pos_y -= (4.5 - pos_y / GU) * 0.4 * GU * smoothstep(1, 0, ((BEAN - 12 * 4 * 91.75) / (12 * 4 * (92 - 91.75 ))));
 
           // Grow and define size
           var dist_center = Math.sqrt(Math.pow(4.5 - pos_y / GU,2) + Math.pow(8 - pos_x / GU ,2));
