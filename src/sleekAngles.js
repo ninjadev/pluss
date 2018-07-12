@@ -27,6 +27,9 @@
       );
       this.plusParticleSystem.shapeFunctions = [this.plusParticleSystem.renderPlus];
 
+      this.brighterPink = '#FF88CB';
+      this.evenBrighterPink = '#FFDDFF';
+
       this.frame = 0;
     }
 
@@ -278,11 +281,28 @@
           const lazorOffsetX = firinMahLazorRight * 6;
           const lazorThickness = lazorIntensity;
           this.ctx.save();
-          this.ctx.fillStyle = '#FF88CB';  // brighter pink
+          this.ctx.fillStyle = this.brighterPink;
           this.ctx.fillRect(lazorOffsetX, firinMahLazorOffsetY + 4.5 - lazorThickness / 2, 10, lazorThickness);
           this.ctx.fillStyle = 'white';
           this.ctx.fillRect(lazorOffsetX, firinMahLazorOffsetY + 4.5 - lazorThickness / 4, 10, lazorThickness / 2);
           this.ctx.restore();
+
+          // Spawn lazor particles
+          if (this.random() < lazorIntensity) {
+            const direction = (firinMahLazorRight ? 1 : -1);
+            const horizontalSpeed = 0.1 * direction;
+            const verticalSpeed = 0.01 * (1 - 2 * this.random());
+            this.ps.spawn(
+              8 + firinMahLazorOffsetX + 2.5 * direction + 8 * direction * this.random(), // x
+              4.5 + firinMahLazorOffsetY + - lazorThickness / 2 + this.random() * lazorThickness, // y
+              horizontalSpeed,  // dx
+              verticalSpeed,  // dy
+              firinMahLazorLeft ? Math.PI : 0,  // rotation
+              0, // rotationalSpeed
+              0.2, // size,
+              this.evenBrighterPink  // color
+            )
+          }
         }
       }
 
