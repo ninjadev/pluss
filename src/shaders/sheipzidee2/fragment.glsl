@@ -407,36 +407,47 @@ void main() {
     float f2 = frame;
     float f3 = frame;
     float f4 = frame;
+    float angle1 = 15.3;
+    float radius1 = 15.;
+    float height1 = -5.;
+    float angle2 = -15.3;
+    float radius2 = 15.;
+    float height2 = 5.;
+    float angle3 = -15.3;
+    float radius3 = 15.;
+    float height3 = 5.;
+    float angle4 = -0.5;
+    float radius4 = 20.;
+    float height4 = .0;
+
 
     if(frame > 4318.5) {
         angle = 0.;
         radius = 10.8;
         height = .25;
     } else if(frame > 4141.5) {
-        angle = -0.5 + frame / 100.;
-        angle = -0.5;
-        radius = 20.;
-        height = .0;
         xRepeat = 4.;
-        f3 = 4142.;
-        f2 = 4123.;
+        f4 = 4142.;
+        f3 = 4123.;
+        f2 = 4111.;
         f1 = 4092.;
     } else if(frame > 4122.5) {
-        angle = -15.3 + frame / 100.;
-        angle = -15.3;
-        radius = 15.;
-        height = -5. + mix(0., 5., (frame - 4091.) / 20.);
-        height = 5.;
         xRepeat = 4.;
-        f2 = 4123.;
+        f4 = 0.;
+        f3 = 4123.;
+        f2 = 4111.;
+        f1 = 4092.;
+    } else if(frame > 4110.5) {
+        xRepeat = 4.;
+        f4 = 0.;
+        f3 = 0.;
+        f2 = 4111.;
         f1 = 4092.;
     } else if(frame > 4091.5) {
-        angle = -15.3 + frame / 100.;
-        angle = 15.3;
-        radius = 15.;
-        height = -5. + mix(0., 5., (frame - 4091.) / 20.);
-        height = -5.;
         xRepeat = 4.;
+        f4 = 0.;
+        f3 = 0.;
+        f2 = 0.;
         f1 = 4092.;
     } else if(frame > 9999.5) {
         radius = 20.;
@@ -452,24 +463,48 @@ void main() {
             vec2 rr = vec2(float(m), float(n)) / float(AA);
 
             vec2 p = (-iResolution.xy + 2.0 * (fragCoord.xy + rr)) / iResolution.x;
+
             p *= xRepeat;
             p.x = mod(p.x -mod(xRepeat, 2.) * 1., 1.) - 0.5;
             p /= xRepeat;
-
             p *= 16. / 9.;
 
             vec2 q = (fragCoord.xy+rr) / iResolution.xy;
 
-            float targetFrame = f1;
+            float targetFrame = frame;
 
-            if(vUv.x / xRepeat >= 0.25) {
-                targetFrame = f2;
+            float x = vUv.x / xRepeat * 2.;
+            float padding = 0.005;
+            if(xRepeat > 1.5) {
+                if(x < 0.25 - padding) {
+                    targetFrame = f1;
+                    angle = angle1;
+                    radius = radius1;
+                    height = height1;
+                } else if(x > 0.25 + padding && x < 0.5 - padding) {
+                    targetFrame = f2;
+                    angle = angle2;
+                    radius = radius2;
+                    height = height2;
+                } else if(x > 0.5 + padding && x < 0.75 - padding) {
+                    targetFrame = f3;
+                    angle = angle3;
+                    radius = radius3;
+                    height = height3;
+                } else if(x > 0.75 + padding) {
+                    targetFrame = f4;
+                    angle = angle4;
+                    radius = radius4;
+                    height = height4;
+                } else {
+                    gl_FragColor = vec4(1.);
+                    return;
+                }
             }
-            if(vUv.x / xRepeat >= 0.5) {
-                targetFrame = f3;
-            }
-            if(vUv.x / xRepeat >= 0.75) {
-                targetFrame = f4;
+
+            if(targetFrame < 10.) {
+                gl_FragColor = vec4(1.);
+                return;
             }
 
             vec3 ro = vec3(radius * sin(angle), height, radius * cos(angle));
