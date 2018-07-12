@@ -226,7 +226,8 @@
     },
     "connected": {
       "tDiffuse": "every.render",
-      "overlay": "discyblob.render"
+      "overlay": "discyblob.render",
+      "osd": "osd.render"
     }
   },
   {
@@ -252,5 +253,9 @@
   {
     "id": "specularSnake",
     "type": "specularSnake"
+  },
+  {
+    "id": "osd",
+    "type": "osd"
   }
 ]
