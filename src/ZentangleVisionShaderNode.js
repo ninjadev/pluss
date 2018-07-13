@@ -12,8 +12,6 @@
       }
       super(id, options);
 
-      this.test = Loader.loadTexture('res/test_train.jpg');
-
       this.z1 = Loader.loadTexture('res/zentangles/z1.jpg');
       this.z2 = Loader.loadTexture('res/zentangles/z2.png');
       this.z3 = Loader.loadTexture('res/zentangles/z8.png');
