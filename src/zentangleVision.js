@@ -69,12 +69,13 @@
       this.number3.add(this.number3_raw);
       this.number4.add(this.number4_raw);
 
-
+      // These correct the raw connections
       this.number1_raw.position.x = 0.6 * GU;
       this.number2_raw.position.x = 0 * GU;
       this.number3_raw.position.x = -0.6 * GU;
       this.number4_raw.position.x = -1.2 * GU;
 
+      // The y translation here ensures that the numbers are not all stacked atop of each other
       this.number1.position.y = 0.5 * GU;
       this.number2.position.y = 0 * GU;
       this.number3.position.y = -0.5 * GU;
@@ -84,13 +85,14 @@
     update(frame) {
       super.update(frame);
 
-      // Remove when jumpint to earlier to make debugging easier
+      // Remove when jumping to earlier to make debugging easier
       if(BEAN < this.oneShoutBean){
         this.scene.remove(this.number1);
         this.scene.remove(this.number2);
         this.scene.remove(this.number3);
         this.scene.remove(this.number4);
       }
+
       if(BEAN == this.oneShoutBean){
         this.scene.add(this.number1);
       }
@@ -102,6 +104,17 @@
       }
       if(BEAN == this.fourShoutBean){
         this.scene.add(this.number4);
+      }
+
+      // number3 slide:
+      if(this.threeShoutBean < BEAN && BEAN < this.fourShoutBean){
+        // debugger;
+        let currentStep = BEAN - this.threeShoutBean;
+        let totalSteps = this.fourShoutBean - this.threeShoutBean;
+        let interval = 2 * GU; // 1.5 - (-1.5)
+        let initialPosition = 1 * GU;
+        let stepSize = interval/totalSteps;
+        this.number3.position.x = initialPosition - (currentStep * stepSize);
       }
 
       this.cube.rotation.x = Math.sin(frame / 10);
