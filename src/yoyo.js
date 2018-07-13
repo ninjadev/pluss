@@ -214,7 +214,11 @@
         }
 
         let scale = 1 + (3 - i) + wobbler;
-        this.ctx.scale(scale, scale);
+        let squeezeProgress = F(this.frame, 1760, 19);
+        let squeezeIntensity = Math.sqrt(Math.sin(lerp(0, 1, squeezeProgress) * Math.PI));
+        let horizontalScaler = scale * (1 + 1.2 * squeezeIntensity);
+        let verticalScaler = scale * (1 - 0.6 * squeezeIntensity);
+        this.ctx.scale(horizontalScaler, verticalScaler);
 
         if (i === 0) {
           let x = lerp(0, -1, BEAN - 1356 + 1);
@@ -231,7 +235,11 @@
           if (BEAN < 1368) {
             x = 1000;
           }
-          const y = 0;
+          let y = 0;
+          if (BEAN >= 1680) {
+            x += 0.12 * Math.cos(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
+            y += 0.12 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
+          }
           this.ctx.translate(x, y);
         } else if (i === 2) {
           let x = easeIn(0, 2.2, F(this.frame, 1368 - 12, 12));
