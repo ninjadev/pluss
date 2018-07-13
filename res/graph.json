@@ -325,5 +325,9 @@
   {
     "id": "TopRightNDVLogoNode",
     "type": "topRightNDVLogoNode"
+  },
+  {
+    "id": "sprinkles",
+    "type": "sprinkles"
   }
 ]
