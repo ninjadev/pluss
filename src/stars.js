@@ -14,7 +14,10 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.colors = ["#d1679e", "#64bac8", "#fae767"];
+      this.pink = "#64bac8";
+      this.blue = "#d1679e";
+      this.green = "#74fbc9";
+      this.yellow = "#fae767";
 
       this.stars = [];
       for (var i=0;i<200;i++) {
@@ -28,12 +31,66 @@
     update(frame) {
       super.update(frame);
       this.canvas.width += 0;
+      let startBEAN = 3984;
+      let takt = 96;
+      
+      let colors = [this.pink, this.blue, this.green];
+      let bgcolor = this.yellow;
+      if (BEAN > startBEAN + takt) {
+        colors = [this.yellow, this.pink, this.blue];
+        bgcolor = this.green;
+      }
+      if (BEAN > startBEAN + takt * 2) {
+        colors = [this.green, this.yellow, this.pink];
+        bgcolor = this.blue;
+      }
+      if (BEAN > startBEAN + takt * 3) {
+        colors = [this.blue, this.green, this.yellow];
+        bgcolor = this.pink;
+      }
+      if (BEAN > startBEAN + takt * 4) {
+        colors = [this.pink, this.blue, this.green];
+        bgcolor = this.yellow;
+      }
+      if (BEAN > startBEAN + takt * 5) {
+        colors = [this.yellow, this.pink, this.blue];
+        bgcolor = this.green;
+      }
+      if (BEAN > startBEAN + takt * 6) {
+        colors = [this.green, this.yellow, this.pink];
+        bgcolor = this.blue;
+      }
+      if (BEAN > startBEAN + takt * 7) {
+        colors = [this.blue, this.green, this.yellow];
+        bgcolor = this.pink;
+      }
+
+      let amp = 0.01;
+      if(BEAT) {
+        switch((BEAN - 3984) % (48 * 8)) {
+        case 0:
+        case 32 - 4:
+        case 48 - 4:
+        case 48 + 32 - 4:
+        case 48 + 48 - 4:
+        case 48 + 48 + 12 - 4:
+        case 48 + 48 + 24 - 4:
+        case 48 + 48 + 32 - 4:
+        case 48 + 48 + 32:
+        case 48 + 48 + 48 - 4:
+        case 48 + 48 + 48:
+        case 48 + 48 + 48 + 12 - 4:
+        case 48 + 48 + 48 + 24 - 4:
+        case 48 + 48 + 48 + 32 - 4:
+        case 48 + 48 + 48 + 32:
+          amp = 0.13;
+        }
+      }
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
-      this.ctx.fillStyle = "#42f4c5";
+      this.ctx.fillStyle = bgcolor;
       this.ctx.fillRect(0, 0, 16, 9);
-      let amp = frame%24 < 4 ? 0.06 : 0.01;
       for (var i=0;i<200;i++) {
         var x = this.stars[i][0] + amp*Math.sin(i + frame/60);
         var y = this.stars[i][1] + amp*Math.cos(i + frame/60);
@@ -49,7 +106,7 @@
         this.ctx.fill();
         this.ctx.beginPath();
         this.ctx.arc(x, y, r*2, 0, 2 * Math.PI);
-        this.ctx.fillStyle = this.colors[i%this.colors.length];
+        this.ctx.fillStyle = colors[i%colors.length];
         this.ctx.fill();
       }
 
