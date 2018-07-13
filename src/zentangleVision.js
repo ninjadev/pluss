@@ -78,7 +78,7 @@
       // Final x/y posotions:
       this.number1.position.x = 1.5 * GU;
       this.number2.position.x = 0 * GU;
-      this.number3.position.x = -1.3 * GU;
+      this.number3.position.x = -1.5 * GU;
       this.number4.position.x = 0 * GU;
 
       this.number1.position.y = -0.2 * GU;
@@ -135,7 +135,7 @@
         let currentStep = BEAN - this.threeShoutBean;
         let totalSteps = this.fourShoutBean - this.threeShoutBean;
         let initialPosition = 0 * GU;
-        let interval = 1.3 * GU; // 0 - (-1.3)
+        let interval = 1.5 * GU; // 0 - (-1.5)
         let stepSize = interval/totalSteps;
         this.number3.position.x = initialPosition - (currentStep * stepSize);
         this.scene.add(this.number3);
