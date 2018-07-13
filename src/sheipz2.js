@@ -100,7 +100,6 @@
       this.ctx.translate(8, 4.5);
 
       this.ctx.save();
-      const shadowSize = 0.15;
 
       for(let j = 0; j < 2; j++) {
         this.ctx.save();
@@ -109,6 +108,16 @@
       }
 
       this.ctx.restore();
+
+      this.ctx.fillStyle = '#0f4e55';
+      let vignetteAmount = 0;
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2520 - 4, 4));
+      vignetteAmount = easeOut(vignetteAmount, 0, F(this.frame, 2544, 4));
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2592 - 4, 4));
+      vignetteAmount = easeOut(vignetteAmount, 0, F(this.frame, 2640, 4));
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2736 - 4, 4));
+      vignetteAmount = Math.pow(vignetteAmount, 1.2);
+      this.ctx.fillRect(-8, -4.5, 16, 0.119 * 9 * vignetteAmount);
 
       this.ctx.restore();
 

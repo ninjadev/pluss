@@ -1,6 +1,7 @@
 (function(global) {
 
   const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
+  const blacky = '#38202b';
 
   class sheipz extends NIN.THREENode {
     constructor(id) {
@@ -56,6 +57,7 @@
         }
       }
 
+      this.ctx.strokeStyle =  blacky;
       this.ctx.stroke();
       this.ctx.restore();
 
@@ -90,7 +92,7 @@
           this.ctx.fillRect(-width / 2 + 4, -h4 +4.5, w4, h4);
           this.ctx.restore();
 
-          this.ctx.fillStyle = 'black';
+          this.ctx.fillStyle = blacky;
           this.ctx.fillRect(-w1 + width / 2 - 4, -h1 + 4.5, w1, h1);
           this.ctx.fillRect(-width / 2, - 4.5, width, h2);
           this.ctx.fillRect(-w3 + width / 2 + 4, -h3 + 4.5, w3, h3);
@@ -102,6 +104,7 @@
         const hh = easeIn(1, 3, F(this.frame, 48 + 2064 - 4 - 4, 4));
         const scale = easeOut(0, 1.5, F(this.frame, 48 + 2016, 12)) - easeIn(0, 0.5, F(this.frame, 48 + 2016, 12));
         this.ctx.scale(scale, scale);
+        this.ctx.strokeStyle = blacky;
         if(j == 1 && BEAN >= 2208 + 48) {
           this.ctx.lineWidth = easeOut(0.5, 1.0, F(this.frame, 48 + 2208, 12));
           this.ctx.strokeRect(-0.5, -hh / 2, 1, hh);
@@ -114,6 +117,7 @@
         this.ctx.beginPath();
         let r = easeIn(0, Math.sqrt(2), F(this.frame, 48 + 2052 - 4, 4));
         this.ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
+        this.ctx.strokeStyle = blacky;
         if(j == 1 && BEAN >= 2208 + 24 + 48) {
           this.ctx.lineWidth = easeOut(0.5, 1, F(this.frame, 48 + 2208 + 24, 12));
           this.ctx.stroke();
@@ -138,6 +142,7 @@
           }
           this.ctx.lineTo(x, y);
         }
+        this.ctx.strokeStyle = blacky;
         if(j == 1 && BEAN >= 2208 + 48 + 48) {
           this.ctx.lineWidth = easeOut(0.5, 1, F(this.frame, 48 + 2208 + 48, 12));
           this.ctx.stroke();
@@ -157,6 +162,16 @@
       this.ctx.fillRect(-8, -0.5 / 4, width, 0.25);
       this.ctx.fillRect(-8, .5 + -0.5 / 4, width3, 0.25);
       this.ctx.restore();
+
+      this.ctx.fillStyle = '#38202b';
+      let vignetteAmount = 0;
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2136 - 4, 4));
+      vignetteAmount = easeOut(vignetteAmount, 0, F(this.frame, 2160, 4));
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2232 - 4, 4));
+      vignetteAmount = easeOut(vignetteAmount, 0, F(this.frame, 2256, 4));
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2352 - 4, 4));
+      vignetteAmount = Math.pow(vignetteAmount, 1.2);
+      this.ctx.fillRect(-8, -4.5, 16, 0.119 * 9 * vignetteAmount);
 
       this.ctx.restore();
 
