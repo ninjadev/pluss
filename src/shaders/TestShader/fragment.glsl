@@ -11,5 +11,8 @@ float dist_from_center(vec2 vUv){
 // 0.5, 0.5 i midten 
 void main() {
     vec4 sprinkle_texture = texture2D(sprinkles, vUv);
+    if (sprinkle_texture.r == 0.0){}
+    else{
     gl_FragColor = vec4(sprinkle_texture.r, sprinkle_texture.g, sprinkle_texture.b, pow(max(0.0, dist_from_center(vUv)), 0.5));
+    }
 }

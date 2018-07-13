@@ -19,7 +19,7 @@
        * 3: Texturize
        * 4: zoom out and Q rune 
        */
-      this.planeUpdater = function (container, camera){
+      this.planeUpdater = function (container, camera, inp){
         if (container.kind == "sphere")
         {
           container.plane.position.x = container.mesh.position.x;
@@ -34,6 +34,9 @@
           container.plane.position.x = container.mesh.position.x + surface_point_nearest_camera.x ;
           container.plane.position.y = container.mesh.position.y + surface_point_nearest_camera.y ;
           container.plane.position.z = container.mesh.position.z + surface_point_nearest_camera.z ;
+          container.plane.material = new THREE.MeshBasicMaterial();
+          container.plane.material.map = inp.getValue(); 
+          container.plane.material.transparent = true;
 
         }
       };
@@ -100,11 +103,16 @@
       this.positionUpdater(frame);
 
 
-      this.planeUpdater(this.cones.white_cone, this.camera);
-      this.planeUpdater(this.cones.pink_cone, this.camera);
-      this.planeUpdater(this.cones.brown_cone, this.camera); 
-      this.cones.white_cone.plane.material.transparent = true;
-      this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
+      this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.TestShader);
+      this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.TestShader);
+      this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
+      // Alternatively needs update on material
+      //this.cones.white_cone.plane.material = new THREE.MeshBasicMaterial();
+      //this.cones.white_cone.plane.material.transparent = true;
+      //this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
+      //console.log(this.cones.white_cone.plane.material.map);
+      //this.cones.white_cone.plane.material.map.needsUpdate = true;
+
       
       //this.camera.position.x = 100* Math.sin(frame/100); 
       //this.camera.position.z = 100* Math.cos(frame/100); 
