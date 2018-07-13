@@ -17,7 +17,7 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.ps = new global.ParticleSystem({friction: 0.982, numParticles: 128});
+      this.ps = new global.ParticleSystem({friction: 0.982, numParticles: 128, life: 64});
       this.plusParticleSystem = new global.ParticleSystem(
         {
           friction: 1,
@@ -65,13 +65,13 @@
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
-      this.ps.render(this.ctx);
 
       this.ctx.strokeStyle = pink;
       this.ctx.lineWidth = 0.025;
       this.ctx.fillStyle = pink;
 
       this.renderTriangles(this.frame);
+      this.ps.render(this.ctx);
 
       this.plusParticleSystem.render(this.ctx);
 
@@ -109,20 +109,23 @@
       // Popup particles
       if (popupProgress >= 0 && popupProgress < 0.33) {
         const particleIntensity = Math.max(0, Math.sin(lerp(0.2, 1, popupProgress) * Math.PI));
-        for (let i = 0; i < 2; i++) {
+        const randomOffset = this.random();
+        const count = 4;
+        for (let i = 0; i < count; i++) {
           if (this.random() < particleIntensity) {
-            const angle = this.random() * Math.PI * 2;
+            const angle = i / count * Math.PI * 2 + randomOffset * Math.PI * 2;
             const radius = Math.max(3, 0.9 + 2.7 * this.random());
-            /*
             this.ps.spawn(
               8 + Math.cos(angle) * radius,  // x
               4.5 + Math.sin(angle) * radius,  // y
-              (0.3 + 0.7 * particleIntensity) * 0.2 * Math.cos(angle),  // dx
-              (0.3 + 0.7 * particleIntensity) * 0.2 * Math.sin(angle),  // dy
+              this.random() * (0.3 + 0.7 * particleIntensity) * 0.2 * Math.cos(angle),  // dx
+              this.random() * (0.3 + 0.7 * particleIntensity) * 0.2 * Math.sin(angle),  // dy
               angle,  // rotation
               particleIntensity * lerp(-0.1, 0.1, this.random()),  // rotationalSpeed
-              lerp(0.3, 0.6, this.random())  // size
+              1.5 * lerp(0.3, 0.6, this.random()),  // size
+              this.random() > 0.5 ? '#3fbdcc' : 'white'
             );
+            /*
             */
           }
         }
@@ -377,6 +380,37 @@
           j == 1 && this.ctx.stroke();
           this.ctx.restore();
         }
+
+        this.ctx.save();
+        this.ctx.translate(8, 4.5);
+        this.ctx.rotate(Math.PI / 16);
+
+        const shadowSize = 0.3;
+        const shadowColor = 'rgba(0, 0, 0, 0.3)';
+
+        this.ctx.fillStyle = 'white';
+        let animation = F(this.frame, 1248 + 12 * 2, 12);
+        this.ctx.fillRect(4, easeIn(5, -6, animation), 5, easeOut(0, 10, animation));
+        this.ctx.fillStyle = shadowColor;
+        this.ctx.fillRect(4, easeIn(5, -6, animation), shadowSize, easeOut(0, 10, animation));
+        this.ctx.fillStyle = '#00befc';
+        animation = F(this.frame, 1248 + 12 * 2, 12);
+        this.ctx.fillRect(0, -6, 4, easeOut(0, 11, animation));
+        this.ctx.fillStyle = shadowColor;
+        this.ctx.fillRect(0, -6, shadowSize, easeOut(0, 11, animation));
+
+        this.ctx.fillStyle = 'white';
+        animation = F(this.frame, 1248 + 12, 12);
+        this.ctx.fillRect(-4, easeOut(6, -5, animation), 4, easeOut(0, 11, animation));
+        this.ctx.fillStyle = shadowColor;
+        this.ctx.fillRect(-4, easeOut(6, -5, animation), shadowSize, easeOut(0, 11, animation));
+
+        this.ctx.fillStyle = '#00befc';
+        this.ctx.fillRect(-9, -4, 5, easeOut(0, 10, F(this.frame, 1248, 12)));
+        this.ctx.fillStyle = shadowColor;
+        this.ctx.fillRect(-9, -4, 5, easeOut(0, shadowSize, F(this.frame, 1248, 12)));
+        this.ctx.restore();
+
         this.ctx.restore();
       }
     }

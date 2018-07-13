@@ -114,18 +114,26 @@
       this.ctx.fillStyle = colors[0];
       this.ctx.scale(1 / cameraZoom, 1 / cameraZoom);
 
-      const drawOwnBackground = BEAN < 1680
+      const drawOwnBackground = BEAN < 1680;
       if (drawOwnBackground) {
         this.ctx.fillRect(-80, -4.5, 160, 9);
-      }
 
+        this.ctx.save();
+        this.ctx.translate(-4 * 8, 0);
+        this.ctx.translate(16 - 4.4 -(this.frame - 2045) / 100, 0);
+        this.ctx.rotate(Math.PI / 16);
 
-      if (drawOwnBackground) {
-        this.ctx.fillStyle = 'white';
-        const amount = 16;
-        for(let i = 0; i < amount; i++) {
-          this.ctx.fillRect(((999999 + i - 0.5 - this.frame / 20) % amount) - amount / 2, -4.5, 0.1, 9);
+        const shadowSize = 0.3;
+        const shadowColor = 'rgba(0, 0, 0, 0.3)';
+
+        for(let i = 0; i < 8; i++) {
+          this.ctx.translate(4, 0);
+          this.ctx.fillStyle =  i % 2 ? '#00befc' : 'white';
+          this.ctx.fillRect(4, -100, 5, 200);
+          this.ctx.fillStyle = shadowColor;
+          this.ctx.fillRect(4, -100, shadowSize, 200);
         }
+        this.ctx.restore();
       }
 
       this.ctx.restore();
