@@ -423,8 +423,8 @@ void main() {
 
     if(frame > 4318.5) {
         angle = 0.;
-        radius = 10.8;
-        height = .25;
+        radius = mix(20., 10.8, smoothstep(0., 1., (frame - 4318.5) / 150.));
+        height = mix(10., .25, smoothstep(0., 1., (frame - 4318.5) / 150.));
     } else if(frame > 4141.5) {
         xRepeat = 4.;
         f4 = 4142.;
@@ -449,6 +449,10 @@ void main() {
         f3 = 0.;
         f2 = 0.;
         f1 = 4092.;
+    } else if(frame > 3990.5) {
+        angle = -.7;
+        radius = 5.8;
+        height = -2.25;
     } else if(frame > 9999.5) {
         radius = 20.;
         angle = -19.3 - frame / 10.;

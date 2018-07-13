@@ -472,21 +472,19 @@
       super.update(frame);
       this.frame = frame;
 
-      if(BEAN < 3120) {
-        if(BEAT && BEAN % 48 == 24) {
-          for(let i = 0; i < 24; i++) {
-            const angle = i / 24 * Math.PI * 2;
-            const radius = 1 * Math.random();
-            this.ps.spawn(
-              8 + Math.cos(angle) * radius,  // x
-              4.5 + Math.sin(angle) * radius,  // y
-              (0.5 + 0.1 * Math.random()) * Math.cos(angle),  // dx
-              (0.5 + 0.1 * Math.random()) * Math.sin(angle),  // dy
-              angle,  // rotation
-              0,
-              0.5
-            );
-          }
+      if(BEAT && BEAN % 48 == 24) {
+        for(let i = 0; i < 24; i++) {
+          const angle = i / 24 * Math.PI * 2;
+          const radius = 1 * Math.random();
+          this.ps.spawn(
+            8 + Math.cos(angle) * radius,  // x
+            4.5 + Math.sin(angle) * radius,  // y
+            (0.5 + 0.1 * Math.random()) * Math.cos(angle),  // dx
+            (0.5 + 0.1 * Math.random()) * Math.sin(angle),  // dy
+            angle,  // rotation
+            0,
+            0.5
+          );
         }
       }
 
@@ -613,7 +611,6 @@
         for(let j = -20; j < 10; j++) {
           const scale = easeOut(0, 1, F(this.frame, 2832 + i / 2 + j / 2, 24));
           if(scale) {
-            this.ctx.save();
             this.ctx.translate(i, j);
             this.ctx.scale(scale, scale);
             const length = 0.5;
@@ -622,7 +619,8 @@
 
             this.ctx.moveTo(0, - length / 2);
             this.ctx.lineTo(0, + length / 2);
-            this.ctx.restore();
+            this.ctx.scale(1 / scale, 1 / scale);
+            this.ctx.translate(-i, -j);
           }
         }
       }
@@ -632,93 +630,19 @@
       this.ctx.stroke();
       this.ctx.restore();
 
-      if(BEAN < 3024 + 48 * 2) {
-        this.renderScene([
-            {word: 'LoGICOMA', at: 2784 + 48},
-            {word: 'MR. DoOB', at: 2832 + 48},
-            {word: 'DESiRE', at: 2880 + 48},
-            {word: 'POo-BRAIN', at: 3024},
-            {word: 'LFT', at: 3024 + 48},
-        ]);
-      } else {
-        this.ctx.save();
-        this.ctx.scale(1 / 3, 1 / 3);
-        this.renderScene([
-            {word: 'P01', at: 3120},
-            {word: 'STILL', at: 3144},
-            {word: 'EXCESS', at: 3168},
-            {word: 'RAMON', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: 'COCOoN', at: 3120},
-            {word: '0x4015', at: 3144},
-            {word: 'PRISMBEINGS', at: 3168},
-            {word: 'LoONIES', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: 'KEYBOARDERS', at: 3120},
-            {word: 'FAIRLIGHT', at: 3144},
-            {word: 'SHCNAPPSGIRLS', at: 3168},
-            {word: 'SPACEPIGS', at: 3192},
-        ]);
+      this.renderScene([
+          {word: 'LoGICOMA', at: 2784 + 48},
+          {word: 'MR. DoOB', at: 2832 + 48},
+          {word: 'DESiRE', at: 2880 + 48},
+          {word: 'POo-BRAIN', at: 2976},
+          {word: 'LFT', at: 3024},
+          {word: 'COCoON', at: 3072},
+          {word: 'STILL', at: 3120},
+          {word: 'S.GIRLS', at: 3144},
+          {word: 'EPHIDRENA', at: 3168},
+          {word: 'ALTAIR', at: 3192},
+      ]);
 
-        this.ctx.translate(-32 * GU, 9 * GU);
-        this.ctx.translate(-8 * GU, 0);
-        this.renderScene([
-            {word: 'EPHIDRENA', at: 3120},
-            {word: 'CONSPIRACY', at: 3144},
-            {word: 'THE DEADLINERS', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: '..', at: 3120},
-            {word: '..', at: 3144},
-            {word: '..', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: '..', at: 3120},
-            {word: '..', at: 3144},
-            {word: '..', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: '..', at: 3120},
-            {word: '..', at: 3144},
-            {word: '..', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-
-        this.ctx.translate(-(48) * GU, 9 * GU);
-        this.ctx.translate(8 * GU, 0);
-        this.renderScene([
-            {word: '..', at: 3120},
-            {word: '..', at: 3144},
-            {word: '..', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: '..', at: 3120},
-            {word: '..', at: 3144},
-            {word: '..', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-        this.ctx.translate(16 * GU, 0);
-        this.renderScene([
-            {word: '..', at: 3120},
-            {word: '..', at: 3144},
-            {word: '..', at: 3168},
-            {word: '..', at: 3192},
-        ]);
-
-        this.ctx.restore();
-      }
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
