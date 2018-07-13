@@ -36,6 +36,14 @@
     update(frame) {
       super.update(frame);
 
+      if (frame < 5250) {
+        this.cube.position.x = 1000;
+      }
+      else
+      {
+        this.cube.position.x = 0;
+      }
+
       this.cube.rotation.x = Math.sin(frame / 20);
       this.cube.rotation.y = -Math.cos(frame / 20) + 3;
     }
