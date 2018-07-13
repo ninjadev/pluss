@@ -39,9 +39,9 @@
 
       loadObject('res/dimentionlens.obj', bestMaterial, this.dimentionlens_model );
       this.scene.add( this.dimentionlens_model );
-      this.dimentionlens_model.scale.x = 14;
-      this.dimentionlens_model.scale.y = 14;
-      this.dimentionlens_model.scale.z = 14;
+      this.dimentionlens_model.scale.x = 24;
+      this.dimentionlens_model.scale.y = 24;
+      this.dimentionlens_model.scale.z = 24;
 
       this.stage_model = new THREE.Object3D();
       var loadObject = function (objPath, material, three_object) {
@@ -114,10 +114,19 @@
       this.cube3.rotation.x = Math.sin(frame / 10);
       this.cube3.rotation.y = -Math.cos(frame / 10);
 
-      this.dimentionlens_model.position.x = 0.35 * 80 * Math.sin(frame / 30);
-      this.dimentionlens_model.position.y = 0;
+      var start_ball_bounce = 5230;
+      var end_ball_bounce = 5270;
+
+      this.dimentionlens_model.position.x = 0.45 * 80 * Math.sin((frame - end_ball_bounce) / 20);
+      this.dimentionlens_model.position.y =  0;
       this.dimentionlens_model.position.z = 15;
       this.dimentionlens_model.rotation.y = frame / 20;
+
+      if (frame > start_ball_bounce && frame < end_ball_bounce)
+      {
+        this.dimentionlens_model.position.y = 0.03 * (frame - end_ball_bounce) * GU * Math.sin(frame / Math.PI);
+        this.dimentionlens_model.position.x = (frame - end_ball_bounce) * 2;
+      }
 
     }
 
