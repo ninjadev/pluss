@@ -106,6 +106,17 @@
         this.scene.add(this.number4);
       }
 
+      // number3 slide:
+      if(this.threeShoutBean < BEAN && BEAN < this.fourShoutBean){
+        // debugger;
+        let currentStep = BEAN - this.threeShoutBean;
+        let totalSteps = this.fourShoutBean - this.threeShoutBean;
+        let interval = 2 * GU; // 1.5 - (-1.5)
+        let initialPosition = 1 * GU;
+        let stepSize = interval/totalSteps;
+        this.number3.position.x = initialPosition - (currentStep * stepSize);
+      }
+
       this.cube.rotation.x = Math.sin(frame / 10);
       this.cube.rotation.y = Math.cos(frame / 10);
 
