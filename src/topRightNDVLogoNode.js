@@ -54,15 +54,30 @@
 
       this.ctx.globalAlpha = Math.max(Math.min((this.frame - 623) / (696 - 653), 1.0), 0.0);
 
+      const whiteParts = [[5682, 6290], [6820, 7540]];
+      let mixer = 0.0;
+      for (let [start, stop] of whiteParts) {
+        mixer = lerp(mixer, 1.0, (this.frame + 15 - start) / 30);
+        mixer = lerp(mixer, 0.0, (this.frame + 15 - stop) / 30);
+      }
+      const imix = 1.0 - mixer;
+
+      const color = 255.0 * mixer;
+
+      const fillStyle = `rgba(${color}, ${color}, ${color}, ${0.8 + mixer * 0.1})`;
+
       const scale = 0.0010;
-      this.ctx.fillStyle = `rgba(0.0, 0.0, 0.0, 0.8)`;
+      this.ctx.fillStyle = fillStyle;
       this.ctx.scale(scale, scale);
       this.ctx.translate(6300, -4000);
       this.ctx.lineWidth = 20;
       this.ctx.fill(this.n);
       this.ctx.stroke(this.threedee);
       this.ctx.stroke(this.n);
-      this.ctx.fillStyle = '#fff';
+
+      let dvColor = 200 + 55 * imix;
+
+      this.ctx.fillStyle = `rgba(${dvColor}, ${dvColor}, ${dvColor}, 0.9)`;
       this.ctx.fill(this.dv);
       this.ctx.stroke(this.dv);
       this.ctx.restore();
