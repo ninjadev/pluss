@@ -10,6 +10,15 @@
         format: THREE.RGBAFormat
       });
       this.resize();
+      /*TODO:
+       * 1: rig balls to triangle and on top
+       *    pink  3616
+       *    white 3640
+       *    black 3650
+       * 2: camera
+       * 3: Texturize
+       * 4: zoom out and Q rune 
+       */
       this.planeUpdater = function (container, camera){
         if (container.kind == "sphere")
         {
@@ -50,7 +59,7 @@
                            5, this.scene);
       this.cones.pink_cone = {};
       this.createIceSphere(this.cones.pink_cone, {color:0x881188, side:THREE.DoubleSide}, 
-                           this.patternMaterial,[20,20,20], 
+                           this.patternMaterial,[0,50,0], 
                            5, this.scene);
       this.cones.brown_cone = {};
       this.createIceSphere(this.cones.brown_cone, {color:0x8B4513, side:THREE.DoubleSide}, 
@@ -62,18 +71,43 @@
       light.position.set(50, 50, 50);
       this.scene.add(light);
 
-      this.camera.position.z = 100;
+      this.camera.position.z = 50;
+      this.positionUpdater = function(frame)
+      {
+        // Here we drop down three balls
+        if (BEAN < 3600){}
+        else if (BEAN < 3616)
+        {
+          // 3600 = 50, 3616 = 0 step it in  BEAN - X0 = 50, x0=  
+          this.cones.pink_cone.mesh.position.y = 3640 - BEAN;   
+        }
+        else if (BEAN < 3640){
+          this.cones.white_cone.mesh.position.y = 3650 - BEAN; 
+        }
+        else if (BEAN < 3650){
+          this.cones.brown_cone.mesh.position.y = 3660 - BEAN;
+        }
+        // Fuck around
+        // Drop some more
+        // Fuck around
+        // TREE TIME
+      };
     }
 
     update(frame) {
       super.update(frame);
+      /* Position updates*/
+      this.positionUpdater(frame);
+
+
       this.planeUpdater(this.cones.white_cone, this.camera);
       this.planeUpdater(this.cones.pink_cone, this.camera);
       this.planeUpdater(this.cones.brown_cone, this.camera); 
       this.cones.white_cone.plane.material.transparent = true;
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
-      this.camera.position.x = 100* Math.sin(frame/100); 
-      this.camera.position.z = 100* Math.cos(frame/100); 
+      
+      //this.camera.position.x = 100* Math.sin(frame/100); 
+      //this.camera.position.z = 100* Math.cos(frame/100); 
       this.camera.lookAt(new THREE.Vector3(0,0,0));
     }
   }
