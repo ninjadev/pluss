@@ -107,12 +107,12 @@ vec2 map(vec3 p) {
     float shapes = min(min(triangle, box), sphere); 
     float ground = 9999999.;
 
-    if(frame > 3636.5) {
+    if(frame > 3713.5 - 76.) {
         float spacing = 0.15;
         shapes = max(shapes, -sdBox(p, vec3(10., spacing / 4., 10.)));
         shapes = max(shapes, -sdBox(p + vec3(0., spacing, 0.), vec3(10., spacing / 4., 10.)));
         shapes = max(shapes, -sdBox(p + vec3(0., -spacing, 0.), vec3(10., spacing / 4., 10.)));
-    } else if(frame > 3446.5) {
+    } else if(frame > 3522.5 - 76.) {
         ground = min(sdCylinder(p, vec3(-1.25, 0., .1)), min(sdCylinder(p, vec3(0., 0., .1)), sdCylinder(p, vec3(1.25, 0., .1))));
     } else {
         ground = sdBox(p + vec3(0., 10.5, 0.), vec3(20., 10., 1.));
@@ -199,7 +199,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     float focc = 1.0;
     float fsha = 1.;
 
-    vec3 green = vec3(14., 92., 73.) / 255.;
+    vec3 green = vec3(56., 32., 43.) / 255.;
     vec3 yellow = vec3(255., 252., 0.) / 255.;
 
     if(m < 1.5) {
@@ -332,7 +332,7 @@ vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist)
 vec3 render(in vec3 ro, in vec3 rd, in vec2 q) {
     vec3 col = vec3(255., 155., 189.) / 255.;
     if(frame > 3636.5) {
-        col = mix(vec3(1.), vec3(0.), sign(sin(rd.x * 40.)));
+        col = mix(vec3(1.), vec3(56., 32., 43.) / 255. * 0.1, sign(sin(rd.x * 40.)));
     }
     float mindist = 0.01;
     float maxdist = 40.0;
@@ -370,9 +370,9 @@ void main() {
     float height = 0.;
     float targetHeight = 0.;
 
-    float letterbox = 0.15;
+    float letterbox = 0.119;
     if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
-        gl_FragColor = vec4(vec3(.1), 1.);
+        gl_FragColor = vec4(vec3(56., 32., 43.) / 255., 1.);
         return;
     }
     if(frame > 3636.5) {

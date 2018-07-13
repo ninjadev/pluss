@@ -13,38 +13,45 @@
       "shader": "PostProcessing"
     },
     "connected": {
-      "tDiffuse": "sceneSwitcherNode.render"
+      "tDiffuse": "NDVLogoOverlayShader.render"
     }
   },
   {
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render",
-
+      "A": "shadowizer.render",
+      "B": "SpinningCube.render",
       "C": "sleekAngles.render",
       "C_three": "sleekstadee.render",
-      "D": "yoyo.render",
+      "D": "yoyoTiler.render",
       "D_transision": "ninjadevtext.render",
       "E": "intro.render",
-      "F": "scannerShader.render",
+      "F": "dimentionMultiplexerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
       "I": "IceCream.render",
+      "I_bg": "starshader.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
       "L": "WaveyPop.render",
       "M": "greetz.render",
       "N": "sheipz.render",
       "O": "sheipzidee.render",
-
       "Q": "sheipz2.render",
       "R": "sheipzidee2.render"
     }
   },
   {
     "id": "SpinningCube",
-    "type": "spinningCube"
+    "type": "spinningCube",
+    "connected": {
+      "squiggles": "squiggles.render",
+      "bananas": "NinetiesPatterns.render",
+      "paint_n": "paint_n.render",
+      "paint_dv": "paint_dv.render",
+      "paint_n_3d": "paint_n_3d.render"
+    }
   },
   {
     "id": "squiggles",
@@ -69,13 +76,9 @@
       "shader": "scannerShader"
     },
     "connected": {
-      "texture": "scanner.render",
-      "depth": "scanner.depth"
+      "texture": "dimensionBackground.render",
+      "depth": "dimensionBackground.depth"
     }
-  },
-  {
-    "id": "scanner",
-    "type": "scanner"
   },
   {
     "id": "dimension1",
@@ -96,7 +99,7 @@
       "shader": "dimentionMultiplexerShader"
     },
     "connected": {
-      "textureBG": "dimensionBackground.render",
+      "textureBG": "scannerShader.render",
       "depthBG": "dimensionBackground.depth",
       "texture1": "dimension1.render",
       "depth1": "dimension1.depth",
@@ -111,6 +114,27 @@
   {
     "id": "yoyo",
     "type": "yoyo"
+  },
+  {
+    "id": "yoyoCombiner",
+    "type": "yoyoCombinerNode",
+    "options": {
+      "shader": "yoyoCombiner"
+    },
+    "connected": {
+      "A": "NinetiesPatterns.render",
+      "B": "yoyo.render"
+    }
+  },
+  {
+    "id": "yoyoTiler",
+    "type": "TilerNode",
+    "options": {
+      "shader": "tiler"
+    },
+    "connected": {
+      "tDiffuse": "yoyoCombiner.render"
+    }
   },
   {
     "id": "ZentangleVision",
@@ -227,5 +251,79 @@
     "options": {
       "shader": "NinetiesPatterns"
     }
+  },
+  {
+    "id": "every",
+    "type": "every"
+  },
+  {
+    "id": "shadowizer",
+    "type": "shadowizerNode",
+    "options": {
+      "shader": "shadowizer"
+    },
+    "connected": {
+      "tDiffuse": "every.render",
+      "overlay": "discyblob.render",
+      "osd": "osd.render"
+    }
+  },
+  {
+    "id": "discyblob",
+    "type": "discyblob"
+  },
+  {
+    "id": "arctic",
+    "type": "arctic"
+  },
+  {
+    "id": "paint_n",
+    "type": "paint_n"
+  },
+  {
+    "id": "paint_dv",
+    "type": "paint_dv"
+  },
+  {
+    "id": "paint_n_3d",
+    "type": "paint_n_3d"
+  },
+  {
+    "id": "specularSnake",
+    "type": "specularSnake"
+  },
+  {
+    "id": "osd",
+    "type": "osd"
+  },
+  {
+    "id": "stars",
+    "type": "stars"
+  },
+  {
+    "id": "starshader",
+    "type": "starshaderNode",
+    "options": {
+      "shader": "starshader"
+    },
+    "connected": {
+      "overlay": "arctic.render",
+      "underlay": "stars.render"
+    }
+  },
+  {
+    "id": "NDVLogoOverlayShader",
+    "type": "NDVLogoOverlayShaderNode",
+    "options": {
+      "shader": "NDVLogoOverlayShader"
+    },
+    "connected": {
+      "overlay": "TopRightNDVLogoNode.render",
+      "background": "sceneSwitcherNode.render"
+    }
+  },
+  {
+    "id": "TopRightNDVLogoNode",
+    "type": "topRightNDVLogoNode"
   }
 ]

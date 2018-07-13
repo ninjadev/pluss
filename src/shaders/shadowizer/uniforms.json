@@ -1,0 +1,6 @@
+{
+    "tDiffuse": { "type": "t", "value": null },
+    "overlay": { "type": "t", "value": null },
+    "osd": { "type": "t", "value": null },
+    "frame": { "type": "f", "value": 0.0 }
+}

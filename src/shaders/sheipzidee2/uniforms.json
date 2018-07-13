@@ -1,5 +1,7 @@
 {
     "iChannel1": { "type": "t", "value": null },
     "iChannel2": { "type": "t", "value": null },
-    "frame": { "type": "f", "value": 0.0 }
+    "frame": { "type": "f", "value": 0.0 },
+    "exitAmount": { "type": "f", "value": 0.0 },
+    "exitAmount2": { "type": "f", "value": 0.0 }
 }

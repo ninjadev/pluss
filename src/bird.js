@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class bird extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -18,7 +19,8 @@
 
 
       this.keyframes = {};
-      const offset = 5500;
+      const offset = 5500 + 1980;
+      const speedMultiplier = 0.8;
 
       const getKeyframesForItem = item => {
         const keyframes = {
@@ -28,7 +30,7 @@
         };
         for(let operation of ['Scale', 'Position', 'Rotation']) {
           for(let seconds in item.Transform[operation]) {
-            const frame = (seconds * 60 | 0) + offset;
+            const frame = ((seconds * 60) + offset) * speedMultiplier | 0;
             keyframes[operation].push({
               frame,
               value: item.Transform[operation][seconds],
@@ -137,15 +139,21 @@
       const X = 10;
       const Y = 16;
       const r = 24;
-      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      this.ctx.fillStyle = '#4a9987';
+      this.ctx.save();
+      this.ctx.translate(0, (this.frame * 20) % (1080 / Y * 2));
       for(let i = 0; i < X; i++) {
-        for(let j = 0; j < Y; j++) {
+        for(let j = -2; j < Y; j++) {
           const x = (i + 0.5 * (j % 2))  / (X - 1) * 1920;
           const y = j / (Y - 1) * 1080;
-          this.ctx.fillRect(x - r / 2, y - r / 2, r, r);
+          this.ctx.fillRect(x - r / 2, y - r / 2, r, r * 3);
         }
       }
+      this.ctx.restore();
 
+      this.ctx.translate(
+          easeIn(300, 0, F(this.frame, 4800, 48)),
+          easeIn(150, 0, F(this.frame, 4800, 48)));
 
       for(let i = 0; i < 2; i++) {
         this.ctx.save();

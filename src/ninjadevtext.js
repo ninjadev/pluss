@@ -61,20 +61,20 @@
 
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
-      this.ctx.font = '2.3px lemonmilkbold';
+      this.ctx.font = '1.5pt lemonmilkbold';
       let offset = -1 / 5;
-      if(this.frame >= 3103) {
-        this.ctx.font = '3px lemonmilkbold';
+      if(BEAN >= 2014) {
+        this.ctx.font = '1pt lemonmilkbold';
       }
       this.ctx.fillStyle = 'white';
       this.ctx.strokeStyle = 'black';
       this.ctx.lineWidth = 0.05;
-      const startTimer = (this.frame - FFB(1908)) / (FFB(1920) - FFB(1908));
+      const startTimer = (this.frame - FFB(1908 + 48)) / (FFB(1920 + 48) - FFB(1908 + 48));
 
       this.ctx.translate(7 + offset, 4 + offset);
 
-      const rounds = 35;
-      const rotationTimer = (this.frame - FFB(1956)) / (FFB(1968) - FFB(1956));
+      const rounds = 30;
+      const rotationTimer = (this.frame - FFB(1956 + 48)) / (FFB(1968 + 48) - FFB(1956 + 48));
       const rotation = easeIn(Math.PI / 16, -Math.PI, rotationTimer);
       this.ctx.translate(
           easeIn(0, 1 - offset, rotationTimer),
@@ -98,25 +98,25 @@
         if(i - 1 < roundsTarget) {
           this.ctx.fillStyle = 'white';
         }
-        let word = easeIn(0, 1, rotationTimer) < 0.5 ? 'Ninjadev' : '2';
+        let word = easeIn(0, 1, rotationTimer) < 0.5 ? 'Ninjadev' : 'Back';
         if(word === 'Ninjadev') {
           word = word.slice(
             0, easeOut(word.length, 0, rotationTimer - 0.5));
         }
-        if(BEAN >= 1968 + 0) {
-          word += '0';
+        if(BEAN >= 1968 + 0 + 48) {
+          word += '';
         }
-        if(BEAN >= 1968 + 12 + 6) {
-          word += '1';
+        if(BEAN >= 1968 + 12 + 6 + 48) {
+          word += ' in';
         }
-        if(BEAN >= 1968 + 24 + 12) {
-          word += '8';
+        if(BEAN >= 1968 + 24 + 12 + 48) {
+          word += ' style';
         }
         if(easeIn(0, 1, rotationTimer) >= 0.5) {
           this.ctx.rotate(Math.PI);
         }
         this.ctx.fillText(word, 0 , 0);
-        this.ctx.strokeText(word, 0 , 0);
+        //this.ctx.strokeText(word, 0 , 0);
         this.ctx.restore();
       }
 
