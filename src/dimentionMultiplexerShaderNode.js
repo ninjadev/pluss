@@ -21,9 +21,9 @@
       this.uniforms.tDepth2.value = this.inputs.depth2.getValue();
       this.uniforms.cameraNear.value = 0.001;
       this.uniforms.cameraFar.value = 150;
-      this.uniforms.blastDistance.value = 40;
+      this.uniforms.blastDistance.value = 50;
 //      this.uniforms.blastDistance.value = frame % 350;
-      this.uniforms.origin_x.value = 80 * Math.sin(frame / 30);
+      this.uniforms.origin_x.value = 150 * Math.sin((frame - 5270) / 20);
       this.uniforms.origin_y.value = 0;//10 * Math.sin(frame / 100);
       this.uniforms.origin_z.value = -15;
       this.uniforms.frame.value = frame;
