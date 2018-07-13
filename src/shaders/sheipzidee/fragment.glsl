@@ -372,7 +372,7 @@ void main() {
 
     float letterbox = 0.119;
     if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
-        gl_FragColor = vec4(vec3(.1), 1.);
+        gl_FragColor = vec4(vec3(93., 28., 53.) / 255., 1.);
         return;
     }
     if(frame > 3636.5) {

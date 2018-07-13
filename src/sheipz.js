@@ -158,6 +158,16 @@
       this.ctx.fillRect(-8, .5 + -0.5 / 4, width3, 0.25);
       this.ctx.restore();
 
+      this.ctx.fillStyle = '#5d1c35';
+      let vignetteAmount = 0;
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2136 - 4, 4));
+      vignetteAmount = easeOut(vignetteAmount, 0, F(this.frame, 2160, 4));
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2232 - 4, 4));
+      vignetteAmount = easeOut(vignetteAmount, 0, F(this.frame, 2256, 4));
+      vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2352 - 4, 4));
+      vignetteAmount = Math.pow(vignetteAmount, 1.2);
+      this.ctx.fillRect(-8, -4.5, 16, 0.119 * 9 * vignetteAmount);
+
       this.ctx.restore();
 
       this.output.needsUpdate = true;

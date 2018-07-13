@@ -399,7 +399,7 @@ void main() {
     float xRepeat = 1.;
 
     if(vUv.y < letterbox || vUv.y > 1. - letterbox) {
-        gl_FragColor = vec4(vec3(.1), 1.);
+        gl_FragColor = vec4(vec3(15., 78., 85.) / 255., 1.);
         return;
     }
 
