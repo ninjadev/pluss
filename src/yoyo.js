@@ -24,11 +24,11 @@
       this.triangle = () => {
         this.ctx.beginPath();
         const radius = 1 / Math.sqrt(2);
-        for(let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
           const angle = Math.PI * 2 * i / 3;
           const x = radius * Math.cos(angle);
           const y = radius * Math.sin(angle);
-          if(i == 0) {
+          if (i == 0) {
             this.ctx.moveTo(x, y);
           }
           this.ctx.lineTo(x, y);
@@ -89,17 +89,17 @@
       ];
 
       let colors = colorsList[0];
-      if(BEAN >= 4392) {
+      if (BEAN >= 4392) {
         colors = colorsList[10];
-      } else if(BEAN >= 33 * 48) {
+      } else if (BEAN >= 33 * 48) {
         colors = colorsList[9];
-      } else if(BEAN >= 32.5 * 48 - 4) {
+      } else if (BEAN >= 32.5 * 48 - 4) {
         colors = colorsList[8];
-      } else if(BEAN >= 31* 48) {
+      } else if (BEAN >= 31 * 48) {
         colors = colorsList[7];
-      } else if(BEAN >= 28.5 * 48 - 20 + 12) {
+      } else if (BEAN >= 28.5 * 48 - 20 + 12) {
         colors = colorsList[3];
-      } else if(BEAN >= 28.5 * 48 - 20) {
+      } else if (BEAN >= 28.5 * 48 - 20) {
         colors = colorsList[1];
       }
 
@@ -114,15 +114,15 @@
 
         this.ctx.save();
         this.ctx.translate(-4 * 8, 0);
-        this.ctx.translate(16 - 4.4 -(this.frame - 2045) / 100, 0);
+        this.ctx.translate(16 - 4.4 - (this.frame - 2045) / 100, 0);
         this.ctx.rotate(Math.PI / 16);
 
         const shadowSize = 0.3;
         const shadowColor = 'rgba(0, 0, 0, 0.3)';
 
-        for(let i = 0; i < 8; i++) {
+        for (let i = 0; i < 8; i++) {
           this.ctx.translate(4, 0);
-          this.ctx.fillStyle =  i % 2 ? '#00befc' : 'white';
+          this.ctx.fillStyle = i % 2 ? '#00befc' : 'white';
           this.ctx.fillRect(4, -100, 5, 200);
           this.ctx.fillStyle = shadowColor;
           this.ctx.fillRect(4, -100, shadowSize, 200);
@@ -134,59 +134,59 @@
 
       let shape = this.square;
 
-      if(BEAN >= 35 * 48) {
+      if (BEAN >= 35 * 48) {
         shape = this.circle;
-      } else if(BEAN >= 30.5 * 48) {
+      } else if (BEAN >= 30.5 * 48) {
         shape = this.triangle;
       }
 
 
-      if(BEAN >= 1440 && BEAN < 1440 + 24) {
-        for(let i = 0; i < 2; i++) {
+      if (BEAN >= 1440 && BEAN < 1440 + 24) {
+        for (let i = 0; i < 2; i++) {
           this.ctx.save();
           this.ctx.fillStyle = colors[0];
-          if(i == 0) {
+          if (i == 0) {
             this.ctx.fillStyle = colors[1];
             const shadowSize = 0.15;
             this.ctx.translate(shadowSize, shadowSize);
           }
           const duration = 12;
-          if(BEAN >= 1440 && BEAN <= 1440 + duration) {
+          if (BEAN >= 1440 && BEAN <= 1440 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
-          if(BEAN >= 1440 + 4 && BEAN <= 1440 + 4 + duration) {
+          if (BEAN >= 1440 + 4 && BEAN <= 1440 + 4 + duration) {
             this.ctx.save();
             this.ctx.translate(0, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
-            this.ctx.restore(); 
+            this.ctx.restore();
           }
 
-          if(BEAN >= 1440 + 8 && BEAN <= 1440 + 8 + duration) {
+          if (BEAN >= 1440 + 8 && BEAN <= 1440 + 8 + duration) {
             this.ctx.save();
             this.ctx.translate(3.65, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
-          if(BEAN >= 1440 + 12 && BEAN <= 1440 + 12 + duration) {
+          if (BEAN >= 1440 + 12 && BEAN <= 1440 + 12 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
-          if(BEAN >= 1440 + 16 && BEAN <= 1440 + 16 + duration) {
+          if (BEAN >= 1440 + 16 && BEAN <= 1440 + 16 + duration) {
             this.ctx.save();
             this.ctx.translate(0, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
-          if(BEAN >= 1440 + 20 && BEAN <= 1440 + 20 + duration) {
+          if (BEAN >= 1440 + 20 && BEAN <= 1440 + 20 + duration) {
             this.ctx.save();
             this.ctx.translate(3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
@@ -196,52 +196,60 @@
         }
       }
 
-      for(let i = 0; i < 3; i++) {
-        if(BEAN < 1368 && i > 0) {
+      for (let i = 0; i < 3; i++) {
+        if (BEAN < 1368 && i > 0) {
           break;
         }
-        if(BEAN >= 1440 && BEAN < 1464) {
+        if (BEAN >= 1440 && BEAN < 1464) {
           break;
         }
         this.ctx.save();
         let wobbler = 0.5 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
 
-        if(BEAN >= 1368 - 24 && BEAN < 1392) {
+        if (BEAN >= 1368 - 24 && BEAN < 1392) {
           wobbler = lerp(wobbler, 0, F(this.frame, 1368 - 24, 4));
         }
-        if(BEAN >= 1464 - 24 && BEAN < 1488) {
+        if (BEAN >= 1464 - 24 && BEAN < 1488) {
           wobbler = lerp(wobbler, 0, F(this.frame, 1464 - 24, 4));
         }
 
         let scale = 1 + (3 - i) + wobbler;
-        this.ctx.scale(scale, scale);
+        let squeezeProgress = F(this.frame, 1760, 19);
+        let squeezeIntensity = Math.sqrt(Math.sin(lerp(0, 1, squeezeProgress) * Math.PI));
+        let horizontalScaler = scale * (1 + 1.2 * squeezeIntensity);
+        let verticalScaler = scale * (1 - 0.6 * squeezeIntensity);
+        this.ctx.scale(horizontalScaler, verticalScaler);
 
-        if(i == 0) {
+        if (i === 0) {
           let x = lerp(0, -1, BEAN - 1356 + 1);
           x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
           x = lerp(x, -1, BEAN - 1464 + 1);
           x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
           const y = 0;
           this.ctx.translate(x, y);
-        } else if(i == 1) {
+        } else if (i === 1) {
           let x = easeIn(0, 0.2, F(this.frame, 1368 - 12, 12));
           x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
           x = lerp(x, 0.2, BEAN - 1464 + 1);
           x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
-          if(BEAN < 1368) {
+          if (BEAN < 1368) {
             x = 1000;
           }
-          const y = 0;
+          let y = 0;
+          if (BEAN >= 1680) {
+            x += 0.12 * Math.cos(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
+            y += 0.12 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
+          }
           this.ctx.translate(x, y);
-        } else if(i == 2) {
+        } else if (i === 2) {
           let x = easeIn(0, 2.2, F(this.frame, 1368 - 12, 12));
           x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
           x = lerp(x, 2.2, BEAN - 1464 - 1);
           x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
-          if(BEAN < 1376) {
+          if (BEAN < 1376) {
             x = 1000;
           }
-          if(BEAN >= 1464 && BEAN < 1464 + 8) {
+          if (BEAN >= 1464 && BEAN < 1464 + 8) {
             x = 1000;
           }
           const y = 0;
@@ -253,19 +261,19 @@
         const shadowSize = 0.15;
         this.ctx.translate(shadowSize / scale, shadowSize / scale);
         let rotation = Math.PI / 4 + this.frame / 50 + 0.67;
-        if(BEAN >= 1368 - 20 && BEAN < 1392) {
+        if (BEAN >= 1368 - 20 && BEAN < 1392) {
           rotation = 0;
         }
-        if(BEAN >= 1368 -12 && BEAN < 1392) {
+        if (BEAN >= 1368 - 12 && BEAN < 1392) {
           rotation = Math.PI / 4;
         }
-        if(BEAN >= 1368 && BEAN < 1392) {
+        if (BEAN >= 1368 && BEAN < 1392) {
           rotation = 0;
         }
-        if(BEAN >= 1368 + 8 && BEAN < 1392) {
+        if (BEAN >= 1368 + 8 && BEAN < 1392) {
           rotation = Math.PI / 4;
         }
-        if(BEAN >= 1464 + 8 && BEAN < 1488) {
+        if (BEAN >= 1464 + 8 && BEAN < 1488) {
           rotation = 0;
         }
         this.ctx.rotate(rotation);
@@ -276,7 +284,6 @@
         shape();
         this.ctx.restore();
       }
-
 
 
       this.ctx.restore();
