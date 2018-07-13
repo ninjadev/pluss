@@ -55,7 +55,7 @@
       this.ctx.globalAlpha = Math.max(Math.min((this.frame - 623) / (696 - 653), 1.0), 0.0);
 
       const scale = 0.0010;
-      this.ctx.fillStyle = '#111';
+      this.ctx.fillStyle = `rgba(0.0, 0.0, 0.0, 0.8)`;
       this.ctx.scale(scale, scale);
       this.ctx.translate(6300, -4000);
       this.ctx.lineWidth = 20;
