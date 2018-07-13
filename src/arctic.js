@@ -57,7 +57,8 @@
       this.ctx.save();
       this.ctx.scale(GU, GU);
 
-      this.ctx.strokeStyle = 'white';
+      // Shadow
+      this.ctx.strokeStyle = '#010101';
 
       this.ctx.translate(0, 4.5);
 
@@ -67,6 +68,21 @@
       this.ctx.lineWidth = 0.1;
       this.ctx.moveTo(0, 0);
       const amplitude = 2 * this.amplitude;
+      for(let i = 0; i < count; i++) {
+        const x = (i + 1) / count * 16;
+        const y = amplitude * Math.sin(i / count * 32 + this.frame / 2) *
+          smoothstep(0, 1, 2 * i / count) *
+          smoothstep(1, 0, 2 * i / count - 1);
+        this.ctx.lineTo(x, y + 0.05);
+      }
+      this.ctx.stroke();
+
+      this.ctx.strokeStyle = 'white';
+
+      this.ctx.beginPath();
+      this.ctx.lineJoin = 'round';
+      this.ctx.lineWidth = 0.1;
+      this.ctx.moveTo(0, 0);
       for(let i = 0; i < count; i++) {
         const x = (i + 1) / count * 16;
         const y = amplitude * Math.sin(i / count * 32 + this.frame / 2) *

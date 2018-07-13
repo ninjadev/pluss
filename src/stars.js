@@ -14,7 +14,7 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.colors = ["#d1679e", "#64bac8", "#fae767", "#ffffff"];
+      this.colors = ["#d1679e", "#64bac8", "#fae767"];
 
       this.stars = [];
       for (var i=0;i<200;i++) {
@@ -27,22 +27,21 @@
 
     update(frame) {
       super.update(frame);
-
-      // This clears the canvas
       this.canvas.width += 0;
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
       this.ctx.fillStyle = "#42f4c5";
       this.ctx.fillRect(0, 0, 16, 9);
+      let amp = frame%24 < 4 ? 0.06 : 0.01;
       for (var i=0;i<200;i++) {
-        var x = this.stars[i][0] + 0.01*Math.sin(i + frame/60);
-        var y = this.stars[i][1] + 0.01*Math.cos(i + frame/60);
+        var x = this.stars[i][0] + amp*Math.sin(i + frame/60);
+        var y = this.stars[i][1] + amp*Math.cos(i + frame/60);
         var r = this.stars[i][2];
         this.stars[i][0] = x;
         this.stars[i][1] = y;
-        var a = this.stars[i][0] + r*0.5;
-        var b = this.stars[i][1] + r*0.5;
+        var a = x + r*0.5;
+        var b = y + r*0.5;
 
         this.ctx.beginPath();
         this.ctx.arc(a, b, r*2, 0, 2 * Math.PI);
@@ -50,7 +49,7 @@
         this.ctx.fill();
         this.ctx.beginPath();
         this.ctx.arc(x, y, r*2, 0, 2 * Math.PI);
-        this.ctx.fillStyle = this.colors[i%4];
+        this.ctx.fillStyle = this.colors[i%this.colors.length];
         this.ctx.fill();
       }
 
