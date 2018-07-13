@@ -36,6 +36,21 @@
         this.ctx.fill();
       };
 
+      this.hexagon = () => {
+        this.ctx.beginPath();
+        const radius = 1 / Math.sqrt(2);
+        for (let i = 0; i < 6; i++) {
+          const angle = Math.PI * 2 * i / 6;
+          const x = radius * Math.cos(angle);
+          const y = radius * Math.sin(angle);
+          if (i === 0) {
+            this.ctx.moveTo(x, y);
+          }
+          this.ctx.lineTo(x, y);
+        }
+        this.ctx.fill();
+      };
+
       this.circle = () => {
         this.ctx.beginPath();
         const radius = 1 / Math.sqrt(2);
@@ -135,7 +150,11 @@
       let shape = this.square;
 
       if (BEAN >= 35 * 48) {
-        shape = this.circle;
+        if (BEAN >= 1776) {
+          shape = this.hexagon;
+        } else {
+          shape = this.circle;
+        }
       } else if (BEAN >= 30.5 * 48) {
         shape = this.triangle;
       }
@@ -145,7 +164,7 @@
         for (let i = 0; i < 2; i++) {
           this.ctx.save();
           this.ctx.fillStyle = colors[0];
-          if (i == 0) {
+          if (i === 0) {
             this.ctx.fillStyle = colors[1];
             const shadowSize = 0.15;
             this.ctx.translate(shadowSize, shadowSize);
