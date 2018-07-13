@@ -13,7 +13,7 @@
       "shader": "PostProcessing"
     },
     "connected": {
-      "tDiffuse": "sceneSwitcherNode.render"
+      "tDiffuse": "NDVLogoOverlayShader.render"
     }
   },
   {
@@ -293,5 +293,20 @@
       "overlay": "arctic.render",
       "underlay": "stars.render"
     }
+  },
+  {
+    "id": "NDVLogoOverlayShader",
+    "type": "NDVLogoOverlayShaderNode",
+    "options": {
+      "shader": "NDVLogoOverlayShader"
+    },
+    "connected": {
+      "overlay": "TopRightNDVLogoNode.render",
+      "background": "sceneSwitcherNode.render"
+    }
+  },
+  {
+    "id": "TopRightNDVLogoNode",
+    "type": "topRightNDVLogoNode"
   }
 ]
