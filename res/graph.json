@@ -31,7 +31,7 @@
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
       "I": "IceCream.render",
-      "I_bg": "arctic.render",
+      "I_bg": "starshader.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
       "L": "WaveyPop.render",
@@ -278,5 +278,20 @@
   {
     "id": "osd",
     "type": "osd"
+  },
+  {
+    "id": "stars",
+    "type": "stars"
+  },
+  {
+    "id": "starshader",
+    "type": "starshaderNode",
+    "options": {
+      "shader": "starshader"
+    },
+    "connected": {
+      "overlay": "arctic.render",
+      "underlay": "stars.render"
+    }
   }
 ]
