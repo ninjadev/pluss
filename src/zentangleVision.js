@@ -75,11 +75,16 @@
       this.number3_raw.position.x = -0.6 * GU;
       this.number4_raw.position.x = -1.2 * GU;
 
-      // The y translation here ensures that the numbers are not all stacked atop of each other
-      this.number1.position.y = 0.5 * GU;
-      this.number2.position.y = 0 * GU;
-      this.number3.position.y = -0.5 * GU;
-      this.number4.position.y = -1 * GU;
+      // Final x/y posotions:
+      this.number1.position.x = 1.5 * GU;
+      this.number2.position.x = 0 * GU;
+      this.number3.position.x = -1.3 * GU;
+      this.number4.position.x = 0 * GU;
+
+      this.number1.position.y = -0.2 * GU;
+      this.number2.position.y = 0.6 * GU;
+      this.number3.position.y = -0.2 * GU;
+      this.number4.position.y = -0.8 * GU;
     }
 
     update(frame) {
@@ -93,28 +98,50 @@
         this.scene.remove(this.number4);
       }
 
-      if(BEAN == this.oneShoutBean){
+      // Alternative version if we figure out we only want the numbers shown at the positions anddont wantto dig out the code from git.
+      // if(BEAN == this.oneShoutBean){
+      //   this.scene.add(this.number1);
+      // }
+      // if(BEAN == this.twoShoutBean){
+      //   this.scene.add(this.number2);
+      // }
+      // if(BEAN == this.threeShoutBean){
+      //   this.scene.add(this.number3);
+      // }
+      // if(BEAN == this.fourShoutBean){
+      //   this.scene.add(this.number4);
+      // }
+
+      if(this.oneShoutBean < BEAN && BEAN < this.fourShoutBean){
+        let currentStep = BEAN - this.oneShoutBean;
+        let totalSteps = this.fourShoutBean - this.oneShoutBean;
+        let initialPosition = 0 * GU;
+        let interval = 1.5 * GU; // [0..1.5]
+        let stepSize = interval/totalSteps;
+        this.number1.position.x = initialPosition + (currentStep * stepSize);
         this.scene.add(this.number1);
       }
-      if(BEAN == this.twoShoutBean){
+      if(this.twoShoutBean < BEAN && BEAN < this.fourShoutBean){
+        let currentStep = BEAN - this.twoShoutBean;
+        let totalSteps = this.fourShoutBean - this.twoShoutBean;
+        let initialPosition = 0 * GU;
+        let interval = 0.6 * GU; // [0..0.6]
+        let stepSize = interval/totalSteps;
+        this.number2.position.y = initialPosition + (currentStep * stepSize);
         this.scene.add(this.number2);
       }
-      if(BEAN == this.threeShoutBean){
+      // number3 slide:
+      if(this.threeShoutBean < BEAN && BEAN < this.fourShoutBean){
+        let currentStep = BEAN - this.threeShoutBean;
+        let totalSteps = this.fourShoutBean - this.threeShoutBean;
+        let initialPosition = 0 * GU;
+        let interval = 1.3 * GU; // 0 - (-1.3)
+        let stepSize = interval/totalSteps;
+        this.number3.position.x = initialPosition - (currentStep * stepSize);
         this.scene.add(this.number3);
       }
       if(BEAN == this.fourShoutBean){
         this.scene.add(this.number4);
-      }
-
-      // number3 slide:
-      if(this.threeShoutBean < BEAN && BEAN < this.fourShoutBean){
-        // debugger;
-        let currentStep = BEAN - this.threeShoutBean;
-        let totalSteps = this.fourShoutBean - this.threeShoutBean;
-        let interval = 2 * GU; // 1.5 - (-1.5)
-        let initialPosition = 1 * GU;
-        let stepSize = interval/totalSteps;
-        this.number3.position.x = initialPosition - (currentStep * stepSize);
       }
 
       this.cube.rotation.x = Math.sin(frame / 10);
