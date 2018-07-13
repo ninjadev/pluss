@@ -13,9 +13,9 @@
         this.uniforms.multiplier.value = 2.0;
       } else if (BEAN >= 1644 && BEAN < 1652) {
         this.uniforms.multiplier.value = 4.0;
-      } else if (BEAN >= 1652 && BEAN < 1660) {
+      } else if (BEAN >= 1652 && BEAN < 1664) {
         this.uniforms.multiplier.value = 8.0;
-      } else if (BEAN >= 1660 && BEAN < 1680) {
+      } else if (BEAN >= 1664 && BEAN < 1680) {
         this.uniforms.multiplier.value = 12.0;
       }
 
