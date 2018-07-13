@@ -11,7 +11,7 @@ uniform float blastDistance;
 #define origin_x 0.
 #define origin_y 0.
 #define origin_z -15.
-#define blastWidth 10.
+#define blastWidth 30.
 // This is the base used to calculate the cameras edges. 
 // A camera with a far plane at 1 with an aspect ratio of
 // 16/9 will have the vertical edge at (1,1.4733).
