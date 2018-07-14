@@ -77,7 +77,7 @@
                            this.patternMaterial,[0,0,0], 
                            5, this.scene);
       this.cones.brown_cone = {};
-      this.createIceSphere(this.cones.brown_cone, {color:0x2e0b16, side:THREE.DoubleSide}, 
+      this.createIceSphere(this.cones.brown_cone, {color:0x7AF0CE, side:THREE.DoubleSide}, 
                            this.patternMaterial,[4,8,0], 
                            5, this.scene);
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
