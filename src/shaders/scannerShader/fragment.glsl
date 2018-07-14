@@ -12,7 +12,7 @@ uniform float blastDistance;
 #define origin_x 0.
 #define origin_y 0.
 #define origin_z -15.
-#define blastWidth 30.
+#define blastWidth 60.
 // This is the base used to calculate the cameras edges. 
 // A camera with a far plane at 1 with an aspect ratio of
 // 16/9 will have the vertical edge at (1,1.4733).
@@ -26,7 +26,7 @@ void main() {
 
   float linear_depth = depth * ((cameraFar - cameraNear) + cameraNear) / cameraFar; // For now near is so close to the camera that this will do. Should be calculated more exact.
 
-  if (linear_depth > 0.7)
+  if (linear_depth > 0.63)
   {
     diffuse = diffuseBG;
   }
