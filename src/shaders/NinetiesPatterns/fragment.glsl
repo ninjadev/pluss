@@ -245,6 +245,8 @@ float banana_head_butt(vec2 p, float size) {
 }
 
 vec3 bananaPattern(vec2 p) {
+    vec2 q = p;
+
     float size = patternSize;
 
     p -= time * patternSpeed;
@@ -266,7 +268,7 @@ vec3 bananaPattern(vec2 p) {
     float bg = banana_bodies * banana_head_butts;
 
     return (
-        vec3(0.35, 0.75, 1.) * bg +
+        vec3(0.35, 0.75 + q.y * 0.25, 1.) * bg +
         vec3(1., 1., 0.) * (1. - banana_bodies) +
         vec3(0.5, 0.3, 0.15) * (1. - banana_head_butts)
     ) - (
