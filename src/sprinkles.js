@@ -16,8 +16,17 @@
     }
 
     update(frame) {
+      this.frame = frame
       super.update(frame);
 
+    }
+
+    resize() {
+      this.canvas.width = 16 * GU;
+      this.canvas.height = 9 * GU;
+    }
+
+    render() {
       // This clears the canvas
       this.canvas.width += 0;
 
@@ -37,7 +46,7 @@
         // Sprincle drawing
         const draw_sprinkle = () => {
           ctx.save();
-          ctx.rotate(frame/100 % 2*Math.PI + random());
+          ctx.rotate(this.frame/100 % 2*Math.PI + random());
           ctx.translate(-0.5,-2);
           ctx.beginPath();
           ctx.lineTo(0+nudge(),0+nudge());
@@ -69,14 +78,6 @@
 
         ctx.restore();
       }
-    }
-
-    resize() {
-      this.canvas.width = 16 * GU;
-      this.canvas.height = 9 * GU;
-    }
-
-    render() {
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
