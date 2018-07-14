@@ -214,7 +214,7 @@
       }
 
 
-      if (BEAN >= 1440 - 4  && BEAN < 1440 + 24) {
+      if (BEAN >= 1440 - 4  && BEAN < 1440 + 24 + 24) {
         for (let i = 0; i < 2; i++) {
           this.ctx.save();
           this.ctx.fillStyle = colors[0];
@@ -224,47 +224,53 @@
             this.ctx.translate(shadowSize, shadowSize);
           }
           const duration = 12;
-          if (BEAN >= 1440 - 4 && BEAN <= 1440 + duration) {
+          if (BEAN >= 1440 - 4 && BEAN < 1440 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
+          /*
           if (BEAN >= 1440 + 4 && BEAN <= 1440 + 4 + duration) {
             this.ctx.save();
             this.ctx.translate(0, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
+          */
 
-          if (BEAN >= 1440 + 8 && BEAN <= 1440 + 8 + duration) {
+          if (BEAN >= 1440 + 12 + 8 && BEAN < 1440 + 12 + 8 + duration) {
             this.ctx.save();
-            this.ctx.translate(3.65, -2.5);
+            this.ctx.translate(3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
+          /*
           if (BEAN >= 1440 + 12 && BEAN <= 1440 + 12 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
+          */
 
-          if (BEAN >= 1440 + 16 && BEAN <= 1440 + 16 + duration) {
+          if (BEAN >= 1440 + -4 + 12 && BEAN < 1464) {
             this.ctx.save();
-            this.ctx.translate(0, 2.5);
+            this.ctx.translate(0, 0);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
+          /*
           if (BEAN >= 1440 + 20 && BEAN <= 1440 + 20 + duration) {
             this.ctx.save();
             this.ctx.translate(3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
+          */
           this.ctx.restore();
         }
       }
@@ -275,11 +281,15 @@
           if (BEAN < 1368 && i > 0) {
             break;
           }
-          if (BEAN >= 1440 && BEAN < 1464) {
+          if (BEAN >= 1440 - 4 && BEAN < 1464) {
             break;
           }
           this.ctx.save();
-          let wobbler = 0.5 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
+          let wobbleOffset = 0;
+          if(BEAN >= 1680) {
+            wobbleOffset = Math.PI;
+          }
+          let wobbler = 0.5 * Math.sin(wobbleOffset + this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
 
           if (BEAN >= 1340 - 4 && BEAN < 1392) {
             wobbler = lerp(wobbler, 0, F(this.frame, 1340-4, 4));
@@ -375,7 +385,6 @@
         this.ctx.scale(16, 16);
         const numTunnelBands = 131;
         for (let i = 0; i < numTunnelBands; i++) {
-          let shape = this.hexagon;
           let radius = 1 / (5 + (tunnelProgress * 16 + easeOut(0, 90, lastHitProgress) - i));
           if (i === numTunnelBands - 1) {
             this.ctx.fillStyle = this.green;
