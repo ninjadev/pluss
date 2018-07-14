@@ -46,7 +46,7 @@
           ctx.lineTo(1+nudge(),0+nudge());
           ctx.closePath();
           ctx.lineWidth = 0.1;
-          ctx.fillStyle = '#ffffff';
+          ctx.fillStyle = '#2e0b16';
           ctx.strokeStyle = '#ff5';
           ctx.stroke();
           ctx.fill();

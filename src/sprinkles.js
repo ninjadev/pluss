@@ -46,16 +46,16 @@
         // Sprincle drawing
         const draw_sprinkle = () => {
           ctx.save();
-          ctx.rotate(this.frame/100 % 2*Math.PI + random());
+          ctx.rotate(this.frame/100 % 3*Math.PI + random());
           ctx.translate(-0.5,-2);
           ctx.beginPath();
           ctx.lineTo(0+nudge(),0+nudge());
-          ctx.lineTo(0+nudge(),4+nudge());
+          ctx.lineTo(0+nudge(),7+nudge());
           ctx.lineTo(1+nudge(),4+random());
-          ctx.lineTo(1+nudge(),0+nudge());
+          ctx.lineTo(1+nudge(),2+nudge());
           ctx.closePath();
           ctx.lineWidth = 0.1;
-          ctx.fillStyle = '#fdf143';
+          ctx.fillStyle = '#7AF0CE';
           ctx.strokeStyle = '#ff5';
           ctx.stroke();
           ctx.fill();
