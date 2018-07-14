@@ -72,10 +72,16 @@
             var orange_height = smoothstep(0, orange_height_normal, ((BEAN - 12 * 4 * 91) / (12 * 4 * (91.10 - 91 ))) - (dist_center/4));
             var white_height = smoothstep(0, white_height_normal, ((BEAN - 12 * 4 * 91.25) / (12 * 4 * (91.35 - 91.25 ))) - (dist_center/4));
             // Puls in and out at start of scene. Scene starts properly at bridge 3 that is at BEAN #4368
-            if(BEAN < 4368)
+            // starts at about 4320
+            var startBean = 4320;
+            var endBean = 4368;
+            if(startBean < BEAN && BEAN < endBean)
             {
-              orange_height = Math.cos(BEAN/12) * orange_height_normal;
-              white_height = Math.cos(BEAN/12) * white_height_normal;
+              let beanInterval = endBean - startBean;
+              let howFarWeAreAlong = BEAN - startBean;
+              let fractionIn = howFarWeAreAlong / beanInterval;
+              orange_height = Math.sin(fractionIn * Math.PI) * orange_height_normal;
+              white_height = Math.sin(fractionIn * Math.PI) * white_height_normal;
             }
             var orange_width = orange_height / (Math.sqrt(3) / 2);
             var white_width = white_height / r3o2;
