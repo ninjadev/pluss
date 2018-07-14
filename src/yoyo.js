@@ -81,7 +81,8 @@
       const cameraZoom = smoothstep(0.1, 1, F(this.frame, 1296, 12));
       this.ctx.scale(cameraZoom, cameraZoom);
 
-      const green = '#00ffc6';
+      const green = '#7AF0CE';
+      this.green = green;
       const yellow = '#fffc00';
       const lightPink = '#f442e8';
       const pink = lightPink;
@@ -256,8 +257,14 @@
           }
           let y = 0;
           if (BEAN >= 1680) {
-            x += 0.12 * Math.cos(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
-            y += 0.12 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
+            x += easeIn(
+              0.12 * Math.cos(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4),
+              0,
+              F(this.frame, 1760 - 4, 4));
+            y += easeIn(
+              0.12 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4),
+              0,
+              F(this.frame, 1760 - 4, 4));
           }
           this.ctx.translate(x, y);
         } else if (i === 2) {
@@ -307,23 +314,29 @@
       if (BEAN >= 1872) {
         const tunnelProgress = F(this.frame, 1824, 64);
         const lastHitProgress = F(this.frame, 1944, 12);
-        const twistProgress = F(this.frame, 1896, 48);
+        //const twistProgress = F(this.frame, 1896, 48);
         this.ctx.scale(16, 16);
         const numTunnelBands = 131;
         for (let i = 0; i < numTunnelBands; i++) {
-          this.ctx.save();
-          const radius = 2 / (5 + (tunnelProgress * 16 + easeOut(0, 90, lastHitProgress) - i));
-          this.ctx.scale(radius, radius);
-          this.ctx.globalAlpha = Math.pow(
-            Math.max(0, Math.min(1, Math.abs(radius * 9))),
-            4
-          );
+          let shape = this.hexagon;
+          let radius = 1 / (5 + (tunnelProgress * 16 + easeOut(0, 90, lastHitProgress) - i));
           if (i === numTunnelBands - 1) {
-            this.ctx.fillStyle = '#7AF0CE';
+            this.ctx.fillStyle = this.green;
+            radius = 0.1;
           } else {
             this.ctx.fillStyle = colors[1 + (i % 3)];
+            if (Math.abs(radius) < 0.1) {
+              continue;
+            }
           }
-          this.ctx.rotate(0.0666 * i * easeOut(0, 1, twistProgress));
+          this.ctx.save();
+          this.ctx.scale(radius, radius);
+          /*this.ctx.globalAlpha = Math.pow(
+            Math.max(0, Math.min(1, Math.abs(radius * 9))),
+            4
+          );*/
+
+          //this.ctx.rotate(0.0666 * i * easeOut(0, 1, twistProgress));
           this.hexagon();
           this.ctx.restore();
         }
