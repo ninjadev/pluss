@@ -10,6 +10,8 @@
         }
       });
 
+      this.random = new global.Random(45);
+
       this.canvas = document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
       this.resizeCanvas = document.createElement('canvas');
@@ -18,6 +20,10 @@
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
+
+      this.ps = new global.ParticleSystem(
+        {friction: 0.982, numParticles: 40, life: 74, colors: ['#3fbdcc', 'white']}
+      );
 
       this.square = () => {
         this.ctx.fillRect(-0.5, -0.5, 1, 1);
@@ -78,6 +84,26 @@
           this.boomsta = 1;
         }
       }
+
+      if (BEAN === 1296 && BEAT) {
+        const randomOffset = this.random();
+        const particleCount = 40;
+        for (let i = 0; i < particleCount; i++) {
+          const angle = i / particleCount * Math.PI * 2 + randomOffset * Math.PI * 2;
+          const radius = Math.max(3, 0.9 + 2.7 * this.random());
+          this.ps.spawn(
+            Math.cos(angle) * radius,  // x
+            Math.sin(angle) * radius,  // y
+            this.random() * 0.2 * Math.cos(angle),  // dx
+            this.random() * 0.2 * Math.sin(angle),  // dy
+            angle,  // rotation
+            lerp(-0.1, 0.1, this.random()),  // rotationalSpeed
+            1.5 * lerp(0.3, 0.6, this.random())  // size
+          );
+        }
+      }
+
+      this.ps.update();
     }
 
     resize() {
@@ -216,15 +242,24 @@
           this.ctx.restore();
         }
 
-        this.ctx.strokeStyle = 'white';
-        const lineWidth = 10 * this.boomsta;
-        const lineHeight = 0.5;
-        this.ctx.beginPath();
-        this.ctx.lineWidth = lineHeight;
-        this.ctx.lineCap = 'round';
-        this.ctx.moveTo(-lineWidth / 2, 2.5);
-        this.ctx.lineTo(lineWidth / 2, 2.5);
-        this.ctx.stroke();
+        // Beat bar
+        for (let i = 0; i < 2; i++) {
+          this.ctx.save();
+          this.ctx.strokeStyle = (i === 0 ? shadowColor : 'white');
+          if (i === 0) {
+            this.ctx.translate(0.08 * 1.6, 0.08 * 1.6);
+          }
+          const lineWidth = 10 * this.boomsta;
+          const lineHeight = 0.5;
+          this.ctx.beginPath();
+          this.ctx.lineWidth = lineHeight;
+          this.ctx.lineCap = 'round';
+          this.ctx.moveTo(-lineWidth / 2, 2.5);
+          this.ctx.lineTo(lineWidth / 2, 2.5);
+          this.ctx.stroke();
+          this.ctx.restore();
+        }
+
       } else {
         // transparent background, to mix in the banana shader
       }
@@ -365,7 +400,7 @@
           this.ctx.scale(horizontalScaler, verticalScaler);
 
           if (i === 0) {
-            let x = lerp(0, -1, BEAN - 1356 - 4);
+            let x = lerp(0, -1, BEAN - 1356 - 8);
             x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
             x = lerp(x, -1, BEAN - 1464 + 1);
             x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
@@ -452,6 +487,7 @@
         }
       }
 
+      this.ps.render(this.ctx);
 
       this.ctx.restore();
 

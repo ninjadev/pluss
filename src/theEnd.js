@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class theEnd extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -120,8 +121,8 @@
       this.ctx.font = 'bold ' + (size * GU) + `pt ${font}`;
       this.ctx.textAlign = 'left';
       this.ctx.textBaseline = 'middle';
-
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
       this.ctx.fillStyle = this.bgcolor;
       this.ctx.fillRect(0, 0, 16*GU, 9*GU);
       this.ctx.save();
@@ -163,6 +164,14 @@
       this.ctx.fillText('DEV', 8.9 * GU, 4.5 * GU);
 
       this.ctx.restore();
+
+      if(BEAN >= 5712) {
+        this.ctx.save();
+        this.ctx.fillStyle = 'black';
+        this.ctx.globalAlpha = easeOut(0, 1, F(this.frame, 5712, 12));
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.restore();
+      }
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);

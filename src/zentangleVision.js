@@ -153,14 +153,14 @@
       this.number4.position.y = -heighter;
 
       // Region add rotation aboutself
-      this.number1.rotation.y = easeOut(
-        Math.PI / 2, 0, Math.pow(F(this.frame, 4464, 24), 0.5));
-      this.number2.rotation.y = easeOut(
-        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 12, 24), 0.5));
-      this.number3.rotation.y = easeOut(
-        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 24, 24), 0.5));
-      this.number4.rotation.y = easeOut(
-        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 36, 24), 0.5));
+      this.number1.rotation.y = easeIn(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 - 24, 24), 0.5));
+      this.number2.rotation.y = easeIn(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 12 - 24, 24), 0.5));
+      this.number3.rotation.y = easeIn(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 24 - 24, 24), 0.5));
+      this.number4.rotation.y = easeIn(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 36 - 24, 24), 0.5));
       // End region rotate about self
     } // End update()
   }

@@ -56,6 +56,16 @@
         this.cube.position.x = 0;
         this.cube.position.y = -6;
       }
+      if (frame < start_obj_bounce)
+      {
+        this.cube.position.y = 1000;
+      }
+      else if (frame > start_obj_bounce && frame < end_obj_bounce)
+      {
+        this.cube.position.y = 0.03 * (frame - end_obj_bounce) * GU * Math.sin(frame / Math.PI);
+        this.cube.position.x = (frame - end_obj_bounce) * 2;
+      }
+
 
     }
 
