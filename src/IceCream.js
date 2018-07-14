@@ -51,7 +51,7 @@
       this.createIceSphere = function(container, color, material, position, size, scene){
         container.mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 32, 32), 
                                         new THREE.MeshBasicMaterial(color));
-        container.plane = new THREE.Mesh(new THREE.PlaneGeometry(20,20,32), material);
+        container.plane = new THREE.Mesh(new THREE.PlaneGeometry(11,11,32), material);
         container.mesh.position.x = position[0];
         container.mesh.position.y = position[1];
         container.mesh.position.z = position[2];
@@ -65,26 +65,24 @@
       this.patternMaterial = new THREE.MeshBasicMaterial();
       //this.patternMaterial.transparent = true; 
       this.createIceSphere(this.cones.white_cone, {color:0x888888, side:THREE.DoubleSide}, 
-                           this.patternMaterial,[10,50,0], 
+                           this.patternMaterial,[8,0,0], 
                            5, this.scene);
       this.cones.pink_cone = {};
       this.createIceSphere(this.cones.pink_cone, {color:0x881188, side:THREE.DoubleSide}, 
-                           this.patternMaterial,[-10,50,0], 
+                           this.patternMaterial,[0,0,0], 
                            5, this.scene);
       this.cones.brown_cone = {};
       this.createIceSphere(this.cones.brown_cone, {color:0x8B4513, side:THREE.DoubleSide}, 
-                           this.patternMaterial,[0,50,0], 
+                           this.patternMaterial,[4,8,0], 
                            5, this.scene);
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
 
       var light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);
       this.scene.add(light);
-      this.camera.position.x = 0; 
-      this.camera.position.y = 0; 
-      this.camera.position.z = -50;
+      this.camera.position.set(0,0,-50);
       //this.camera.lookAt = new THREE.Vector3(-1.7,11.98,-5.35);
-      this.camera.lookAt = new THREE.Vector3(0,0,0);
+      this.camera.lookAt(this.cones.white_cone.mesh.position);
       this.positionUpdater = function(frame)
       {
         // Here we drop down three balls
@@ -117,14 +115,17 @@
     update(frame) {
       super.update(frame);
       /* Position updates*/
-      this.positionUpdater(frame);
-
+      //this.positionUpdater(frame);
 
       this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.TestShader);
       this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.TestShader);
       this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
-      //this.camera.position.x = 100* Math.sin(frame/100); 
-      //this.camera.position.z = 100* Math.cos(frame/100); 
+      //this.camera.lookAt.set() = new THREE.Vector3(0.88,1.16,-5.01);
+      this.camera.position.x = 30* Math.sin(frame/100)+ 40; 
+      this.camera.position.z = 30* Math.cos(frame/100);
+      this.camera.position.y = 30;
+      this.camera.lookAt(this.cones.white_cone.mesh.position);
+ 
       //this.camera.lookAt(new THREE.Vector3(0,0,0));
     }
   }
