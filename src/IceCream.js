@@ -153,6 +153,24 @@
       const pos2 = trgt2.add(disp2.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
       const pos3 = trgt3.add(disp3.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
 
+      // Rotate around y-axis
+      if (localtime > 120) {
+        const rotvec = new THREE.Vector3(0,1,0);
+        const rot = (localtime - 120) / 20.0;
+        pos1.applyAxisAngle(rotvec, rot);
+        pos2.applyAxisAngle(rotvec, rot);
+        pos3.applyAxisAngle(rotvec, rot);
+      }
+
+      // Rotate around y-axis
+      if (localtime > 150) {
+        const rotvec = new THREE.Vector3(1,0,0);
+        const rot = (localtime - 150) / 20.0;
+        pos1.applyAxisAngle(rotvec, rot);
+        pos2.applyAxisAngle(rotvec, rot);
+        pos3.applyAxisAngle(rotvec, rot);
+      }
+
       // Set positions
       this.cones.white_cone.mesh.position.set(pos1.x, pos1.y, pos1.z);
       this.cones.brown_cone.mesh.position.set(pos3.x, pos3.y, pos3.z);
