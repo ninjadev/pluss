@@ -10,7 +10,7 @@
       // Sync related, change these to match
       // start and end BEANs of the placement of this scene
       this.startBEAN = 4896;
-      this.endBean = 5167;
+      this.endBean = 5177;
 
       // Settings
       this.ballBEANsync = 24;

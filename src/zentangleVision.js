@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class zentangleVision extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -41,8 +42,8 @@
 
       var flat_material_1 = new THREE.MeshBasicMaterial({color: 0x3de8ff});
       var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xff0094});
-      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x18d100});
-      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0xfffa00});
+      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x71ff51});
+      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0xfffd00});
 
       loadObject('res/1.obj', flat_material_1, this.number1_raw );
       loadObject('res/2.obj', flat_material_2, this.number2_raw );
@@ -97,6 +98,7 @@
 
     update(frame) {
       super.update(frame);
+      this.frame = frame;
 
       // Remove when jumping to earlier to make debugging easier
       if(BEAN < this.oneShoutBean){
@@ -140,28 +142,25 @@
       }
       // Region add numbers end
 
-      let endFinalTransition = 4720;
-      if(this.fourShoutBean < BEAN && BEAN < endFinalTransition)
-      {
-        let number1PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, endFinalTransition, this.number1originalPosition, this.number2originalPosition, BEAN);
-        this.number1.position.x = number1PosNow.x;
-        this.number1.position.y = number1PosNow.y;
-        let number2PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, endFinalTransition, this.number2originalPosition, this.number3originalPosition, BEAN);
-        this.number2.position.x = number2PosNow.x;
-        this.number2.position.y = number2PosNow.y;
-        let number3PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, endFinalTransition, this.number3originalPosition, this.number4originalPosition, BEAN);
-        this.number3.position.x = number3PosNow.x;
-        this.number3.position.y = number3PosNow.y;
-        let number4PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, endFinalTransition, this.number4originalPosition, this.number1originalPosition, BEAN);
-        this.number4.position.x = number4PosNow.x;
-        this.number4.position.y = number4PosNow.y;
-      } // This ends when bird scene starts at bean #4776
+      const heighter = 12.8;
+      this.number1.position.x = -45;
+      this.number1.position.y = -heighter;
+      this.number2.position.x = -25;
+      this.number2.position.y = -heighter - 5;
+      this.number3.position.x = -2;
+      this.number3.position.y = -heighter + 3;
+      this.number4.position.x = 25;
+      this.number4.position.y = -heighter;
 
       // Region add rotation aboutself
-      this.number1.rotation.y = frame / 10;
-      this.number2.rotation.y = frame / 10;
-      this.number3.rotation.y = frame / 10;
-      this.number4.rotation.y = frame / 10;
+      this.number1.rotation.y = easeOut(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464, 24), 0.5));
+      this.number2.rotation.y = easeOut(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 12, 24), 0.5));
+      this.number3.rotation.y = easeOut(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 24, 24), 0.5));
+      this.number4.rotation.y = easeOut(
+        Math.PI / 2, 0, Math.pow(F(this.frame, 4464 + 36, 24), 0.5));
       // End region rotate about self
     } // End update()
   }

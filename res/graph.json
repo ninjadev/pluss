@@ -352,6 +352,7 @@
     },
     "connected": {
       "logo": "ndvpainter.render",
+      "background": "WaveyPop.render",
       "patterns": "NinetiesPatterns.render"
     }
   },
