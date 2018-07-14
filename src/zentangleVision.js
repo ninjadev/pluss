@@ -8,10 +8,6 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),
-                                 new THREE.MeshBasicMaterial({ color: 0x444444 }));
-      this.scene.add(this.cube);
-
       var light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);
       this.scene.add(light);
@@ -43,10 +39,10 @@
         });
       };
 
-      var flat_material_1 = new THREE.MeshBasicMaterial({color: 0x999999});
-      var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xEEEEEE});
-      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x555555});
-      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0x333333});
+      var flat_material_1 = new THREE.MeshBasicMaterial({color: 0x3de8ff});
+      var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xff0094});
+      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x71ff51});
+      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0xff0f0f});
 
       loadObject('res/1.obj', flat_material_1, this.number1_raw );
       loadObject('res/2.obj', flat_material_2, this.number2_raw );
@@ -57,7 +53,7 @@
       this.twoShoutBean     = 4476;
       this.threeShoutBean   = 4490;
       this.fourShoutBean    = 4500;
-      this.ShoutingOverBeab = 4512;
+      this.ShoutingOverBean = 4512;
 
       this.number1 = new THREE.Object3D();
       this.number2 = new THREE.Object3D();
@@ -155,9 +151,6 @@
       } // This ends when bird scene starts at bean #4776
 
       // Region add rotation aboutself
-      this.cube.rotation.x = Math.sin(frame / 10);
-      this.cube.rotation.y = Math.cos(frame / 10);
-
       this.number1.rotation.y = frame / 10;
       this.number2.rotation.y = frame / 10;
       this.number3.rotation.y = frame / 10;
