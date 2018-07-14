@@ -116,12 +116,11 @@
 
       // Setup background
       {
-        const scale = 4.7;
+        const scale = 10;
         const backgroundMesh = new THREE.Mesh(
             new THREE.PlaneGeometry(16*scale, 9*scale, 0),
         );
         backgroundMesh.position.z = 0;
-        backgroundMesh.material.depthWrite = false;
 
         this.scene.add(backgroundMesh);
         this.backgroundMesh = backgroundMesh;
@@ -129,12 +128,17 @@
     }
 
     update(frame) {
-      super.update(frame);
 
       // Update background
+      const camera_normal = this.camera.getWorldDirection();
+      this.backgroundMesh.position.x = this.camera.position.x + camera_normal.x*100;
+      this.backgroundMesh.position.y = this.camera.position.y + camera_normal.y*100;
+      this.backgroundMesh.position.z = this.camera.position.z + camera_normal.z*100;
+      this.backgroundMesh.lookAt(this.camera.position);
       this.backgroundMesh.material = new THREE.MeshBasicMaterial({
         map: this.inputs.squiggleBackground.getValue(),
       });
+
 
       /* Position updates*/
       //this.positionUpdater(frame);
@@ -149,6 +153,8 @@
       this.camera.lookAt(this.cones.white_cone.mesh.position);
  
       //this.camera.lookAt(new THREE.Vector3(0,0,0));
+
+      super.update(frame);
     }
   }
   global.IceCream = IceCream;
