@@ -65,6 +65,11 @@
       this.number3.add(this.number3_raw);
       this.number4.add(this.number4_raw);
 
+      this.number1.scale.multiplyScalar(1.9);
+      this.number2.scale.multiplyScalar(1.9);
+      this.number3.scale.multiplyScalar(1.9);
+      this.number4.scale.multiplyScalar(1.9);
+
       // These correct the raw connections
       this.number1_raw.position.x = 0.6 * GU;
       this.number2_raw.position.x = 0 * GU;
