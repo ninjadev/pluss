@@ -275,6 +275,8 @@
         }
       }
 
+      let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
+
       // Three shapes
       if (BEAN < 1860) {
         for (let i = 0; i < 3; i++) {
@@ -282,6 +284,9 @@
             break;
           }
           if (BEAN >= 1440 - 4 && BEAN < 1464) {
+            break;
+          }
+          if (i === 2 && BEAN >= 1824 || i === 1 && BEAN >= 1836) {
             break;
           }
           this.ctx.save();
@@ -351,7 +356,6 @@
           this.ctx.save();
           const shadowSize = 0.15;
           this.ctx.translate(shadowSize / scale, shadowSize / scale);
-          let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
           if (BEAN >= 1340 && BEAN < 1392) {
             rotation = 0;
           }
@@ -378,14 +382,15 @@
       }
 
       // tunnel
-      if (BEAN >= 1856 && BEAN < 1872) {
+      if (BEAN >= 1848 && BEAN < 1872) {
         const tunnelProgress = F(this.frame, 1824, 64);
         const lastHitProgress = F(this.frame, 1944, 12);
         //const twistProgress = F(this.frame, 1896, 48);
         this.ctx.scale(16, 16);
+        this.ctx.rotate(rotation);
         const numTunnelBands = 131;
-        for (let i = 0; i < numTunnelBands; i++) {
-          let radius = 1 / (5 + (tunnelProgress * 16 + easeOut(0, 90, lastHitProgress) - i));
+        for (let i = 23; i < numTunnelBands; i++) {
+          let radius = 1 / (5 + (tunnelProgress * 2 * 16 + easeOut(0, 90, lastHitProgress) - i));
           if (i === numTunnelBands - 1) {
             this.ctx.fillStyle = this.green;
             radius = 0.1;
@@ -397,12 +402,7 @@
           }
           this.ctx.save();
           this.ctx.scale(radius, radius);
-          /*this.ctx.globalAlpha = Math.pow(
-            Math.max(0, Math.min(1, Math.abs(radius * 9))),
-            4
-          );*/
 
-          //this.ctx.rotate(0.0666 * i * easeOut(0, 1, twistProgress));
           this.hexagon();
           this.ctx.restore();
         }
