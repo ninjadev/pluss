@@ -30,7 +30,7 @@
       "F": "dimentionMultiplexerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
-      "I": "IceCream.render",
+      "I": "IceCreamEndShader.render",
       "I_bg": "starshader.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
@@ -335,6 +335,17 @@
   {
     "id": "sprinkles",
     "type": "sprinkles"
+  },
+  {
+    "id": "IceCreamEndShader",
+    "type": "IceCreamEndShaderNode",
+    "options": {
+      "shader": "IceCreamEndShader"
+    },
+    "connected": {
+      "tree": "intro.render",
+      "icecream": "IceCream.render"
+    }
   },
   {
     "id": "squiggleBackground",

@@ -30,5 +30,5 @@
     }
   }
 
-  global.dimentionMultiplexerShaderNode = dimentionMultiplexerShaderNode;
+  global.dimentionMultiplexerShaderNode = dimentionMultiplexerShaderNode; 
 })(this);
