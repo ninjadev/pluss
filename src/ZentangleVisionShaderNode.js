@@ -11,13 +11,6 @@
          squiggles: new NIN.TextureInput(),
       }
       super(id, options);
-
-      this.z1 = Loader.loadTexture('res/zentangles/z1.jpg');
-      this.z2 = Loader.loadTexture('res/zentangles/z2.png');
-      this.z3 = Loader.loadTexture('res/zentangles/z8.png');
-      this.z4 = Loader.loadTexture('res/zentangles/z10.jpg');
-      this.z5 = Loader.loadTexture('res/zentangles/z11.jpg');
-      this.z6 = Loader.loadTexture('res/zentangles/z12.jpg');
     }
 
     update(frame) {
