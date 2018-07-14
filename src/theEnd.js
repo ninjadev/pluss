@@ -114,6 +114,13 @@
     }
 
     render() {
+      let font = 'lemonmilkbold';
+      let size = 1.2;
+      let shake = 0.4;
+      this.ctx.font = 'bold ' + (size * GU) + `pt ${font}`;
+      this.ctx.textAlign = 'left';
+      this.ctx.textBaseline = 'middle';
+
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.fillStyle = this.bgcolor;
       this.ctx.fillRect(0, 0, 16*GU, 9*GU);
@@ -122,15 +129,12 @@
       this.ctx.translate(8*GU, 4.5*GU);
       this.ctx.scale(this.sizeNIN, this.sizeNIN);
       this.ctx.translate(-8*GU, -4.5*GU);
-      this.ctx.translate(this.cameraX * GU, this.cameraY * GU);
-      this.ctx.font = 'bold ' + (1.5 * GU) + 'pt bababoom';
-      this.ctx.textAlign = 'left';
-      this.ctx.textBaseline = 'middle';
+      this.ctx.translate(this.cameraX * GU * shake, this.cameraY * GU * shake);
 
       this.ctx.fillStyle = this.shadowNIN;
-      this.ctx.fillText('NIN', 4.5 * GU, 4.6 * GU);
+      this.ctx.fillText('NIN', 3.8 * GU, 4.6 * GU);
       this.ctx.fillStyle = this.colorNIN;
-      this.ctx.fillText('NIN', 4.4 * GU, 4.5 * GU);
+      this.ctx.fillText('NIN', 3.7 * GU, 4.5 * GU);
 
       this.ctx.restore();
       this.ctx.save();
@@ -138,10 +142,7 @@
       this.ctx.translate(8*GU, 4.5*GU);
       this.ctx.scale(this.sizeJA, this.sizeJA);
       this.ctx.translate(-8*GU, -4.5*GU);
-      this.ctx.translate(this.cameraX * GU, this.cameraY * GU);
-      this.ctx.font = 'bold ' + (1.5 * GU) + 'pt bababoom';
-      this.ctx.textAlign = 'left';
-      this.ctx.textBaseline = 'middle';
+      this.ctx.translate(this.cameraX * GU * shake, this.cameraY * GU * shake);
 
       this.ctx.fillStyle = this.shadowJA;
       this.ctx.fillText('JA', 6.8 * GU, 4.6 * GU);
@@ -154,15 +155,12 @@
       this.ctx.translate(8*GU, 4.5*GU);
       this.ctx.scale(this.sizeDEV, this.sizeDEV);
       this.ctx.translate(-8*GU, -4.5*GU);
-      this.ctx.translate(this.cameraX * GU, this.cameraY * GU);
-      this.ctx.font = 'bold ' + (1.5 * GU) + 'pt bababoom';
-      this.ctx.textAlign = 'left';
-      this.ctx.textBaseline = 'middle';
+      this.ctx.translate(this.cameraX * GU * shake, this.cameraY * GU * shake);
 
       this.ctx.fillStyle = this.shadowDEV;
-      this.ctx.fillText('DEV', 8.3 * GU, 4.6 * GU);
+      this.ctx.fillText('DEV', 9.0 * GU, 4.6 * GU);
       this.ctx.fillStyle = this.colorDEV;
-      this.ctx.fillText('DEV', 8.2 * GU, 4.5 * GU);
+      this.ctx.fillText('DEV', 8.9 * GU, 4.5 * GU);
 
       this.ctx.restore();
 
