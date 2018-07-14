@@ -75,16 +75,21 @@
       this.number3_raw.position.x = -0.6 * GU;
       this.number4_raw.position.x = -1.2 * GU;
 
-      // Final x/y posotions:
-      this.number1.position.x = 1.5 * GU;
-      this.number2.position.x = 0 * GU;
-      this.number3.position.x = -1.5 * GU;
-      this.number4.position.x = 0 * GU;
+      this.number1originalPosition = new THREE.Vector3(1.5 * GU, -0.2 * GU, this.number1.position.z);
+      this.number2originalPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number2.position.z);
+      this.number3originalPosition = new THREE.Vector3(-1.5 * GU, -0.2 * GU, this.number3.position.z);
+      this.number4originalPosition = new THREE.Vector3(0 * GU, -0.8 * GU, this.number4.position.z);
 
-      this.number1.position.y = -0.2 * GU;
-      this.number2.position.y = 0.6 * GU;
-      this.number3.position.y = -0.2 * GU;
-      this.number4.position.y = -0.8 * GU;
+      // Final x/y posotions:
+      this.number1.position.x = this.number1originalPosition.x;
+      this.number2.position.x = this.number2originalPosition.x;
+      this.number3.position.x = this.number3originalPosition.x;
+      this.number4.position.x = this.number4originalPosition.x;
+
+      this.number1.position.y = this.number1originalPosition.y;
+      this.number2.position.y = this.number2originalPosition.y;
+      this.number3.position.y = this.number3originalPosition.y;
+      this.number4.position.y = this.number4originalPosition.y;
     }
 
     update(frame) {
@@ -92,6 +97,15 @@
 
       // Remove when jumping to earlier to make debugging easier
       if(BEAN < this.oneShoutBean){
+        this.number1.position.x = this.number1originalPosition.x;
+        this.number2.position.x = this.number2originalPosition.x;
+        this.number3.position.x = this.number3originalPosition.x;
+        this.number4.position.x = this.number4originalPosition.x;
+
+        this.number1.position.y = this.number1originalPosition.y;
+        this.number2.position.y = this.number2originalPosition.y;
+        this.number3.position.y = this.number3originalPosition.y;
+        this.number4.position.y = this.number4originalPosition.y;
         this.scene.remove(this.number1);
         this.scene.remove(this.number2);
         this.scene.remove(this.number3);
@@ -132,31 +146,20 @@
       }
       // Region add numbers end
 
-      let number1originalPosition = new THREE.Vector3(1.5 * GU, -0.2 * GU, this.number1.position.z);
-      // let number1destinationPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number1.position.z);
-
-      let number2originalPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number2.position.z);
-      // let number2destinationPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number2.position.z);
-
-      let number3originalPosition = new THREE.Vector3(-1.5 * GU, -0.2 * GU, this.number3.position.z);
-      // let number3destinationPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number3.position.z);
-
-      let number4originalPosition = new THREE.Vector3(0 * GU, -0.8 * GU, this.number4.position.z);
-      // let number4destinationPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number4.position.z);
       if(this.fourShoutBean < BEAN){
-        let number1PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, 4776, number1originalPosition, number2originalPosition, BEAN);
+        let number1PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, 4760, this.number1originalPosition, this.number2originalPosition, BEAN);
         this.number1.position.x = number1PosNow.x;
         this.number1.position.y = number1PosNow.y;
-        let number2PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4776, number2originalPosition, number3originalPosition, BEAN);
+        let number2PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4760, this.number2originalPosition, this.number3originalPosition, BEAN);
         this.number2.position.x = number2PosNow.x;
         this.number2.position.y = number2PosNow.y;
-        let number3PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4776, number3originalPosition, number4originalPosition, BEAN);
+        let number3PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4760, this.number3originalPosition, this.number4originalPosition, BEAN);
         this.number3.position.x = number3PosNow.x;
         this.number3.position.y = number3PosNow.y;
-        let number4PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4776, number4originalPosition, number1originalPosition, BEAN);
+        let number4PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4760, this.number4originalPosition, this.number1originalPosition, BEAN);
         this.number4.position.x = number4PosNow.x;
         this.number4.position.y = number4PosNow.y;
-      } // This ends when bir scene starts at bean #4776
+      } // This ends when bird scene starts at bean #4776
 
       // Region add rotation aboutself
       this.cube.rotation.x = Math.sin(frame / 10);
