@@ -50,8 +50,29 @@
       super.update(frame);
       this.frame = frame;
 
-      if(BEAT && BEAN % 24 == 0) {
-        this.makeNewLines();
+      if(BEAN < 5424) {
+        if(BEAT && BEAN % 24 == 0) {
+          this.makeNewLines();
+        }
+      } else {
+
+        if(BEAT) {
+          switch(BEAN - 5472) {
+          case 0:
+          case 12:
+          case 24:
+          case 48:
+          case 48 + 24 - 4:
+          case 48 + 36:
+          case 96:
+          case 96 + 12 + 6:
+            this.makeNewLines();
+          }
+        }
+
+        if(BEAT && BEAN >= 5604 && BEAN % 2 == 0) {
+          this.makeNewLines();
+        }
       }
     }
 
