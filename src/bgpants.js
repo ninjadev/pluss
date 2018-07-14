@@ -41,7 +41,7 @@
         this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
 
         var colors = ["#090918", "#cb7f68", "#ece9f5"];
-        
+
         // Background
         this.ctx.fillStyle = colors[0];
         this.ctx.rect(-1 * GU , - 1 * GU, 18 * GU, 11 * GU);
@@ -53,8 +53,6 @@
         var orange_height = orange_height_normal;
         var white_height_normal = 0.2 * GU;
         var white_height = white_height_normal;
-
-        
 
         var orange_width = orange_height / (Math.sqrt(3) / 2);
         var white_width = white_height / r3o2;
@@ -72,8 +70,14 @@
             // Grow and define size
             var dist_center = Math.sqrt(Math.pow(4.5 - pos_y / GU,2) + Math.pow(8 - pos_x / GU ,2));
             var orange_height = smoothstep(0, orange_height_normal, ((BEAN - 12 * 4 * 91) / (12 * 4 * (91.10 - 91 ))) - (dist_center/4));
-            var orange_width = orange_height / (Math.sqrt(3) / 2);
             var white_height = smoothstep(0, white_height_normal, ((BEAN - 12 * 4 * 91.25) / (12 * 4 * (91.35 - 91.25 ))) - (dist_center/4));
+            // Puls in and out at start of scene. Scene starts properly at bridge 3 that is at BEAN #4368
+            if(BEAN < 4368)
+            {
+              orange_height = Math.cos(BEAN/12) * orange_height_normal;
+              white_height = Math.cos(BEAN/12) * white_height_normal;
+            }
+            var orange_width = orange_height / (Math.sqrt(3) / 2);
             var white_width = white_height / r3o2;
 
             // Drop down a bit starting from the center
@@ -93,7 +97,6 @@
               this.ctx.lineTo(pos_x, pos_y);
               this.ctx.stroke();
               this.ctx.fill();
-              
             }
             else
             {
