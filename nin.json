@@ -2,17 +2,18 @@
   "title": "My project",
   "authors": [
     "capitalism",
+    "flowie",
     "iverjo",
+    "kefirsjeiken",
     "lulle",
+    "monsi",
+    "profit",
+    "rohtie",
     "run",
     "sigveseb",
-    "stiaje",
-    "rohtie",
-    "kefirsjeiken",
-    "monsi",
-    "profit"
+    "stiaje"
   ],
-  "description": "This is my project",
+  "description": "Ninjadev's PC demo entry for Solskogen 2018.",
   "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
   "music": {
     "path": "res/music.mp3",
@@ -20,7 +21,7 @@
     "subdivision": 12,
     "BEANOffset": 0
   },
-  "googleAnalyticsID": "Your GA ID",
+  "googleAnalyticsID": "",
   "labels": [
     {
       "name": "Intro 1",
