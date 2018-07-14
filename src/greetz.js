@@ -598,6 +598,19 @@
     render() {
 
       this.ctx.fillStyle = '#fffc00';
+      this.ctx.strokeStyle = '#f5ce18';
+      if(BEAN >= 3216) {
+        const amount = F(this.frame, 3216, 48);
+        const fr = smoothstep(0xff, 0x61, amount);
+        const fg = smoothstep(0xfc, 0x28, amount);
+        const fb = smoothstep(0, 0x89, amount);
+        const sr = smoothstep(0xf5, 0xff, amount);
+        const sg = smoothstep(0xce, 0xff, amount);
+        const sb = smoothstep(0x18, 0xff, amount);
+        this.ctx.fillStyle = `rgb(${fr}, ${fg}, ${fb})`;
+        this.ctx.strokeStyle = `rgb(${sr}, ${sg}, ${sb})`;
+      }
+
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       
@@ -613,18 +626,20 @@
           if(scale) {
             this.ctx.translate(i, j);
             this.ctx.scale(scale, scale);
+            const rot = smoothstep(0, Math.PI / 8 * 3, F(this.frame, 3216 + i * 2 + j, 12));
+            this.ctx.rotate(rot);
             const length = 0.5;
             this.ctx.moveTo(- length / 2, 0);
             this.ctx.lineTo(+ length / 2, 0);
 
             this.ctx.moveTo(0, - length / 2);
             this.ctx.lineTo(0, + length / 2);
+            this.ctx.rotate(-rot);
             this.ctx.scale(1 / scale, 1 / scale);
             this.ctx.translate(-i, -j);
           }
         }
       }
-      this.ctx.strokeStyle = '#f5ce18';
       this.ctx.lineWidth = 0.1;
       this.ctx.lineCap = 'round';
       this.ctx.stroke();
