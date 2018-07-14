@@ -78,7 +78,8 @@
     },
     "connected": {
       "texture": "dimensionBackground.render",
-      "depth": "dimensionBackground.depth"
+      "depth": "dimensionBackground.depth",
+      "textureBG": "greetz.render"
     }
   },
   {

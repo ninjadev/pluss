@@ -630,18 +630,22 @@
       this.ctx.stroke();
       this.ctx.restore();
 
-      this.renderScene([
-          {word: 'LoGICOMA', at: 2784 + 48},
-          {word: 'MR. DoOB', at: 2832 + 48},
-          {word: 'DESiRE', at: 2880 + 48},
-          {word: 'POo-BRAIN', at: 2976},
-          {word: 'LFT', at: 3024},
-          {word: 'COCoON', at: 3072},
-          {word: 'STILL', at: 3120},
-          {word: 'S.GIRLS', at: 3144},
-          {word: 'EPHIDRENA', at: 3168},
-          {word: 'ALTAIR', at: 3192},
-      ]);
+      // Enable the text only in greetz scene and not the next one where this scnee is still the BG.
+      if (this.frame < 5075)
+      {
+        this.renderScene([
+            {word: 'LoGICOMA', at: 2784 + 48},
+            {word: 'MR. DoOB', at: 2832 + 48},
+            {word: 'DESiRE', at: 2880 + 48},
+            {word: 'POo-BRAIN', at: 2976},
+            {word: 'LFT', at: 3024},
+            {word: 'COCoON', at: 3072},
+            {word: 'STILL', at: 3120},
+            {word: 'S.GIRLS', at: 3144},
+            {word: 'EPHIDRENA', at: 3168},
+            {word: 'ALTAIR', at: 3192},
+        ]);
+      }
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
