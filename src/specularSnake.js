@@ -53,15 +53,43 @@
         curve.offset(-0.1).map(strokeCurve);
       }
 
+
       {
         const pi = Math.PI;
         const t = BEAN/10;
+
+        // Draw poops
+        const snakeBackPath = (t) => ({
+          x: (t % 24 - 6.5),
+          y: 4 + 1.5*Math.sin(t%24 - 3.5 + (-pi/2))
+        });
+
+        const rectCenteredAt = (x,y,w,h) =>
+          ctx.fillRect(x-(w/2), y-(h/2), w, h);
+
+        // Squares from snake butt
+        //for (let tt = 1; tt < t; tt += pi) {
+        //  const {x:x, y:y} = snakeBackPath(tt);
+        //  ctx.fillStyle = "#09eff0";
+        //  rectCenteredAt(x,y,.3,.3);
+        //}
+
+        // Sin-wave from snake butt
+        //for (let tt = 1; tt < t; tt += 0.1) {
+        //  const {x:x, y:y} = snakeBackPath(tt);
+        //  ctx.lineTo(x,y);
+        //}
+        //ctx.lineWidth = 0.1;
+        //ctx.strokeStyle = "#09eff0";
+        //ctx.stroke();
+
+        // Draw snake
         const x = t % 24 - 3.5;
         const y = (offset) => Math.sin(x + offset);
         const curve = Bezier.quadraticFromPoints(
-          {x: x-3, y: 3 + 1.5 * y(-pi/2)},
-          {x: x-1, y: 3 + y(-pi/4)},
-          {x: x+3, y: 3 + 0.3*y(pi/2)},
+          {x: x-3, y: 4 + 1.5 * y(-pi/2)},
+          {x: x-1, y: 4 + y(-pi/4)},
+          {x: x+3, y: 4 + 0.3*y(pi/2)},
           0.4
           );
         specularDraw(curve);
