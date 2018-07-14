@@ -2,6 +2,10 @@ uniform float frame;
 uniform float sync;
 uniform float transition;
 uniform float numBalls;
+
+uniform float scene;
+uniform float crazySpeed;
+
 uniform vec3 transCol;
 
 uniform sampler2D tDiffuse;
@@ -188,34 +192,63 @@ float balls(vec2 p) {
     return r;
 }
 
+vec3 goCrazy(vec2 p) {
+  float t = mod(time * crazySpeed, 1.);
+
+  vec3 col = mix(
+    mix(
+      vec3(1., 1., 0.),
+      vec3(0., 0., 1.),
+      t
+    ),
+    mix(
+      vec3(1., 0., 1.),
+      vec3(0., 1., 1.),
+      t
+    ),
+    t
+  );
+
+  return col;
+  // return vec3(0., 1., 1.);
+}
+
 void main() {
     vec2 p = p;
-    p = 2. * p - 1.;
-    p.x *= 16. / 9.;
 
-    vec3 col = vec3(p.y * 2., cos(time), cos(time));
+    vec3 col;
 
-    float pat = smoothstep(0., 0.01, pattern(p));
-    float pat_shadow = smoothstep(0., 0.01, pattern(p - vec2(0.015, 0.)));
+    if (scene == 0.0) {
+      p = 2. * p - 1.;
+      p.x *= 16. / 9.;
 
-    float cut = smoothstep(0., 0.005, cutout(p));
-    float cut_shadow = smoothstep(0., 0.025, cutout(p - vec2(0.075, -0.055)));
+      col = vec3(p.y * 2., cos(time), cos(time));
 
-    float hole_shadow = smoothstep(0., 0.01, holes(p - vec2(0.01, -0.01)));
-    float hole = smoothstep(0., 0.005, holes(p));
+      float pat = smoothstep(0., 0.01, pattern(p));
+      float pat_shadow = smoothstep(0., 0.01, pattern(p - vec2(0.015, 0.)));
 
-    float dots_pat = smoothstep(0., 0.005, dots(p));
+      float cut = smoothstep(0., 0.005, cutout(p));
+      float cut_shadow = smoothstep(0., 0.025, cutout(p - vec2(0.075, -0.055)));
 
-    float ball_line = smoothstep(0., 0.005, balls(p));
-    float ball_outline = smoothstep(0., 0.005, max(balls(p - vec2(0.01, -0.005)) - 0.001, -(balls(p))));
+      float hole_shadow = smoothstep(0., 0.01, holes(p - vec2(0.01, -0.01)));
+      float hole = smoothstep(0., 0.005, holes(p));
 
-    col = (
-        pat_shadow * pat * cut * cut_shadow * hole_shadow * ball_line * vec3(1., 0.15, 0.5) +
-        (1. - pat) * cut * hole * ball_line * vec3(0.25, 1.0, 0.25) +
-        (1. - cut) * ball_line * (p.x * 0.25 + 0.65) * vec3(0.5, (1. - p.x) * 0.85, 1.5) * 1.75 +
-        (1. - hole) * cut * dots_pat * cut_shadow * ball_line * mix(vec3(1.), transCol, clamp(transition, 0., 1.)) +
-        (1. - ball_line) * vec3(0.25, 1.0, 1.25) - (1. - ball_outline) * 0.15
-    );
+      float dots_pat = smoothstep(0., 0.005, dots(p));
+
+      float ball_line = smoothstep(0., 0.005, balls(p));
+      float ball_outline = smoothstep(0., 0.005, max(balls(p - vec2(0.01, -0.005)) - 0.001, -(balls(p))));
+
+      col = (
+          pat_shadow * pat * cut * cut_shadow * hole_shadow * ball_line * vec3(1., 0.15, 0.5) +
+          (1. - pat) * cut * hole * ball_line * vec3(0.25, 1.0, 0.25) +
+          (1. - cut) * ball_line * (p.x * 0.25 + 0.65) * vec3(0.5, (1. - p.x) * 0.85, 1.5) * 1.75 +
+          (1. - hole) * cut * dots_pat * cut_shadow * ball_line * mix(vec3(1.), transCol, clamp(transition, 0., 1.)) +
+          (1. - ball_line) * vec3(0.25, 1.0, 1.25) - (1. - ball_outline) * 0.15
+      );
+    }
+    else {
+      col = goCrazy(p);
+    }
 
     gl_FragColor = vec4(col, 1.0);
 }
