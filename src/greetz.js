@@ -345,14 +345,14 @@
         },
         P: {
           width: 1.25,
-          render: () => {
+          render: t => {
             drawWithShadow(color => {
               this.ctx.fillStyle = color || green;
               this.ctx.translate(1 -1.25 / 2, 0);
-              this.ctx.fillRect(-1, -1, 0.5, 2);
+              this.ctx.fillRect(-1, -1, easeIn(0, 0.5, t), 2);
 
               this.ctx.fillStyle = color || purple;
-              const r = 0.75;
+              const r = easeIn(0, 0.75, t);
               this.ctx.beginPath();
               this.ctx.ellipse(-0.5, -0.25, r, r, 3 * Math.PI / 2, 0, Math.PI);
               this.ctx.fill();
@@ -361,18 +361,18 @@
         },
         R: {
           width: 1.25,
-          render: () => {
+          render: t => {
             drawWithShadow(color => {
               this.ctx.fillStyle = color || green;
               this.ctx.translate(1 -1.25 / 2, 0);
-              this.ctx.fillRect(-1, -1, 0.5, 2);
+              this.ctx.fillRect(easeIn(-.5, -1, t), -1, easeIn(0, 0.5, t), 2);
 
               this.ctx.fillStyle = color || purple;
-              const r = 0.75;
+              const r = easeIn(0, 0.75, t);
               this.ctx.beginPath();
               this.ctx.ellipse(-0.5, -0.25, r, r, 3 * Math.PI / 2, 0, Math.PI);
               this.ctx.moveTo(-0.5, -1);
-              this.ctx.lineTo(0.25, 1);
+              this.ctx.lineTo(easeIn(-0.5, .25 ,t), 1);
               this.ctx.lineTo(-0.5, 1);
               this.ctx.fill();
             });
@@ -380,16 +380,16 @@
         },
         D: {
           width: 1.5,
-          render: () => {
+          render: t => {
             drawWithShadow(color => {
               this.ctx.fillStyle = color || green;
-              const r = 1;
+              const r = easeIn(0, 1, t);
               this.ctx.translate(0.5 - 1.5 / 2, 0);
               this.ctx.beginPath();
               this.ctx.moveTo(-0.5, -1);
               this.ctx.lineTo(0, -1);
               this.ctx.ellipse(0, 0, r, r, 3 * Math.PI / 2, 0, Math.PI);
-              this.ctx.lineTo(-0.5, 1);
+              this.ctx.lineTo(-0.5, easeIn(-1, 1, t));
               this.ctx.lineTo(-0.5, -1);
               this.ctx.fill();
             });
@@ -397,11 +397,11 @@
         },
         B: {
           width: 1.25,
-          render: () => {
+          render: t => {
             drawWithShadow(color => {
               this.ctx.fillStyle = color || green;
               this.ctx.translate(0.5 - 1.25 / 2, 0);
-              const r = 0.5;
+              const r = easeIn(0, 0.5, t);
               this.ctx.beginPath();
               this.ctx.moveTo(-0.5, -1);
               this.ctx.lineTo(0, -1);
