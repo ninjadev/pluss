@@ -12,6 +12,8 @@
 
       this.canvas = document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
+      this.resizeCanvas = document.createElement('canvas');
+      this.resizeCtx = this.resizeCanvas.getContext('2d');
       this.resize();
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
@@ -452,6 +454,30 @@
 
 
       this.ctx.restore();
+
+      /**
+       // Blur the canvas for smoother tiling.
+       // This is done by painting a downscaled version of the image on a separate canvas,
+       // and then paint an upscaled version of that on the original canvas
+       */
+      let multiplier = 1;
+      if (BEAN >= 1632 && BEAN < 1644) {
+        multiplier = 2;
+      } else if (BEAN >= 1644 && BEAN < 1652) {
+        multiplier = 4;
+      } else if (BEAN >= 1652 && BEAN < 1664) {
+        multiplier = 8;
+      } else if (BEAN >= 1664 && BEAN < 1680) {
+        multiplier = 12;
+      }
+      if (multiplier > 1) {
+        this.resizeCanvas.width = 1920 / multiplier;
+        this.resizeCanvas.height = 1080 / multiplier;
+        for (let i = 0; i < 4; i++) {
+          this.resizeCtx.drawImage(this.canvas, 0, 0, this.resizeCanvas.width, this.resizeCanvas.height);
+          this.ctx.drawImage(this.resizeCanvas, 0, 0, this.canvas.width, this.canvas.height);
+        }
+      }
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
