@@ -36,8 +36,11 @@
     update(frame) {
       super.update(frame);
 
-      this.cube.rotation.x = Math.sin(frame / 20);
-      this.cube.rotation.y = -Math.cos(frame / 20) + 3;
+      var vm_rotation_x =  0.7 * Math.sin(frame / 20) + Math.PI / 2;
+      var vm_rotation_y = 0.4 * -Math.cos(frame / 20);
+
+      this.cube.rotation.x = vm_rotation_x;
+      this.cube.rotation.y = vm_rotation_y;
 
       this.cube.position.y = 1000;
 
