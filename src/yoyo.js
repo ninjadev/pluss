@@ -62,6 +62,20 @@
     update(frame) {
       super.update(frame);
       this.frame = frame;
+
+      this.boomsta *= 0.9;
+      if(BEAT) {
+        switch((BEAN - 1872) % 96) {
+        case 0:
+        case 24 - 4:
+        case 24:
+        case 48 - 4:
+        case 48 + 12 - 4:
+        case 48 + 24 - 4:
+        case 48 + 24:
+          this.boomsta = 1;
+        }
+      }
     }
 
     resize() {
@@ -163,6 +177,7 @@
 
         for (let i = 0; i < numCircles; i++) {
           let scaler = 1;
+          /*
           if (BEAN >= 1892 && BEAN < 1896) {
             if (i === 1) {
               scaler = 0.5;
@@ -180,6 +195,7 @@
               scaler = 0.5;
             }
           }
+          */
           scaler *= easeOut(1, 0, F(this.frame, 1956, 9));
           this.ctx.save();
           this.ctx.translate(-5 + i * 3.25, 0);
@@ -197,6 +213,16 @@
           this.circle();
           this.ctx.restore();
         }
+
+        this.ctx.strokeStyle = 'white';
+        const lineWidth = 10 * this.boomsta;
+        const lineHeight = 0.5;
+        this.ctx.beginPath();
+        this.ctx.lineWidth = lineHeight;
+        this.ctx.lineCap = 'round';
+        this.ctx.moveTo(-lineWidth / 2, 2.5);
+        this.ctx.lineTo(lineWidth / 2, 2.5);
+        this.ctx.stroke();
       } else {
         // transparent background, to mix in the banana shader
       }
