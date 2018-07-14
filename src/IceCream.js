@@ -132,9 +132,9 @@
     update(frame) {
 
       /* Position updates*/
-      const disp1 = new THREE.Vector3(-30, -30, 0);
-      const disp2 = new THREE.Vector3( -10,  20 , 0);
-      const disp3 = new THREE.Vector3( 20, -10 , 0);
+      const disp1 = new THREE.Vector3(   0, -10, 0);
+      const disp2 = new THREE.Vector3( -10,  10, 0);
+      const disp3 = new THREE.Vector3(  10,  10, 0);
 
       const trgt1 = new THREE.Vector3(8,0,0);
       const trgt2 = new THREE.Vector3(0,0,0);
@@ -154,9 +154,9 @@
       const pos3 = trgt3.add(disp3.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
 
       // Set positions
-      this.cones.pink_cone.mesh.position.set(pos1.x, pos1.y, pos1.z);
-      this.cones.white_cone.mesh.position.set(pos2.x, pos2.y, pos2.z);
+      this.cones.white_cone.mesh.position.set(pos1.x, pos1.y, pos1.z);
       this.cones.brown_cone.mesh.position.set(pos3.x, pos3.y, pos3.z);
+      this.cones.pink_cone.mesh.position.set(pos2.x, pos2.y, pos2.z);
 
 
       // Add hairs to balls
