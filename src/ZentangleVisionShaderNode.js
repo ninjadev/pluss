@@ -45,6 +45,11 @@
         this.uniforms.z6.value = this.inputs.three_scene.getValue();
         this.uniforms.frame.value = frame;
       }
+      this.uniforms.z2.value = this.inputs.three_scene.getValue();
+      this.uniforms.z3.value = this.inputs.three_scene.getValue();
+      this.uniforms.z4.value = this.inputs.three_scene.getValue();
+      this.uniforms.z5.value = this.inputs.three_scene.getValue();
+      this.uniforms.z6.value = this.inputs.three_scene.getValue();
     }
   }
 
