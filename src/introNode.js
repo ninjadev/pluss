@@ -14,7 +14,7 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.dots_per_level = 20;
+      this.dots_per_level = 18;
       this.dots = 268;
     }
 
@@ -26,7 +26,7 @@
 
     update(frame) {
       this.frame = frame;
-      this.dots = (frame - 6125) % 200 ;
+      this.dots = (frame - 6125);
     }
 
     renderShape(ctx, shape) {
@@ -76,7 +76,7 @@
           const calcY = GU * (8.9 - y - dot / dots_per_level * dy) - GU;
           if(calcX <= 8 * GU) {
               ctx.fillStyle = `rgb(${nr|0}, ${ng|0}, ${nb|0})`;
-              ctx.fillRect(calcX, calcY, 0.02 * GU, 0.02 * GU);
+              ctx.fillRect(calcX, calcY, 0.06 * GU, 0.06 * GU);
               /*
               ctx.beginPath();
               ctx.ellipse(

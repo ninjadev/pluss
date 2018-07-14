@@ -18,7 +18,6 @@
       this.cube3.position.set(-30, 30, 0);
       //this.scene.add(this.cube3);
 
-      this.dimentionlens_model = new THREE.Object3D();
       var loadObject = function (objPath, material, three_object) {
         var objLoader = new THREE.OBJLoader();
         Loader.loadAjax(objPath, function(text) {
@@ -34,14 +33,6 @@
           three_object.add(object);
         });
       };
-
-      var bestMaterial = new THREE.MeshBasicMaterial({color: 0x382740});
-
-      loadObject('res/dimentionlens.obj', bestMaterial, this.dimentionlens_model );
-      this.scene.add( this.dimentionlens_model );
-      this.dimentionlens_model.scale.x = 24;
-      this.dimentionlens_model.scale.y = 24;
-      this.dimentionlens_model.scale.z = 24;
 
       this.vm_body = new THREE.Object3D();
       var vm_body_material = new THREE.MeshPhongMaterial({color: 0xD72921});
@@ -77,9 +68,9 @@
         });
       };
 
-      this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
+      this.bg = new THREE.Mesh(new THREE.BoxGeometry(821, 824, 0.0001),
                                  new THREE.MeshPhongMaterial({ color: 0x666666 })); // A background of max size ish. Useful to know how large that would be :)
-      this.bg.position.z = -49; // just within the cameras view
+      this.bg.position.z = -249; // just within the cameras view
       this.scene.add(this.bg);
 
       for (var i = 0; i < 60; i++)
@@ -119,21 +110,6 @@
 
       var start_ball_bounce = 5230;
       var end_ball_bounce = 5270;
-
-      this.dimentionlens_model.position.x = 0.45 * 80 * Math.sin((frame - end_ball_bounce) / 20);
-      this.dimentionlens_model.position.y =  0;
-      this.dimentionlens_model.position.z = 15;
-      this.dimentionlens_model.rotation.y = frame / 20;
-      if (frame < start_ball_bounce)
-      {
-        this.dimentionlens_model.position.y = 1000;
-      }
-      else if (frame > start_ball_bounce && frame < end_ball_bounce)
-      {
-        this.dimentionlens_model.position.y = 0.03 * (frame - end_ball_bounce) * GU * Math.sin(frame / Math.PI);
-        this.dimentionlens_model.position.x = (frame - end_ball_bounce) * 2;
-      }
-
 
       var vm_scale = 20;
       var vm_rotation_x = 1.9;
