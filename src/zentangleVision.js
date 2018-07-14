@@ -73,16 +73,16 @@
       this.number4.scale.multiplyScalar(1.9);
 
       // These correct the raw connections
-      this.number1_raw.position.x = 0.6 * GU;
-      this.number2_raw.position.x = 0 * GU;
-      this.number3_raw.position.x = -0.6 * GU;
-      this.number4_raw.position.x = -1.2 * GU;
+      this.number1_raw.position.x = 24;
+      this.number2_raw.position.x = 0;
+      this.number3_raw.position.x = -24;
+      this.number4_raw.position.x = -48;
 
       this.originVector = new THREE.Vector3(0,0,0);
-      this.number1originalPosition = new THREE.Vector3(1.25 * GU, -0.2 * GU, this.number1.position.z);
-      this.number2originalPosition = new THREE.Vector3(0 * GU, 0.3 * GU, this.number2.position.z);
-      this.number3originalPosition = new THREE.Vector3(-1.25 * GU, -0.3 * GU, this.number3.position.z);
-      this.number4originalPosition = new THREE.Vector3(0 * GU, -0.8 * GU, this.number4.position.z);
+      this.number1originalPosition = new THREE.Vector3(50, -8, this.number1.position.z);
+      this.number2originalPosition = new THREE.Vector3(0, 12, this.number2.position.z);
+      this.number3originalPosition = new THREE.Vector3(-50, -12, this.number3.position.z);
+      this.number4originalPosition = new THREE.Vector3(0, -32, this.number4.position.z);
 
       // Final x/y posotions:
       this.number1.position.x = this.number1originalPosition.x;
