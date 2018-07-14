@@ -125,8 +125,8 @@
     }
 
     warmup(renderer) {
-      this.ctx.update(363);
-      this.ctx.render(renderer);
+      this.update(363);
+      this.render(renderer);
     }
   }
 
