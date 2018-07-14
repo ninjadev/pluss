@@ -36,7 +36,7 @@
           const angle = Math.PI * 2 * i / 3;
           const x = radius * Math.cos(angle);
           const y = radius * Math.sin(angle);
-          if (i == 0) {
+          if (i === 0) {
             this.ctx.moveTo(x, y);
           }
           this.ctx.lineTo(x, y);
@@ -204,27 +204,7 @@
         }
 
         for (let i = 0; i < numCircles; i++) {
-          let scaler = 1;
-          /*
-          if (BEAN >= 1892 && BEAN < 1896) {
-            if (i === 1) {
-              scaler = 0.5;
-            }
-          } else if (BEAN >= 1916 && BEAN < 1928) {
-            if (i === 2) {
-              scaler = 0.5;
-            }
-          } else if (BEAN >= 1928 && BEAN < 1940) {
-            if (i === 2) {
-              scaler = 0.75;
-            }
-          } else if (BEAN >= 1940 && BEAN < 1944) {
-            if (i === 3) {
-              scaler = 0.5;
-            }
-          }
-          */
-          scaler *= easeOut(1, 0, F(this.frame, 1956, 9));
+          let scaler = easeOut(1, 0, F(this.frame, 1956, 9));
           this.ctx.save();
           this.ctx.translate(-5 + i * 3.25, 0);
           this.ctx.scale(2 * scaler, 2 * scaler);
@@ -259,7 +239,6 @@
           this.ctx.stroke();
           this.ctx.restore();
         }
-
       } else {
         // transparent background, to mix in the banana shader
       }
@@ -296,15 +275,6 @@
             this.ctx.restore();
           }
 
-          /*
-          if (BEAN >= 1440 + 4 && BEAN <= 1440 + 4 + duration) {
-            this.ctx.save();
-            this.ctx.translate(0, -2.5);
-            this.ctx.fillRect(-1, -1, 2, 2);
-            this.ctx.restore();
-          }
-          */
-
           if (BEAN >= 1440 + 12 + 8 && BEAN < 1440 + 12 + 8 + duration) {
             this.ctx.save();
             this.ctx.translate(3.65, 2.5);
@@ -312,30 +282,12 @@
             this.ctx.restore();
           }
 
-          /*
-          if (BEAN >= 1440 + 12 && BEAN <= 1440 + 12 + duration) {
-            this.ctx.save();
-            this.ctx.translate(-3.65, 2.5);
-            this.ctx.fillRect(-1, -1, 2, 2);
-            this.ctx.restore();
-          }
-          */
-
           if (BEAN >= 1440 + -4 + 12 && BEAN < 1464) {
             this.ctx.save();
             this.ctx.translate(0, 0);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
-
-          /*
-          if (BEAN >= 1440 + 20 && BEAN <= 1440 + 20 + duration) {
-            this.ctx.save();
-            this.ctx.translate(3.65, 2.5);
-            this.ctx.fillRect(-1, -1, 2, 2);
-            this.ctx.restore();
-          }
-          */
           this.ctx.restore();
         }
       }
