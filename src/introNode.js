@@ -115,7 +115,7 @@
       {
         this.ctx.beginPath();
         this.ctx.fillStyle = "#fbe967";
-        var scale_rect = (this.frame - 6259) / 1.1 *  GU;
+        var scale_rect = (this.frame - 6259) / 1.0 *  GU;
         this.ctx.fillRect(8 * GU - scale_rect  / 1.4, 2 * GU- scale_rect  / 2 , scale_rect, scale_rect);
         this.ctx.closePath();
       }
