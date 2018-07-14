@@ -13,6 +13,11 @@
       this.uniforms.overlay.value = this.inputs.overlay.getValue();
       this.uniforms.background.value = this.inputs.background.getValue();
     }
+
+    warmup(renderer) {
+      this.update(8262);
+      this.render(renderer);
+    }
   }
 
   global.NDVLogoOverlayShaderNode = NDVLogoOverlayShaderNode;

@@ -120,6 +120,11 @@
       selectedScene.enabled = true;
       this.outputs.render.setValue(selectedScene.getValue());
     }
+
+    warmup(renderer) {
+      this.ctx.update(5499);
+      this.ctx.render(renderer);
+    }
   }
 
   global.SceneSwitcherNode = SceneSwitcherNode;

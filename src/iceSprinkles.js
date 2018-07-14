@@ -80,6 +80,12 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(6000);
+      this.render(renderer);
+    }
+
   }
 
   global.iceSprinkles = iceSprinkles;

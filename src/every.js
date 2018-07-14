@@ -17,6 +17,11 @@
 
     }
 
+    warmup(renderer) {
+      this.update(576);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
       this.frame = frame;

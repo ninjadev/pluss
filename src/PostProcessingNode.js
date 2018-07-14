@@ -10,6 +10,11 @@
       this.paperTexture.wrapS = this.paperTexture.wrapT = THREE.RepeatWrapping;
     }
 
+    warmup(renderer) {
+      this.ctx.update(8226);
+      this.ctx.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.frame.value = frame;
       this.uniforms.tDiffuse.value = this.inputs.tDiffuse.getValue();

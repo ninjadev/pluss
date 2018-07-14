@@ -123,6 +123,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.ctx.update(363);
+      this.ctx.render(renderer);
+    }
   }
 
   global.osd = osd;

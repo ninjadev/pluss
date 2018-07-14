@@ -470,6 +470,11 @@
         }
       }
     }
+
+    warmup(renderer) {
+      this.update(1528);
+      this.render(renderer);
+    }
   }
 
   global.sleekAngles = sleekAngles;

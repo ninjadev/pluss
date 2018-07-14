@@ -126,6 +126,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(3130);
+      this.render(renderer);
+    }
   }
 
   global.ninjadevtext = ninjadevtext;

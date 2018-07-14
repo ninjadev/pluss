@@ -15,6 +15,12 @@
       this.output.magFilter = THREE.LinearFilter;
     }
 
+    warmup(renderer) {
+      this.update(5872);
+      this.render(renderer);
+    }
+
+
     update(frame) {
       this.frame = frame
       super.update(frame);

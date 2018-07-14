@@ -108,6 +108,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(8262);
+      this.render(renderer);
+    }
   }
 
   global.ndvpainter = ndvpainter;

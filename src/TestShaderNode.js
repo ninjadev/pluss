@@ -15,6 +15,11 @@
       this.uniforms.frame.value = frame;
       this.uniforms.sprinkles.value = this.inputs.sprinkles.getValue();
     }
+
+    warmup(renderer) {
+      this.update(6006);
+      this.render(renderer);
+    }
   }
 
   global.TestShaderNode = TestShaderNode;

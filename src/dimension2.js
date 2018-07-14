@@ -69,6 +69,11 @@
 
     }
 
+    warmup(renderer) {
+      this.update(5575); 
+      this.render(renderer);
+    }
+
     render(renderer) {
       renderer.render(this.scene, this.camera2, this.renderTarget, true);
       this.outputs.render.setValue(this.renderTarget.texture);

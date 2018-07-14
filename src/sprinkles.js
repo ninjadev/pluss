@@ -81,6 +81,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(5972);
+      this.render(renderer);
+    }
   }
 
   global.sprinkles = sprinkles;

@@ -83,8 +83,11 @@
           };
         }
       }
-      console.log(this.keyframes);
-      console.log(this.playback);
+    }
+
+    warmup(renderer) {
+      this.update(7597);
+      this.render(renderer);
     }
 
     update(frame) {

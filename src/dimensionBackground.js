@@ -156,6 +156,13 @@
       this.outputs.render.setValue(this.renderTarget.texture);
       this.outputs.depth.setValue(this.renderTarget.depthTexture);
     }
+
+    warmup(renderer) {
+      this.update(5103);
+      this.render(renderer);
+      this.update(5304);
+      this.render(renderer);
+    }
   }
 
   global.dimensionBackground = dimensionBackground;

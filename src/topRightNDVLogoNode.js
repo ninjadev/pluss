@@ -90,6 +90,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(2626);
+      this.render(renderer);
+    }
   }
 
   global.topRightNDVLogoNode = topRightNDVLogoNode;

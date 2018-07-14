@@ -31,6 +31,11 @@
         this.uniforms.amplitude.value  = this.amplitude;
       }
     }
+
+    warmup(renderer) {
+      this.update(8865);
+      this.render(renderer);
+    }
   }
 
   global.squiggleBackgroundNode = squiggleBackgroundNode;

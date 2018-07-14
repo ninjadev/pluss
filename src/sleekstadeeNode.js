@@ -29,6 +29,11 @@
       this.uniforms.blast.value = this.blast;
 
     }
+
+    warmup(renderer) {
+      this.update(3545);
+      this.render(renderer);
+    }
   }
 
   global.sleekstadeeNode = sleekstadeeNode;

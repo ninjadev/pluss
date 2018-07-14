@@ -187,6 +187,11 @@
       this.shadowDEV = this.blank;
       this.sizer = 1;
     }
+
+    warmup(renderer) {
+      this.update(8914);
+      this.render(renderer);
+    }
   }
 
   global.theEnd = theEnd;

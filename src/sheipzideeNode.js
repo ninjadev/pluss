@@ -4,6 +4,11 @@
       super(id, options);
     }
 
+    warmup(renderer) {
+      this.update(3731);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.frame.value = frame - 76.;
     }

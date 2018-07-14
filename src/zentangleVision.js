@@ -96,6 +96,11 @@
       this.number4.position.y = this.number4originalPosition.y;
     }
 
+    warmup(renderer) {
+      this.update(6949);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
       this.frame = frame;

@@ -13,6 +13,11 @@
       this.uniforms.overlay.value = this.inputs.overlay.getValue();
       this.uniforms.background.value = this.inputs.background.getValue();
     }
+
+    warmup(renderer) {
+      this.update(8212);
+      this.render(renderer);
+    }
   }
 
   global.EndShaderNode = EndShaderNode;

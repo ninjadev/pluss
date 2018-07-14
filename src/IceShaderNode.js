@@ -11,6 +11,11 @@
       this.resize();
     }
 
+    warmup(renderer) {
+      this.update(6000);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.frame.value = frame;
       this.uniforms.iceSprinkles.value = this.inputs.iceSprinkles.getValue();

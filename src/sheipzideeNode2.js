@@ -5,6 +5,11 @@
       super(id, options);
     }
 
+    warmup(renderer) {
+      this.ctx.update(3995);
+      this.ctx.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.frame.value = frame;
       this.uniforms.exitAmount2.value = easeIn(0, 1, F(frame, 2784 + 12, 12));

@@ -21,6 +21,11 @@
 
       this.uniforms.tDiffuse.value = this.inputs.tDiffuse.getValue();
     }
+
+    warmup(renderer) {
+      this.update(2626); 
+      this.render(renderer);
+    }
   }
 
   global.TilerNode = TilerNode;

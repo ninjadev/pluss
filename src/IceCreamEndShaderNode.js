@@ -20,6 +20,11 @@
       this.uniforms.icecream.value = this.inputs.icecream.getValue();
       this.uniforms.frame.value = frame;
     }
+
+    warmup(renderer) {
+      this.update(5998);
+      this.render(renderer);
+    }
   }
 
   global.IceCreamEndShaderNode = IceCreamEndShaderNode;

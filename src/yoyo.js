@@ -518,6 +518,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(2129);
+      this.render(renderer);
+    }
   }
 
   global.yoyo = yoyo;

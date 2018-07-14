@@ -12,6 +12,13 @@
       super(id, options);
     }
 
+    warmup(renderer) {
+      this.update(5103);
+      this.render(renderer);
+      this.update(5304);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.tDiffuseBG.value = this.inputs.textureBG.getValue();
       this.uniforms.tDepthBG.value = this.inputs.depthBG.getValue();
