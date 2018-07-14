@@ -132,28 +132,58 @@
     update(frame) {
 
       /* Position updates*/
-      //this.positionUpdater(frame);
+      const disp1 = new THREE.Vector3(-30, -30, 0);
+      const disp2 = new THREE.Vector3( -10,  20 , 0);
+      const disp3 = new THREE.Vector3( 20, -10 , 0);
 
-      this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.IceShader);
-      this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.CircleShader);
-      this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
-      //this.camera.lookAt.set() = new THREE.Vector3(0.88,1.16,-5.01);
-      this.camera.position.x = 30* Math.sin(frame/100)+ 40; 
-      this.camera.position.z = 30* Math.cos(frame/100);
-      this.camera.position.y = 30;
-      this.camera.lookAt(this.cones.white_cone.mesh.position);
+      const trgt1 = new THREE.Vector3(8,0,0);
+      const trgt2 = new THREE.Vector3(0,0,0);
+      const trgt3 = new THREE.Vector3(4,8,0);
+
+      // TODO: Animate these over time down to 0
+      const localtime = BEAN - 3600;
+      const duration = 100;
+      const disp_fact = easeIn(1, 0, localtime/duration);  // 1 - ease_out ?
+      const rot_fact  = easeOut(1, 0, localtime/duration);  // smoothstep - smoothstep ?
+
+      const rots = 10.0;  // in rads
+      const rotvec = new THREE.Vector3(0,0,1);
+
+      const pos1 = trgt1.add(disp1.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
+      const pos2 = trgt2.add(disp2.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
+      const pos3 = trgt3.add(disp3.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
+
+      // Set positions
+      this.cones.pink_cone.mesh.position.set(pos1.x, pos1.y, pos1.z);
+      this.cones.white_cone.mesh.position.set(pos2.x, pos2.y, pos2.z);
+      this.cones.brown_cone.mesh.position.set(pos3.x, pos3.y, pos3.z);
+
+
+      // Add hairs to balls
+      {
+        this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.IceShader);
+        this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.CircleShader);
+        this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
+        //this.camera.lookAt.set() = new THREE.Vector3(0.88,1.16,-5.01);
+        //this.camera.position.x = 30* Math.sin(frame/100)+ 40; 
+        //this.camera.position.z = 30* Math.cos(frame/100);
+        //this.camera.position.y = 30;
+        //this.camera.lookAt(this.cones.white_cone.mesh.position);
+      }
  
-      //this.camera.lookAt(new THREE.Vector3(0,0,0));
+      this.camera.lookAt(new THREE.Vector3(0,0,0));
 
       // Update background
-      const camera_normal = this.camera.getWorldDirection();
-      this.backgroundMesh.position.x = this.camera.position.x + camera_normal.x*100;
-      this.backgroundMesh.position.y = this.camera.position.y + camera_normal.y*100;
-      this.backgroundMesh.position.z = this.camera.position.z + camera_normal.z*100;
-      this.backgroundMesh.lookAt(this.camera.position);
-      this.backgroundMesh.material = new THREE.MeshBasicMaterial({
-        map: this.inputs.squiggleBackground.getValue(),
-      });
+      {
+        const camera_normal = this.camera.getWorldDirection();
+        this.backgroundMesh.position.x = this.camera.position.x + camera_normal.x*100;
+        this.backgroundMesh.position.y = this.camera.position.y + camera_normal.y*100;
+        this.backgroundMesh.position.z = this.camera.position.z + camera_normal.z*100;
+        this.backgroundMesh.lookAt(this.camera.position);
+        this.backgroundMesh.material = new THREE.MeshBasicMaterial({
+          map: this.inputs.squiggleBackground.getValue(),
+        });
+      }
 
 
       super.update(frame);
