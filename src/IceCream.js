@@ -1,7 +1,10 @@
 (function(global) {
   class IceCream extends NIN.THREENode {
     constructor(id, options) {
-      options.inputs = { TestShader: new NIN.TextureInput() };
+      options.inputs = {
+        TestShader: new NIN.TextureInput(),
+        squiggleBackground: new NIN.TextureInput(),
+      };
       options.outputs = { render: new NIN.TextureOutput() };
       super(id, options);
       this.renderTarget = new THREE.WebGLRenderTarget(640, 360, {
@@ -95,10 +98,29 @@
         // Fuck around
         // TREE TIME
       };
+
+      // Setup background
+      {
+        const scale = 4.7;
+        const backgroundMesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(16*scale, 9*scale, 0),
+        );
+        backgroundMesh.position.z = 0;
+        backgroundMesh.material.depthWrite = false;
+
+        this.scene.add(backgroundMesh);
+        this.backgroundMesh = backgroundMesh;
+      }
     }
 
     update(frame) {
       super.update(frame);
+
+      // Update background
+      this.backgroundMesh.material = new THREE.MeshBasicMaterial({
+        map: this.inputs.squiggleBackground.getValue(),
+      });
+
       /* Position updates*/
       this.positionUpdater(frame);
 

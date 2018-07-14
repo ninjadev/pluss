@@ -242,7 +242,8 @@
     "id": "IceCream",
     "type": "IceCream",
     "connected": {
-      "TestShader": "TestShader.render"
+      "TestShader": "TestShader.render",
+      "squiggleBackground": "squiggleBackground.render"
     }
   },
   {
@@ -329,5 +330,12 @@
   {
     "id": "sprinkles",
     "type": "sprinkles"
+  },
+  {
+    "id": "squiggleBackground",
+    "type": "squiggleBackgroundNode",
+    "options": {
+      "shader": "squiggleBackground"
+    }
   }
 ]
