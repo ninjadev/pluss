@@ -109,10 +109,12 @@
         colors = colorsList[10];
       } else if (BEAN >= 33 * 48) {
         colors = colorsList[9];
-      } else if (BEAN >= 32.5 * 48 - 4) {
-        colors = colorsList[8];
-      } else if (BEAN >= 31 * 48) {
-        colors = colorsList[7];
+      } else if (BEAN >= 1536 + 24 - 4) {
+        colors = colorsList[3];
+      } else if (BEAN >= 1536 + 12 - 4) {
+        colors = colorsList[5];
+      } else if (BEAN >= 1536 - 4) {
+        colors = colorsList[4];
       } else if (BEAN >= 1344 - 4 + 12) {
         colors = colorsList[3];
       } else if (BEAN >= 1344 - 4) {
@@ -296,14 +298,36 @@
           }
           let wobbler = 0.5 * Math.sin(wobbleOffset + this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
 
-          if (BEAN >= 1340 - 4 && BEAN < 1392) {
-            wobbler = lerp(wobbler, 0, F(this.frame, 1340-4, 4));
+          if (BEAN >= 1536 - 4 - 4 && BEAN < 1586) {
+            wobbler = lerp(wobbler, 0, F(this.frame, 1536 - 4 - 4, 4));
           }
           if (BEAN >= 1464 - 24 && BEAN < 1488) {
             wobbler = lerp(wobbler, 0, F(this.frame, 1464 - 24, 4));
           }
 
           let beforeTunnelSize = 1.6;
+
+
+          let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
+          if (BEAN >= 1340 && BEAN < 1392) {
+            rotation = 0;
+          }
+          if (BEAN >= 1536-4 && BEAN < 1584) {
+            rotation = Math.PI / 6;
+          }
+          if (BEAN >= 1356 - 4 && BEAN < 1392) {
+            rotation = Math.PI / 4;
+          }
+          if (BEAN >= 1368 && BEAN < 1392) {
+            rotation = 0;
+          }
+          if (BEAN >= 1368 + 8 && BEAN < 1392) {
+            rotation = Math.PI / 4;
+          }
+          if (BEAN >= 1464 + 8 && BEAN < 1488) {
+            rotation = 0;
+          }
+
           let scale = 1 + (3 - i) + wobbler;
           scale = smoothstep(scale, beforeTunnelSize, F(this.frame, 1830, 18));
           let squeezeProgress = F(this.frame, 1760, 19);
@@ -319,6 +343,10 @@
             x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
             const y = 0;
             this.ctx.translate(x, y);
+
+            if(BEAN >= 1536 - 4 && BEAN < 1584) {
+              rotation += Math.PI;
+            }
           } else if (i === 1) {
             let x = easeIn(0, 0.2, F(this.frame, 1368 - 12, 12));
             x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
@@ -352,27 +380,15 @@
             }
             const y = 0;
             this.ctx.translate(x, y);
+            if(BEAN >= 1536 + 12 + 12 - 4 && BEAN < 1584) {
+              rotation += Math.PI;
+            }
           }
 
           this.ctx.fillStyle = 'rgba(0,0,0,0.85)';
           this.ctx.save();
           const shadowSize = 0.15;
           this.ctx.translate(shadowSize / scale, shadowSize / scale);
-          if (BEAN >= 1340 && BEAN < 1392) {
-            rotation = 0;
-          }
-          if (BEAN >= 1356 - 4 && BEAN < 1392) {
-            rotation = Math.PI / 4;
-          }
-          if (BEAN >= 1368 && BEAN < 1392) {
-            rotation = 0;
-          }
-          if (BEAN >= 1368 + 8 && BEAN < 1392) {
-            rotation = Math.PI / 4;
-          }
-          if (BEAN >= 1464 + 8 && BEAN < 1488) {
-            rotation = 0;
-          }
           this.ctx.rotate(rotation);
           shape();
           this.ctx.restore();
