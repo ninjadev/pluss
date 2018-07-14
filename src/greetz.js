@@ -472,7 +472,7 @@
       super.update(frame);
       this.frame = frame;
 
-      if(BEAT && BEAN % 48 == 24) {
+      if(BEAT && BEAN % 48 == 24 && BEAN < 3120) {
         for(let i = 0; i < 24; i++) {
           const angle = i / 24 * Math.PI * 2;
           const radius = 1 * Math.random();

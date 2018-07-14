@@ -3,5 +3,6 @@
     "frame": { "type": "f", "value": 0.0 },
     "time": { "type": "f", "value": 0.0 },
     "scene": { "type": "f", "value": 0.0 },
+    "invert": { "type": "f", "value": 0.0 },
     "sync": { "type": "f", "value": 0.0 }
 }

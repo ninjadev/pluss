@@ -375,7 +375,7 @@
 
           this.ctx.closePath();
           this.ctx.fill();
-          j == 1 && this.ctx.stroke();
+          j === 1 && this.ctx.stroke();
           this.ctx.restore();
         }
 
@@ -406,7 +406,7 @@
         this.ctx.fillStyle = '#00befc';
         this.ctx.fillRect(-9, -4, 5, easeOut(0, 10, F(this.frame, 1248, 12)));
         this.ctx.fillStyle = shadowColor;
-        this.ctx.fillRect(-9, -4, 5, easeOut(0, shadowSize, F(this.frame, 1248, 12)));
+        //this.ctx.fillRect(-9, -4, 5, easeOut(0, shadowSize, F(this.frame, 1248, 12)));
         this.ctx.restore();
 
         this.ctx.restore();
