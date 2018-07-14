@@ -347,7 +347,10 @@
   },
   {
     "id": "ndvpainter",
-    "type": "ndvpainter"
+    "type": "ndvpainter",
+    "connected": {
+      "squigglesBG": "squiggles.render"
+    }
   },
   {
     "id": "upbeatShader",
