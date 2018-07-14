@@ -81,10 +81,15 @@
                            this.patternMaterial,[4,8,0], 
                            5, this.scene);
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
-
-      var light = new THREE.PointLight(0xffffff, 1, 100);
-      light.position.set(50, 50, 50);
-      this.scene.add(light);
+      this.cylinderGeometry = new THREE.CylinderGeometry( 5, 0, 20, 64 );
+      this.cylinderMaterial = new THREE.MeshBasicMaterial( {color: 0xEE7600} );
+      this.cylinder = new THREE.Mesh( this.cylinderGeometry, this.cylinderMaterial );
+      this.scene.add(this.cylinder);
+      this.cylinder.position.x = 6;
+      this.cylinder.position.y = -17;
+      this.cylinder.position.z = 20;
+      //light.position.set(50, 50, 50);
+      //this.scene.add(light);
       this.camera.position.set(0,0,-50);
       //this.camera.lookAt = new THREE.Vector3(-1.7,11.98,-5.35);
       this.camera.lookAt(this.cones.white_cone.mesh.position);
