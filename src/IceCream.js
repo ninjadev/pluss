@@ -129,17 +129,6 @@
 
     update(frame) {
 
-      // Update background
-      const camera_normal = this.camera.getWorldDirection();
-      this.backgroundMesh.position.x = this.camera.position.x + camera_normal.x*100;
-      this.backgroundMesh.position.y = this.camera.position.y + camera_normal.y*100;
-      this.backgroundMesh.position.z = this.camera.position.z + camera_normal.z*100;
-      this.backgroundMesh.lookAt(this.camera.position);
-      this.backgroundMesh.material = new THREE.MeshBasicMaterial({
-        map: this.inputs.squiggleBackground.getValue(),
-      });
-
-
       /* Position updates*/
       //this.positionUpdater(frame);
 
@@ -153,6 +142,17 @@
       this.camera.lookAt(this.cones.white_cone.mesh.position);
  
       //this.camera.lookAt(new THREE.Vector3(0,0,0));
+
+      // Update background
+      const camera_normal = this.camera.getWorldDirection();
+      this.backgroundMesh.position.x = this.camera.position.x + camera_normal.x*100;
+      this.backgroundMesh.position.y = this.camera.position.y + camera_normal.y*100;
+      this.backgroundMesh.position.z = this.camera.position.z + camera_normal.z*100;
+      this.backgroundMesh.lookAt(this.camera.position);
+      this.backgroundMesh.material = new THREE.MeshBasicMaterial({
+        map: this.inputs.squiggleBackground.getValue(),
+      });
+
 
       super.update(frame);
     }
