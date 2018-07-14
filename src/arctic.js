@@ -61,17 +61,17 @@
 
       this.ctx.translate(0, 4.5);
 
-      let width = 0.1;
-      let length = 1;
-      if (BEAN >= 4308) {
-        width = (BEAN-4308)*2;
-        length = 0;
-      }
+      let startBEAN = 4296;
+      let sluttBEAN = 4319;
+      let t = (this.frame - FRAME_FOR_BEAN(startBEAN))/(FRAME_FOR_BEAN(sluttBEAN) - FRAME_FOR_BEAN(startBEAN));
+      let c = lerp(255, 0, t);
+      let width = lerp(0.1, 10, t);
+
       const count = 128;
       this.ctx.beginPath();
       this.ctx.lineJoin = 'round';
       this.ctx.lineCap = 'butt';
-      this.ctx.lineWidth = width;
+      this.ctx.lineWidth = 0.1;
       this.ctx.moveTo(-1, 0);
       const amplitude = 2 * this.amplitude;
       for(let i = 0; i < count; i++) {
@@ -83,18 +83,18 @@
       }
       this.ctx.stroke();
 
-      this.ctx.strokeStyle = 'white';
+      this.ctx.strokeStyle = `rgb(${c},${c},${c})`;
 
       this.ctx.beginPath();
       this.ctx.lineJoin = 'round';
-      this.ctx.lineWidth = 0.1;
+      this.ctx.lineWidth = width;;
       this.ctx.moveTo(0, 0);
       for(let i = 0; i < count; i++) {
         const x = (i + 1) / count * 16;
         const y = amplitude * Math.sin(i / count * 32 + this.frame / 2) *
           smoothstep(0, 1, 2 * i / count) *
           smoothstep(1, 0, 2 * i / count - 1);
-        this.ctx.lineTo(x * length, y);
+        this.ctx.lineTo(x, y);
       }
       this.ctx.stroke();
 

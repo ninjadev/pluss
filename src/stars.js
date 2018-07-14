@@ -14,8 +14,8 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.pink = "#64bac8";
-      this.blue = "#d1679e";
+      this.blue = "#64bac8";
+      this.pink = "#d1679e";
       this.green = "#74fbc9";
       this.yellow = "#fae767";
 
@@ -48,42 +48,23 @@
         colors = [this.blue, this.green, this.yellow];
         bgcolor = this.pink;
       }
-      if (BEAN > startBEAN + takt * 4) {
-        colors = [this.pink, this.blue, this.green];
-        bgcolor = this.yellow;
-      }
-      if (BEAN > startBEAN + takt * 5) {
-        colors = [this.yellow, this.pink, this.blue];
-        bgcolor = this.green;
-      }
-      if (BEAN > startBEAN + takt * 6) {
-        colors = [this.green, this.yellow, this.pink];
-        bgcolor = this.blue;
-      }
-      if (BEAN > startBEAN + takt * 7) {
-        colors = [this.blue, this.green, this.yellow];
-        bgcolor = this.pink;
-      }
 
       let amp = 0.01;
       if(BEAT && BEAN <= 4272) {
-        switch((BEAN - 3984) % (48 * 4)) {
-        case 0:
-        case 32 - 4:
-        case 48 - 4:
-        case 48 + 32 - 4:
-        case 48 + 48 - 4:
-        case 48 + 48 + 12:
-        case 48 + 48 + 12 + 8:
-        case 48 + 48 + 32 - 4:
-        case 48 + 48 + 48 - 4:
-        case 48 * 3:
-        case 48 * 3 + 8:
-        case 48 * 3 + 24 - 4:
-        case 48 * 3 + 32 - 4:
-        case 48 * 3 + 32:
-          amp = 0.13;
-        }
+        let b = (BEAN - 3984) % (48 * 4);
+        if ((b >= 32 - 4 && b < 32) || 
+          (b >= 48 - 4 && b < 48) ||
+          (b >= 48 + 32 - 4 && b < 48 + 32) ||
+          (b >= 48 + 48 - 4 && b < 48 + 48) || 
+          (b >= 48 + 48 + 12 && b < 48 + 48 + 16) || 
+          (b >= 48 + 48 + 12 + 8  && b < 48 + 48 + 12 + 12) || 
+          (b >= 48 + 48 + 32 - 4  && b < 48 + 48 + 32) || 
+          (b >= 48 + 48 + 48 - 4  && b < 48 + 48 + 48) || 
+          (b >= 48 * 3 && b < 48 * 3 + 4) ||
+          (b >= 48 * 3 + 8 && b < 48 * 3 + 12) || 
+          (b >= 48 * 3 + 24 - 4 && b < 48 * 3 + 24) || 
+          (b >= 48 * 3 + 32 - 4 && b < 48 * 3 + 32) || 
+          (b >= 48 * 3 + 32 && b < 48 * 3 + 32 + 4)) {amp = 0.13}
       }
 
       this.ctx.save();
@@ -93,7 +74,7 @@
       for (var i=0;i<200;i++) {
         var x = this.stars[i][0] + amp*Math.sin(i + frame/60);
         var y = this.stars[i][1] + amp*Math.cos(i + frame/60);
-        var r = this.stars[i][2];
+        var r = this.stars[i][2] + amp*0.3;
         this.stars[i][0] = x;
         this.stars[i][1] = y;
         var a = x + r*0.5;
