@@ -65,6 +65,7 @@
       this.number3.add(this.number3_raw);
       this.number4.add(this.number4_raw);
 
+      // Resize the numbers:
       this.number1.scale.multiplyScalar(1.9);
       this.number2.scale.multiplyScalar(1.9);
       this.number3.scale.multiplyScalar(1.9);
@@ -77,9 +78,9 @@
       this.number4_raw.position.x = -1.2 * GU;
 
       this.originVector = new THREE.Vector3(0,0,0);
-      this.number1originalPosition = new THREE.Vector3(1.4 * GU, -0.2 * GU, this.number1.position.z);
-      this.number2originalPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number2.position.z);
-      this.number3originalPosition = new THREE.Vector3(-1.4 * GU, -0.2 * GU, this.number3.position.z);
+      this.number1originalPosition = new THREE.Vector3(1.25 * GU, -0.2 * GU, this.number1.position.z);
+      this.number2originalPosition = new THREE.Vector3(0 * GU, 0.3 * GU, this.number2.position.z);
+      this.number3originalPosition = new THREE.Vector3(-1.25 * GU, -0.3 * GU, this.number3.position.z);
       this.number4originalPosition = new THREE.Vector3(0 * GU, -0.8 * GU, this.number4.position.z);
 
       // Final x/y posotions:
