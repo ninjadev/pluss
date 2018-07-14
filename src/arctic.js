@@ -61,7 +61,7 @@
 
       this.ctx.translate(0, 4.5);
 
-      let startBEAN = 4296;
+      let startBEAN = 4308;
       let sluttBEAN = 4319;
       let t = (this.frame - FRAME_FOR_BEAN(startBEAN))/(FRAME_FOR_BEAN(sluttBEAN) - FRAME_FOR_BEAN(startBEAN));
       let c = lerp(255, 0, t);
