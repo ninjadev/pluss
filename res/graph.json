@@ -21,7 +21,7 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "shadowizer.render",
-      "B": "SpinningCube.render",
+      "B": "ndv_composotory.render",
       "C": "sleekAngles.render",
       "C_three": "sleekstadee.render",
       "D": "yoyoTiler.render",
@@ -278,7 +278,10 @@
   },
   {
     "id": "paint_n",
-    "type": "paint_n"
+    "type": "paint_n",
+    "connected": {
+      "ninetiesPatterns": "NinetiesPatterns.render"
+    }
   },
   {
     "id": "paint_dv",
@@ -329,5 +332,20 @@
   {
     "id": "sprinkles",
     "type": "sprinkles"
+  },
+  { 
+    "id": "ndv_composotory",
+    "type": "ndv_composotoryNode",
+    "options": {
+      "shader": "ndv_composotory"
+    },
+    "connected": {
+      "logo": "ndvpainter.render",
+      "patterns": "NinetiesPatterns.render"
+    }
+  },
+  {
+    "id": "ndvpainter",
+    "type": "ndvpainter"
   }
 ]
