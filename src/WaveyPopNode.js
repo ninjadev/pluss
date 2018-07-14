@@ -19,9 +19,6 @@
       this.maxBalls = 4;
       this.fromColor = new THREE.Vector3(0., 1., 0.7725490196078432);
       this.toColor = new THREE.Vector3(0., 0.6039215686274509, 0.807843137254902);
-
-      // Crazy mode related
-      this.crazySpeed = 1.;
     }
 
     update(frame) {
@@ -77,13 +74,10 @@
       let scene = 0.;
       if (BEAN > this.endBean) {
         scene = 1.;
-        this.crazySpeed = 1.;
       }
 
-      this.crazySpeed = 0.25 + Math.floor((BEAN - this.endBean) / 24) * 0.15;
-
       this.uniforms.scene.value =  scene;
-      this.uniforms.crazySpeed.value = this.crazySpeed;
+      this.uniforms.crazySpeed.value = 0.25 + Math.floor((BEAN - this.endBean) / 24) * 0.75;
     }
   }
 
