@@ -9,7 +9,7 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30),new THREE.MeshPhongMaterial({ color: 0xFF256F }));
+      this.cube = new THREE.Mesh(new THREE.BoxGeometry(35, 10, 28),new THREE.MeshPhongMaterial({ color: 0xFF256F }));
       this.scene.add(this.cube);
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
@@ -54,7 +54,7 @@
       else if ( frame > end_obj_bounce)
       {
         this.cube.position.x = 0;
-        this.cube.position.y = 0;
+        this.cube.position.y = -6;
       }
 
     }
