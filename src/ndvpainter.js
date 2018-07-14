@@ -29,26 +29,25 @@
       let x = 0;
       let y = 0;
 
-      const currentBean = BEAN_FOR_FRAME(frame);
-      if (currentBean < 5166) {
+      if (BEAN < 5172) {
         scale = 0.0010;
         x = 14300;
         y = 500;
-      } else if (currentBean < 5172) {
+      } else if (BEAN < 5172 + 4) {
         scale = 0.0025;
         x = 4900;
         y = 220;
-      } else if (currentBean < 5178) {
-        scale = 0.0055;
-        x = 1490;
+      } else if (BEAN < 5172 + 8) {
+        scale = 0.0045;
+        x = 1490 + 400;
         y = 97;
-      } else if (currentBean < 5184) {
+      } else if (BEAN < 5172 + 12) {
         // scale = 0.0075;
         // x = 480;
         // y = 64;
         scale = 0.0070;
-        x = 870;
-        y = 96;
+        x = 870 - 200;
+        y = 96 - 20;
       } else {
         // scale = 0.0085;
         // x = 300;
