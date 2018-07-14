@@ -57,7 +57,7 @@
 
       this.ctx.globalAlpha = alpha;
 
-      const whiteParts = [[5682, 6290], [6820, 7540]];
+      const whiteParts = [[5682, 6290], [6820, 7046]];
       let mixer = 0.0;
       for (let [start, stop] of whiteParts) {
         mixer = lerp(mixer, 1.0, (this.frame + 15 - start) / 30);
