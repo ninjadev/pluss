@@ -12,15 +12,15 @@ void main() {
     vec4 backgroundSample = texture2D(background, vUv);
 
     vec3 color = vec3(0.);
-    if(logoSample.a < 0.25) {
+    if(logoSample.b == 1.) {
       color = backgroundSample.xyz;
-    } else if (logoSample.a < 0.50) {
+    } else if (logoSample.r == 1.) {
       color = patternSample.xyz;
+    } else if(logoSample.g == 1.) {
+      color = vec3(1., 0., 0.);
     } else {
       color = logoSample.xyz;
-    }
-    //} else if(logoSample.a < 0.75) {
-    //  color = vec3(1., 0., 0.);
+	  }
     //} else if(logoSample.a > 0.75) {
     //  color = vec3(1., 1., 0.);
 
