@@ -61,11 +61,11 @@
 
       this.ctx.translate(0, 4.5);
 
-      let startBEAN = 4308;
-      let sluttBEAN = 4319;
+      let startBEAN = 4320;
+      let sluttBEAN = 4344;
       let t = (this.frame - FRAME_FOR_BEAN(startBEAN))/(FRAME_FOR_BEAN(sluttBEAN) - FRAME_FOR_BEAN(startBEAN));
-      let c = lerp(255, 0, t);
-      let width = lerp(0.1, 10, t);
+      let c = easeIn(255, 0, t);
+      let width = easeIn(0.1, 10, t);
 
       const count = 128;
       this.ctx.beginPath();
@@ -87,7 +87,7 @@
 
       this.ctx.beginPath();
       this.ctx.lineJoin = 'round';
-      this.ctx.lineWidth = width;;
+      this.ctx.lineWidth = width;
       this.ctx.moveTo(0, 0);
       for(let i = 0; i < count; i++) {
         const x = (i + 1) / count * 16;

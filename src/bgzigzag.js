@@ -38,7 +38,7 @@
       this.ctx.rect(-1 * GU , - 1 * GU, 18 * GU, 11 * GU);
       this.ctx.stroke();
 
-      for (var i = 0; i < 10; i++)
+      for (var i = 0; i < 11; i++)
       {
         this.ctx.strokeStyle = colors[0];
         this.ctx.beginPath();

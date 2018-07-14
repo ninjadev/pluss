@@ -1,5 +1,6 @@
 {
     "tDiffuse": { "type": "t", "value": null },
+    "tDiffuseBG": { "type": "t", "value": null },
     "tDepth": { "type": "t", "value": null },
     "cameraNear": { "type": "f", "value": 0.0 },
     "cameraFar": { "type": "f", "value": 0.0 },

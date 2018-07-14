@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class NinetiesPatternsNode extends NIN.ShaderNode {
     constructor(id, options) {
       super(id, options);
@@ -28,6 +29,15 @@
       let patternA = this.BANANA;
       let patternB = this.BANANA;
 
+      const BEAT1 = 5184;
+      const BEAT2 = 5184 + 20;
+      const BEAT3 = BEAT1 + 48;
+      const BEAT4 = BEAT2 + 48;
+      const BEAT5 = BEAT1 + 96;
+      const BEAT6 = BEAT5 + 12;
+      const BEAT7 = BEAT6 + 18;
+
+
 
       //
       // TIMINGS
@@ -55,30 +65,57 @@
           return result;
         }
 
-        if (BEAN < MTV_BEAN + SYNC_BEAN) {
+        // slides
+        if (BEAN < BEAT2) {
           patternA = this.CRAZY;
           patternB = this.ZEBRA;
           currentTransition = this.LEFT_TO_RIGHT;
-          transitionLerp = syncLerp(1);
+          transitionLerp = easeOut(0, 1, F(frame,BEAT1,24));
         }
-        else if (BEAN < MTV_BEAN + (SYNC_BEAN * 2)) {
+        else if (BEAN < BEAT3) {
           patternA = this.ZEBRA;
           patternB = this.GEOPARD;
-          currentTransition = this.LEFT_TO_RIGHT;
-          transitionLerp = syncLerp(2);
+          currentTransition = this.RIGHT_TO_LEFT;
+          transitionLerp = easeOut(0, 1, F(frame,BEAT2,24));
         }
-        else if (BEAN < MTV_BEAN + (SYNC_BEAN * 3)) {
+        else if (BEAN < BEAT4) {
           patternA = this.GEOPARD;
           patternB = this.CRAZY;
-          currentTransition = this.RIGHT_TO_LEFT;
-          transitionLerp = syncLerp(3);
+          currentTransition = this.LEFT_TO_RIGHT;
+          transitionLerp = easeOut(0, 1, F(frame,BEAT3,24));
         }
-        else if (BEAN < MTV_BEAN + (SYNC_BEAN * 4)) {
+        else if (BEAN < BEAT5) {
           patternA = this.CRAZY;
           patternB = this.BANANA;
           currentTransition = this.RIGHT_TO_LEFT;
-          transitionLerp = syncLerp(4);
+          transitionLerp = easeOut(0, 1, F(frame,BEAT4,24));
         }
+        else if (BEAN < BEAT6) {
+          patternA = this.BANANA;
+          patternB = this.GEOPARD;
+          currentTransition = this.LEFT_TO_RIGHT;
+          transitionLerp = easeOut(0, 1, F(frame,BEAT5,24));
+        }
+        else if (BEAN < BEAT7) {
+          patternA = this.GEOPARD;
+          patternB = this.ZEBRA;
+          currentTransition = this.RIGHT_TO_LEFT;
+          transitionLerp = easeOut(0, 1, F(frame,BEAT6,24));
+        }
+        else if (BEAN < 5316) {
+          patternA = this.CRAZY;
+          patternB = this.BANANA;
+          currentTransition = this.LEFT_TO_RIGHT
+          transitionLerp = easeOut(0, 1, F(frame,BEAT7,24));
+        }
+        // 132 beans. last swipe to banana
+        //bang bang bang
+        if (BEAN >= 5316){
+          currentTransition = this.NONE;
+          patternA = (BEAN / 4 | 0 ) % 4
+
+        }
+
       }
 
 

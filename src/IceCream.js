@@ -1,7 +1,12 @@
 (function(global) {
   class IceCream extends NIN.THREENode {
     constructor(id, options) {
-      options.inputs = { TestShader: new NIN.TextureInput() };
+      options.inputs = {
+        TestShader: new NIN.TextureInput(),
+        CircleShader: new NIN.TextureInput(),
+        IceShader: new NIN.TextureInput(),
+        squiggleBackground: new NIN.TextureInput(),
+      };
       options.outputs = { render: new NIN.TextureOutput() };
       super(id, options);
       this.renderTarget = new THREE.WebGLRenderTarget(640, 360, {
@@ -10,7 +15,7 @@
         format: THREE.RGBAFormat
       });
       this.resize();
-      // credz alnitak Stack overflow 
+      // no longer SO
       this.remap = function (value, imin, imax, omin, omax)
       {
         const scale = (omax - omin)/(imax-imin);
@@ -64,7 +69,7 @@
       this.cones.white_cone = {};
       this.patternMaterial = new THREE.MeshBasicMaterial();
       //this.patternMaterial.transparent = true; 
-      this.createIceSphere(this.cones.white_cone, {color:0xfcfbe3, side:THREE.DoubleSide}, 
+      this.createIceSphere(this.cones.white_cone, {color:0x7AF0CE, side:THREE.DoubleSide}, 
                            this.patternMaterial,[8,0,0], 
                            5, this.scene);
       this.cones.pink_cone = {};
@@ -72,7 +77,7 @@
                            this.patternMaterial,[0,0,0], 
                            5, this.scene);
       this.cones.brown_cone = {};
-      this.createIceSphere(this.cones.brown_cone, {color:0x2e0b16, side:THREE.DoubleSide}, 
+      this.createIceSphere(this.cones.brown_cone, {color:0xFFFC00, side:THREE.DoubleSide}, 
                            this.patternMaterial,[4,8,0], 
                            5, this.scene);
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
@@ -110,15 +115,27 @@
         // Fuck around
         // TREE TIME
       };
+
+      // Setup background
+      {
+        const scale = 10;
+        const backgroundMesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(16*scale, 9*scale, 0),
+        );
+        backgroundMesh.position.z = 0;
+
+        this.scene.add(backgroundMesh);
+        this.backgroundMesh = backgroundMesh;
+      }
     }
 
     update(frame) {
-      super.update(frame);
+
       /* Position updates*/
       //this.positionUpdater(frame);
 
-      this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.TestShader);
-      this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.TestShader);
+      this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.IceShader);
+      this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.CircleShader);
       this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
       //this.camera.lookAt.set() = new THREE.Vector3(0.88,1.16,-5.01);
       this.camera.position.x = 30* Math.sin(frame/100)+ 40; 
@@ -127,6 +144,19 @@
       this.camera.lookAt(this.cones.white_cone.mesh.position);
  
       //this.camera.lookAt(new THREE.Vector3(0,0,0));
+
+      // Update background
+      const camera_normal = this.camera.getWorldDirection();
+      this.backgroundMesh.position.x = this.camera.position.x + camera_normal.x*100;
+      this.backgroundMesh.position.y = this.camera.position.y + camera_normal.y*100;
+      this.backgroundMesh.position.z = this.camera.position.z + camera_normal.z*100;
+      this.backgroundMesh.lookAt(this.camera.position);
+      this.backgroundMesh.material = new THREE.MeshBasicMaterial({
+        map: this.inputs.squiggleBackground.getValue(),
+      });
+
+
+      super.update(frame);
     }
   }
   global.IceCream = IceCream;

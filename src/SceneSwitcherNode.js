@@ -101,7 +101,7 @@
         selectedScene = this.inputs.G;
       } else if (BEAN < 12 * 4 * 83) {
         selectedScene = this.inputs.I;
-      } else if (BEAN < 12 * 4 * 90) {
+      } else if (BEAN < 12 * 4 * 91) {
         selectedScene = this.inputs.I_bg;
       } else if (BEAN < 12 * 4 * 94) {
         selectedScene = this.inputs.K;
@@ -109,7 +109,7 @@
         selectedScene = this.inputs.S;
       } else if (BEAN < 12 * 4 * 102) {
         selectedScene = this.inputs.J;
-      } else if (BEAN < 12 * 4 * 108) {
+      } else if (BEAN < 12 * 4 * 107) {
         selectedScene = this.inputs.L ;
       } else if (BEAN < 12 * 4 * 113) {
         selectedScene = this.inputs.B ;

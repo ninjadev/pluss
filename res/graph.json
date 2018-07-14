@@ -30,7 +30,7 @@
       "F": "dimentionMultiplexerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
-      "I": "IceCream.render",
+      "I": "IceCreamEndShader.render",
       "I_bg": "starshader.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
@@ -79,7 +79,8 @@
     },
     "connected": {
       "texture": "dimensionBackground.render",
-      "depth": "dimensionBackground.depth"
+      "depth": "dimensionBackground.depth",
+      "textureBG": "greetz.render"
     }
   },
   {
@@ -244,7 +245,10 @@
     "id": "IceCream",
     "type": "IceCream",
     "connected": {
-      "TestShader": "TestShader.render"
+      "IceShader": "IceShader.render",
+      "CircleShader": "CircleShader.render",
+      "TestShader": "TestShader.render",
+      "squiggleBackground": "squiggleBackground.render"
     }
   },
   {
@@ -336,6 +340,24 @@
     "type": "sprinkles"
   },
   {
+    "id": "IceCreamEndShader",
+    "type": "IceCreamEndShaderNode",
+    "options": {
+      "shader": "IceCreamEndShader"
+    },
+    "connected": {
+      "tree": "intro.render",
+      "icecream": "IceCream.render"
+    }
+  },
+  {
+    "id": "squiggleBackground",
+    "type": "squiggleBackgroundNode",
+    "options": {
+      "shader": "squiggleBackground"
+    }
+  },
+  {
     "id": "ndv_composotory",
     "type": "ndv_composotoryNode",
     "options": {
@@ -343,12 +365,16 @@
     },
     "connected": {
       "logo": "ndvpainter.render",
+      "background": "WaveyPop.render",
       "patterns": "NinetiesPatterns.render"
     }
   },
   {
     "id": "ndvpainter",
-    "type": "ndvpainter"
+    "type": "ndvpainter",
+    "connected": {
+      "squigglesBG": "squiggles.render"
+    }
   },
   {
     "id": "upbeatShader",
@@ -371,5 +397,34 @@
       "overlay": "theEnd.render",
       "background": "squiggles.render"
     }
+  },
+  {
+    "id": "CircleShader",
+    "type": "CircleShaderNode",
+    "options": {
+      "shader": "CircleShader"
+    },
+    "connected": {
+      "circleOlav": "circleOlav.render"
+    }
+  },
+  {
+    "id": "circleOlav",
+    "type": "circleOlav"
+  },
+  {
+    "id": "IceShader",
+    "type": "IceShaderNode",
+    "options": {
+      "shader": "IceShader"
+    },
+    "connected":{
+      "iceSprinkles": "iceSprinkles.render"
+    }
+  },
+  {
+    "id": "iceSprinkles",
+    "type": "iceSprinkles"
   }
+
 ]

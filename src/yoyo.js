@@ -62,6 +62,20 @@
     update(frame) {
       super.update(frame);
       this.frame = frame;
+
+      this.boomsta *= 0.9;
+      if(BEAT) {
+        switch((BEAN - 1872) % 96) {
+        case 0:
+        case 24 - 4:
+        case 24:
+        case 48 - 4:
+        case 48 + 12 - 4:
+        case 48 + 24 - 4:
+        case 48 + 24:
+          this.boomsta = 1;
+        }
+      }
     }
 
     resize() {
@@ -81,7 +95,8 @@
       const cameraZoom = smoothstep(0.1, 1, F(this.frame, 1296, 12));
       this.ctx.scale(cameraZoom, cameraZoom);
 
-      const green = '#00ffc6';
+      const green = '#7AF0CE';
+      this.green = green;
       const yellow = '#fffc00';
       const lightPink = '#f442e8';
       const pink = lightPink;
@@ -108,10 +123,12 @@
         colors = colorsList[10];
       } else if (BEAN >= 33 * 48) {
         colors = colorsList[9];
-      } else if (BEAN >= 32.5 * 48 - 4) {
-        colors = colorsList[8];
-      } else if (BEAN >= 31 * 48) {
-        colors = colorsList[7];
+      } else if (BEAN >= 1536 + 24 - 4) {
+        colors = colorsList[3];
+      } else if (BEAN >= 1536 + 12 - 4) {
+        colors = colorsList[5];
+      } else if (BEAN >= 1536 - 4) {
+        colors = colorsList[4];
       } else if (BEAN >= 1344 - 4 + 12) {
         colors = colorsList[3];
       } else if (BEAN >= 1344 - 4) {
@@ -123,17 +140,17 @@
       this.ctx.fillStyle = colors[0];
       this.ctx.scale(1 / cameraZoom, 1 / cameraZoom);
 
-      const drawOwnBackground = BEAN < 1680;
-      if (drawOwnBackground) {
+      const shadowSize = 0.3;
+      const shadowColor = 'rgba(0, 0, 0, 0.3)';
+
+      if (BEAN < 1680) {
+        // Stripy blue/white background
         this.ctx.fillRect(-80, -4.5, 160, 9);
 
         this.ctx.save();
         this.ctx.translate(-4 * 8, 0);
         this.ctx.translate(16 - 4.4 - (this.frame - 2045) / 100, 0);
         this.ctx.rotate(Math.PI / 16);
-
-        const shadowSize = 0.3;
-        const shadowColor = 'rgba(0, 0, 0, 0.3)';
 
         for (let i = 0; i < 8; i++) {
           this.ctx.translate(4, 0);
@@ -143,6 +160,71 @@
           this.ctx.fillRect(4, -100, shadowSize, 200);
         }
         this.ctx.restore();
+      } else if (BEAN >= 1872) {
+        // solid green-ish background
+        this.ctx.fillStyle = this.green;
+        this.ctx.fillRect(-16, -9, 16 * 2, 9 * 2);
+
+        // white circles with shadow
+        let numCircles = 1;
+        if (BEAN >= 1892 && BEAN < 1916) {
+          numCircles = 2;
+        } else if (BEAN >= 1916 && BEAN < 1940) {
+          numCircles = 3;
+        } else if (BEAN >= 1940) {
+          numCircles = 4;
+        }
+
+        for (let i = 0; i < numCircles; i++) {
+          let scaler = 1;
+          /*
+          if (BEAN >= 1892 && BEAN < 1896) {
+            if (i === 1) {
+              scaler = 0.5;
+            }
+          } else if (BEAN >= 1916 && BEAN < 1928) {
+            if (i === 2) {
+              scaler = 0.5;
+            }
+          } else if (BEAN >= 1928 && BEAN < 1940) {
+            if (i === 2) {
+              scaler = 0.75;
+            }
+          } else if (BEAN >= 1940 && BEAN < 1944) {
+            if (i === 3) {
+              scaler = 0.5;
+            }
+          }
+          */
+          scaler *= easeOut(1, 0, F(this.frame, 1956, 9));
+          this.ctx.save();
+          this.ctx.translate(-5 + i * 3.25, 0);
+          this.ctx.scale(2 * scaler, 2 * scaler);
+
+          // shadow
+          this.ctx.fillStyle = shadowColor;
+          this.ctx.save();
+          this.ctx.translate(0.08, 0.08);
+          this.circle();
+          this.ctx.restore();
+
+          // circle body
+          this.ctx.fillStyle = 'white';
+          this.circle();
+          this.ctx.restore();
+        }
+
+        this.ctx.strokeStyle = 'white';
+        const lineWidth = 10 * this.boomsta;
+        const lineHeight = 0.5;
+        this.ctx.beginPath();
+        this.ctx.lineWidth = lineHeight;
+        this.ctx.lineCap = 'round';
+        this.ctx.moveTo(-lineWidth / 2, 2.5);
+        this.ctx.lineTo(lineWidth / 2, 2.5);
+        this.ctx.stroke();
+      } else {
+        // transparent background, to mix in the banana shader
       }
 
       this.ctx.restore();
@@ -150,7 +232,7 @@
       let shape = this.square;
 
       if (BEAN >= 35 * 48) {
-        if (BEAN >= 1776) {
+        if (BEAN >= 1776 && BEAN < 1860) {
           shape = this.hexagon;
         } else {
           shape = this.circle;
@@ -160,7 +242,7 @@
       }
 
 
-      if (BEAN >= 1440 - 4  && BEAN < 1440 + 24) {
+      if (BEAN >= 1440 - 4  && BEAN < 1440 + 24 + 24) {
         for (let i = 0; i < 2; i++) {
           this.ctx.save();
           this.ctx.fillStyle = colors[0];
@@ -170,160 +252,199 @@
             this.ctx.translate(shadowSize, shadowSize);
           }
           const duration = 12;
-          if (BEAN >= 1440 - 4 && BEAN <= 1440 + duration) {
+          if (BEAN >= 1440 - 4 && BEAN < 1440 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
+          /*
           if (BEAN >= 1440 + 4 && BEAN <= 1440 + 4 + duration) {
             this.ctx.save();
             this.ctx.translate(0, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
+          */
 
-          if (BEAN >= 1440 + 8 && BEAN <= 1440 + 8 + duration) {
+          if (BEAN >= 1440 + 12 + 8 && BEAN < 1440 + 12 + 8 + duration) {
             this.ctx.save();
-            this.ctx.translate(3.65, -2.5);
+            this.ctx.translate(3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
+          /*
           if (BEAN >= 1440 + 12 && BEAN <= 1440 + 12 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
+          */
 
-          if (BEAN >= 1440 + 16 && BEAN <= 1440 + 16 + duration) {
+          if (BEAN >= 1440 + -4 + 12 && BEAN < 1464) {
             this.ctx.save();
-            this.ctx.translate(0, 2.5);
+            this.ctx.translate(0, 0);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
 
+          /*
           if (BEAN >= 1440 + 20 && BEAN <= 1440 + 20 + duration) {
             this.ctx.save();
             this.ctx.translate(3.65, 2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
             this.ctx.restore();
           }
+          */
           this.ctx.restore();
         }
       }
 
-      for (let i = 0; i < 3; i++) {
-        if (BEAN < 1368 && i > 0) {
-          break;
-        }
-        if (BEAN >= 1440 && BEAN < 1464) {
-          break;
-        }
-        this.ctx.save();
-        let wobbler = 0.5 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
+      let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
 
-        if (BEAN >= 1340 - 4 && BEAN < 1392) {
-          wobbler = lerp(wobbler, 0, F(this.frame, 1340-4, 4));
-        }
-        if (BEAN >= 1464 - 24 && BEAN < 1488) {
-          wobbler = lerp(wobbler, 0, F(this.frame, 1464 - 24, 4));
-        }
+      // Three shapes
+      if (BEAN < 1860) {
+        for (let i = 0; i < 3; i++) {
+          if (BEAN < 1368 && i > 0) {
+            break;
+          }
+          if (BEAN >= 1440 - 4 && BEAN < 1464) {
+            break;
+          }
+          if (i === 2 && BEAN >= 1824 || i === 1 && BEAN >= 1836) {
+            break;
+          }
+          this.ctx.save();
+          let wobbleOffset = 0;
+          if(BEAN >= 1680) {
+            wobbleOffset = Math.PI;
+          }
+          let wobbler = 0.5 * Math.sin(wobbleOffset + this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
 
-        let scale = 1 + (3 - i) + wobbler;
-        let squeezeProgress = F(this.frame, 1760, 19);
-        let squeezeIntensity = Math.sqrt(Math.sin(lerp(0, 1, squeezeProgress) * Math.PI));
-        let horizontalScaler = scale * (1 + 1.2 * squeezeIntensity);
-        let verticalScaler = scale * (1 - 0.6 * squeezeIntensity);
-        this.ctx.scale(horizontalScaler, verticalScaler);
+          if (BEAN >= 1536 - 4 - 4 && BEAN < 1586) {
+            wobbler = lerp(wobbler, 0, F(this.frame, 1536 - 4 - 4, 4));
+          }
+          if (BEAN >= 1464 - 24 && BEAN < 1488) {
+            wobbler = lerp(wobbler, 0, F(this.frame, 1464 - 24, 4));
+          }
 
-        if (i === 0) {
-          let x = lerp(0, -1, BEAN - 1356 - 4);
-          x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
-          x = lerp(x, -1, BEAN - 1464 + 1);
-          x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
-          const y = 0;
-          this.ctx.translate(x, y);
-        } else if (i === 1) {
-          let x = easeIn(0, 0.2, F(this.frame, 1368 - 12, 12));
-          x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
-          x = lerp(x, 0.2, BEAN - 1464 + 1);
-          x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
-          if (BEAN < 1368) {
-            x = 1000;
-          }
-          let y = 0;
-          if (BEAN >= 1680) {
-            x += 0.12 * Math.cos(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
-            y += 0.12 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4);
-          }
-          this.ctx.translate(x, y);
-        } else if (i === 2) {
-          let x = easeIn(0, 2.2, F(this.frame, 1368 - 12, 12));
-          x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
-          x = lerp(x, 2.2, BEAN - 1464 - 1);
-          x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
-          if (BEAN < 1376) {
-            x = 1000;
-          }
-          if (BEAN >= 1464 && BEAN < 1464 + 8) {
-            x = 1000;
-          }
-          const y = 0;
-          this.ctx.translate(x, y);
-        }
+          let beforeTunnelSize = 1.6;
 
-        this.ctx.fillStyle = 'rgba(0,0,0,0.85)';
-        this.ctx.save();
-        const shadowSize = 0.15;
-        this.ctx.translate(shadowSize / scale, shadowSize / scale);
-        let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
-        if (BEAN >= 1340 && BEAN < 1392) {
-          rotation = 0;
+
+          let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
+          if (BEAN >= 1340 && BEAN < 1392) {
+            rotation = 0;
+          }
+          if (BEAN >= 1536-4 && BEAN < 1584) {
+            rotation = Math.PI / 6;
+          }
+          if (BEAN >= 1356 - 4 && BEAN < 1392) {
+            rotation = Math.PI / 4;
+          }
+          if (BEAN >= 1368 && BEAN < 1392) {
+            rotation = 0;
+          }
+          if (BEAN >= 1368 + 8 && BEAN < 1392) {
+            rotation = Math.PI / 4;
+          }
+          if (BEAN >= 1464 + 8 && BEAN < 1488) {
+            rotation = 0;
+          }
+
+          let scale = 1 + (3 - i) + wobbler;
+          scale = smoothstep(scale, beforeTunnelSize, F(this.frame, 1830, 18));
+          let squeezeProgress = F(this.frame, 1760, 19);
+          let squeezeIntensity = Math.sqrt(Math.sin(lerp(0, 1, squeezeProgress) * Math.PI));
+          let horizontalScaler = scale * (1 + 1.2 * squeezeIntensity);
+          let verticalScaler = scale * (1 - 0.6 * squeezeIntensity);
+          this.ctx.scale(horizontalScaler, verticalScaler);
+
+          if (i === 0) {
+            let x = lerp(0, -1, BEAN - 1356 - 4);
+            x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
+            x = lerp(x, -1, BEAN - 1464 + 1);
+            x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
+            const y = 0;
+            this.ctx.translate(x, y);
+
+            if(BEAN >= 1536 - 4 && BEAN < 1584) {
+              rotation += Math.PI;
+            }
+          } else if (i === 1) {
+            let x = easeIn(0, 0.2, F(this.frame, 1368 - 12, 12));
+            x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
+            x = lerp(x, 0.2, BEAN - 1464 + 1);
+            x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
+            if (BEAN < 1368) {
+              x = 1000;
+            }
+            let y = 0;
+            if (BEAN >= 1680) {
+              x += easeIn(
+                0.12 * Math.cos(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4),
+                0,
+                F(this.frame, 1760 - 4, 4));
+              y += easeIn(
+                0.12 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 4),
+                0,
+                F(this.frame, 1760 - 4, 4));
+            }
+            this.ctx.translate(x, y);
+          } else if (i === 2) {
+            let x = easeIn(0, 2.2, F(this.frame, 1368 - 12, 12));
+            x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
+            x = lerp(x, 2.2, BEAN - 1464 - 1);
+            x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
+            if (BEAN < 1376) {
+              x = 1000;
+            }
+            if (BEAN >= 1464 && BEAN < 1464 + 8) {
+              x = 1000;
+            }
+            const y = 0;
+            this.ctx.translate(x, y);
+            if(BEAN >= 1536 + 12 + 12 - 4 && BEAN < 1584) {
+              rotation += Math.PI;
+            }
+          }
+
+          this.ctx.fillStyle = 'rgba(0,0,0,0.85)';
+          this.ctx.save();
+          const shadowSize = 0.15;
+          this.ctx.translate(shadowSize / scale, shadowSize / scale);
+          this.ctx.rotate(rotation);
+          shape();
+          this.ctx.restore();
+          this.ctx.rotate(rotation);
+          this.ctx.fillStyle = colors[1 + i];
+          shape();
+          this.ctx.restore();
         }
-        if (BEAN >= 1356 - 4 && BEAN < 1392) {
-          rotation = Math.PI / 4;
-        }
-        if (BEAN >= 1368 && BEAN < 1392) {
-          rotation = 0;
-        }
-        if (BEAN >= 1368 + 8 && BEAN < 1392) {
-          rotation = Math.PI / 4;
-        }
-        if (BEAN >= 1464 + 8 && BEAN < 1488) {
-          rotation = 0;
-        }
-        this.ctx.rotate(rotation);
-        shape();
-        this.ctx.restore();
-        this.ctx.rotate(rotation);
-        this.ctx.fillStyle = colors[1 + i];
-        shape();
-        this.ctx.restore();
       }
 
-      if (BEAN >= 1872) {
+      // tunnel
+      if (BEAN >= 1848 && BEAN < 1872) {
         const tunnelProgress = F(this.frame, 1824, 64);
-        const lastHitProgress = F(this.frame, 1944, 12);
-        const twistProgress = F(this.frame, 1896, 48);
         this.ctx.scale(16, 16);
-        const numTunnelBands = 131;
-        for (let i = 0; i < numTunnelBands; i++) {
-          this.ctx.save();
-          const radius = 2 / (5 + (tunnelProgress * 16 + easeOut(0, 90, lastHitProgress) - i));
-          this.ctx.scale(radius, radius);
-          this.ctx.globalAlpha = Math.pow(
-            Math.max(0, Math.min(1, Math.abs(radius * 9))),
-            4
-          );
+        this.ctx.rotate(rotation);
+        const numTunnelBands = 32;
+        for (let i = 23; i < numTunnelBands; i++) {
+          let radius = 1 / (5 + (tunnelProgress * 32 - i));
           if (i === numTunnelBands - 1) {
-            this.ctx.fillStyle = '#7AF0CE';
+            this.ctx.fillStyle = this.green;
+            radius = 0.1;
           } else {
             this.ctx.fillStyle = colors[1 + (i % 3)];
+            if (Math.abs(radius) < 0.1) {
+              continue;
+            }
           }
-          this.ctx.rotate(0.0666 * i * easeOut(0, 1, twistProgress));
+          this.ctx.save();
+          this.ctx.scale(radius, radius);
+
           this.hexagon();
           this.ctx.restore();
         }
