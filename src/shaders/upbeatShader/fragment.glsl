@@ -1,6 +1,7 @@
 uniform float frame;
 uniform float time;
 uniform float scene;
+uniform float sync;
 uniform sampler2D tDiffuse;
 
 varying vec2 vUv;
@@ -29,6 +30,25 @@ float thingy(vec2 p, vec2 offset, float size, float rotation, float shape) {
     float circle = length(p - offset) - size;
 
     return mix(square, circle, shape);
+}
+
+float transPattern(vec2 p) {
+    p.x += 0.25;
+
+    vec2 size = vec2(0.005, 0.02);
+
+    vec2 rep = vec2(0.06, 0.2);
+
+    float px = floor(p.x / rep.x);
+
+    p.y += time;
+    p.y -= px * 0.5;
+
+    p = mod(p, rep);
+    p -= rep * 0.5;
+
+
+    return max(abs(p.x) - size.x, abs(p.y) - size.y);
 }
 
 void main() {
@@ -65,8 +85,34 @@ void main() {
         );
     }
     else if (scene < 10.) {
+        float edgies = 12421.;
+        float size = 0.03;
+
+        p.y -= time * 0.001;
+
+        for (float x = 0.; x < 32.; x++) {
+            for (float y = 0.; y < 16.; y++) {
+                vec2 offset = 0.5 - vec2(x - 9.25, y) * size * (2. + (time * 0.15));
+
+                float edge = max(abs(p.x - offset.x) - size, abs(p.y - offset.y) - size);
+
+                float rotation = (2. * PI * hash(x * y + sync));
+                // More geometric version (aka more boring)
+                // float rotation = (2. * PI + PI * (0.25 + sync)) * floor(32. * hash(x * y + sync/*floor(time * 4.)*/));
+
+                edge = max(edge, ((p - offset) * rotate(rotation)).y);
+
+                edgies = min(edgies, edge);
+            }
+        }
+
+        float transPat = transPattern(p);
+        edgies = mix(edgies, transPat, clamp((time - 5.0) * 1., 0., 1.));
+        edgies = smoothstep(0., 0.01, edgies);
+
+
         col = (
-            vec3(1., 1., 0.)
+            vec3(1., 1., 0.) * edgies
         );
     }
 

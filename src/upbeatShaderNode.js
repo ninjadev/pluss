@@ -9,6 +9,7 @@
       this.uniforms.frame.value = frame;
       this.uniforms.time.value = (frame - FRAME_FOR_BEAN(this.startBEAN)) / 60.;
       this.uniforms.scene.value = Math.floor((BEAN - this.startBEAN) / 24.);
+      this.uniforms.sync.value = Math.floor((BEAN - this.startBEAN) / 24.);
     }
   }
 
