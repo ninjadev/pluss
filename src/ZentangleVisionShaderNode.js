@@ -21,7 +21,9 @@
     }
 
     update(frame) {
-      if (frame % 400 < 300)
+      // if (frame % 400 < 300)
+      // if (false)
+      if(true)
       {
         this.uniforms.tDiffuse.value = this.inputs.three_scene.getValue();
         this.uniforms.z1.value = this.inputs.bgpants.getValue();
@@ -41,7 +43,7 @@
         this.uniforms.z4.value = this.inputs.three_scene.getValue();
         this.uniforms.z5.value = this.inputs.three_scene.getValue();
         this.uniforms.z6.value = this.inputs.three_scene.getValue();
-        this.uniforms.frame.value = frame;        
+        this.uniforms.frame.value = frame;
       }
     }
   }
