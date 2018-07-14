@@ -4,12 +4,14 @@
       options.inputs = {
          texture: new NIN.TextureInput(),
          depth: new NIN.TextureInput(),
+         textureBG: new NIN.TextureInput(),
       }
       super(id, options);
     }
 
     update(frame) {
       this.uniforms.tDiffuse.value = this.inputs.texture.getValue();
+      this.uniforms.tDiffuseBG.value = this.inputs.textureBG.getValue();
       this.uniforms.tDepth.value = this.inputs.depth.getValue();
       this.uniforms.cameraNear.value = 1;
       this.uniforms.cameraFar.value = 150;

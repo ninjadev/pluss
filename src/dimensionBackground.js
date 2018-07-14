@@ -35,7 +35,7 @@
         });
       };
 
-      var bestMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
+      var bestMaterial = new THREE.MeshBasicMaterial({color: 0x382740});
 
       loadObject('res/dimentionlens.obj', bestMaterial, this.dimentionlens_model );
       this.scene.add( this.dimentionlens_model );
@@ -121,13 +121,15 @@
       this.dimentionlens_model.position.y =  0;
       this.dimentionlens_model.position.z = 15;
       this.dimentionlens_model.rotation.y = frame / 20;
-
-      if (frame > start_ball_bounce && frame < end_ball_bounce)
+      if (frame < start_ball_bounce)
+      {
+        this.dimentionlens_model.position.y = 1000;
+      }
+      else if (frame > start_ball_bounce && frame < end_ball_bounce)
       {
         this.dimentionlens_model.position.y = 0.03 * (frame - end_ball_bounce) * GU * Math.sin(frame / Math.PI);
         this.dimentionlens_model.position.x = (frame - end_ball_bounce) * 2;
       }
-
     }
 
     render(renderer) {
