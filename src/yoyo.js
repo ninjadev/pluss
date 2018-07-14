@@ -304,6 +304,31 @@
         this.ctx.restore();
       }
 
+      if (BEAN >= 1872) {
+        const tunnelProgress = F(this.frame, 1824, 64);
+        const lastHitProgress = F(this.frame, 1944, 12);
+        const twistProgress = F(this.frame, 1896, 48);
+        this.ctx.scale(16, 16);
+        const numTunnelBands = 131;
+        for (let i = 0; i < numTunnelBands; i++) {
+          this.ctx.save();
+          const radius = 2 / (5 + (tunnelProgress * 16 + easeOut(0, 90, lastHitProgress) - i));
+          this.ctx.scale(radius, radius);
+          this.ctx.globalAlpha = Math.pow(
+            Math.max(0, Math.min(1, Math.abs(radius * 9))),
+            4
+          );
+          if (i === numTunnelBands - 1) {
+            this.ctx.fillStyle = '#7AF0CE';
+          } else {
+            this.ctx.fillStyle = colors[1 + (i % 3)];
+          }
+          this.ctx.rotate(0.0666 * i * easeOut(0, 1, twistProgress));
+          this.hexagon();
+          this.ctx.restore();
+        }
+      }
+
 
       this.ctx.restore();
 
