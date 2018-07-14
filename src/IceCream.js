@@ -64,15 +64,15 @@
       this.cones.white_cone = {};
       this.patternMaterial = new THREE.MeshBasicMaterial();
       //this.patternMaterial.transparent = true; 
-      this.createIceSphere(this.cones.white_cone, {color:0x888888, side:THREE.DoubleSide}, 
+      this.createIceSphere(this.cones.white_cone, {color:0xfcfbe3, side:THREE.DoubleSide}, 
                            this.patternMaterial,[8,0,0], 
                            5, this.scene);
       this.cones.pink_cone = {};
-      this.createIceSphere(this.cones.pink_cone, {color:0x881188, side:THREE.DoubleSide}, 
+      this.createIceSphere(this.cones.pink_cone, {color:0xffa6bd, side:THREE.DoubleSide}, 
                            this.patternMaterial,[0,0,0], 
                            5, this.scene);
       this.cones.brown_cone = {};
-      this.createIceSphere(this.cones.brown_cone, {color:0x8B4513, side:THREE.DoubleSide}, 
+      this.createIceSphere(this.cones.brown_cone, {color:0x2e0b16, side:THREE.DoubleSide}, 
                            this.patternMaterial,[4,8,0], 
                            5, this.scene);
       this.cones.white_cone.plane.material.map = this.inputs.TestShader.getValue();
