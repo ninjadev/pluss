@@ -27,7 +27,7 @@
     update(frame) {
       const firstFrameOfGrowth = 6125;
       // const maxTreeSize = 10 * this.dots_per_level;
-      const maxTreeSize = 7 * this.dots_per_level;
+      const maxTreeSize = 11 * this.dots_per_level;
       this.frame = frame;
 
       // 6125 is the frame when the tree starts to grow
@@ -49,7 +49,7 @@
     }
 
     render(renderer) {
-      this.ctx.globalCompositeOperation = 'xor';
+      this.ctx.globalCompositeOperation = 'source-over';
       this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
 
       const r = 140;
@@ -94,17 +94,6 @@
               ctx.fillStyle = `rgb(${nr|0}, ${ng|0}, ${nb|0})`;
               const scalingFactor = 0.04;
               ctx.fillRect(calcX, calcY, scalingFactor * GU, scalingFactor * GU);
-              /*
-              ctx.beginPath();
-              ctx.ellipse(
-                calcX,
-                calcY,
-                0.02 * GU,
-                0.02 * GU,
-                0, 0, Math.PI * 2);
-              //ctx.closePath();
-              ctx.fill();
-              */
           }
         }
         return;
@@ -112,12 +101,24 @@
 
       draw_branch(0, 0, this.dots, this.dots_per_level, 0, 1, this.ctx);
 
+
+
+
       this.ctx.save();
       this.ctx.translate(8 * GU, 4.5 * GU);
       this.ctx.scale(-1, 1);
       this.ctx.translate(-8 * GU, -4.5 * GU);
       this.ctx.drawImage(this.canvas, 0, 0);
       this.ctx.restore();
+
+      if (this.frame > 6259)
+      {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = "#fbe967";
+        var scale_rect = (this.frame - 6259) / 1.1 *  GU;
+        this.ctx.fillRect(8 * GU - scale_rect  / 1.4, 2 * GU- scale_rect  / 2 , scale_rect, scale_rect);
+        this.ctx.closePath();
+      }
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
