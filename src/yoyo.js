@@ -12,6 +12,8 @@
 
       this.canvas = document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
+      this.resizeCanvas = document.createElement('canvas');
+      this.resizeCtx = this.resizeCanvas.getContext('2d');
       this.resize();
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
@@ -62,6 +64,20 @@
     update(frame) {
       super.update(frame);
       this.frame = frame;
+
+      this.boomsta *= 0.9;
+      if(BEAT) {
+        switch((BEAN - 1872) % 96) {
+        case 0:
+        case 24 - 4:
+        case 24:
+        case 48 - 4:
+        case 48 + 12 - 4:
+        case 48 + 24 - 4:
+        case 48 + 24:
+          this.boomsta = 1;
+        }
+      }
     }
 
     resize() {
@@ -163,6 +179,7 @@
 
         for (let i = 0; i < numCircles; i++) {
           let scaler = 1;
+          /*
           if (BEAN >= 1892 && BEAN < 1896) {
             if (i === 1) {
               scaler = 0.5;
@@ -180,6 +197,7 @@
               scaler = 0.5;
             }
           }
+          */
           scaler *= easeOut(1, 0, F(this.frame, 1956, 9));
           this.ctx.save();
           this.ctx.translate(-5 + i * 3.25, 0);
@@ -197,6 +215,16 @@
           this.circle();
           this.ctx.restore();
         }
+
+        this.ctx.strokeStyle = 'white';
+        const lineWidth = 10 * this.boomsta;
+        const lineHeight = 0.5;
+        this.ctx.beginPath();
+        this.ctx.lineWidth = lineHeight;
+        this.ctx.lineCap = 'round';
+        this.ctx.moveTo(-lineWidth / 2, 2.5);
+        this.ctx.lineTo(lineWidth / 2, 2.5);
+        this.ctx.stroke();
       } else {
         // transparent background, to mix in the banana shader
       }
@@ -426,6 +454,30 @@
 
 
       this.ctx.restore();
+
+      /**
+       // Blur the canvas for smoother tiling.
+       // This is done by painting a downscaled version of the image on a separate canvas,
+       // and then paint an upscaled version of that on the original canvas
+       */
+      let multiplier = 1;
+      if (BEAN >= 1632 && BEAN < 1644) {
+        multiplier = 2;
+      } else if (BEAN >= 1644 && BEAN < 1652) {
+        multiplier = 4;
+      } else if (BEAN >= 1652 && BEAN < 1664) {
+        multiplier = 8;
+      } else if (BEAN >= 1664 && BEAN < 1680) {
+        multiplier = 12;
+      }
+      if (multiplier > 1) {
+        this.resizeCanvas.width = 1920 / multiplier;
+        this.resizeCanvas.height = 1080 / multiplier;
+        for (let i = 0; i < 4; i++) {
+          this.resizeCtx.drawImage(this.canvas, 0, 0, this.resizeCanvas.width, this.resizeCanvas.height);
+          this.ctx.drawImage(this.resizeCanvas, 0, 0, this.canvas.width, this.canvas.height);
+        }
+      }
 
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);

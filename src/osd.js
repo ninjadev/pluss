@@ -74,7 +74,7 @@
         this.ctx.textBaseline = 'middle';
         this.ctx.translate(3.25, 0);
         this.ctx.fillStyle = color || 'white';
-        this.ctx.fillText('Punk in the trunk', -8, 1.6);
+        this.ctx.fillText('Pinky frinky', -8, 1.6);
         this.ctx.fillStyle = color || '#7afa3b';
         this.ctx.fillText('Ninjadev', -8, 2.4);
         this.ctx.restore();

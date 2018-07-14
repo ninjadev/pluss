@@ -69,6 +69,15 @@
       this.uniforms.numBalls.value = this.numBalls;
 
       this.uniforms.transCol.value = transitionColor;
+
+
+      let scene = 0.;
+      if (BEAN > this.endBean) {
+        scene = 1.;
+      }
+
+      this.uniforms.scene.value =  scene;
+      this.uniforms.crazySpeed.value = 0.25 + Math.floor((BEAN - this.endBean) / 24) * 0.75;
     }
   }
 

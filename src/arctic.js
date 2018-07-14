@@ -87,7 +87,7 @@
 
       this.ctx.beginPath();
       this.ctx.lineJoin = 'round';
-      this.ctx.lineWidth = width;;
+      this.ctx.lineWidth = width;
       this.ctx.moveTo(0, 0);
       for(let i = 0; i < count; i++) {
         const x = (i + 1) / count * 16;

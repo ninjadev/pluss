@@ -40,7 +40,8 @@
       "O": "sheipzidee.render",
       "Q": "sheipz2.render",
       "R": "sheipzidee2.render",
-      "S": "upbeatShader.render"
+      "S": "upbeatShader.render",
+      "T": "EndShader.render"
     }
   },
   {
@@ -380,6 +381,21 @@
     "type": "upbeatShaderNode",
     "options": {
       "shader": "upbeatShader"
+    }
+  },
+  {
+    "id": "theEnd",
+    "type": "theEnd"
+  },
+  {
+    "id": "EndShader",
+    "type": "EndShaderNode",
+    "options": {
+      "shader": "EndShader"
+    },
+    "connected": {
+      "overlay": "theEnd.render",
+      "background": "squiggles.render"
     }
   },
   {

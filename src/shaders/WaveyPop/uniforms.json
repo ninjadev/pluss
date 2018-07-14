@@ -4,5 +4,7 @@
     "sync": { "type": "f", "value": 0.0 },
     "transition": { "type": "f", "value": 0.0 },
     "numBalls": { "type": "f", "value": 0.0 },
-    "transCol": { "type": "fv3", "value": null }
+    "transCol": { "type": "fv3", "value": null },
+    "scene": { "type": "f", "value": null },
+    "crazySpeed": { "type": "f", "value": null }
 }
