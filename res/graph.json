@@ -339,6 +339,7 @@
     "type": "squiggleBackgroundNode",
     "options": {
       "shader": "squiggleBackground"
+    }
   },
   { 
     "id": "ndv_composotory",
