@@ -1,5 +1,6 @@
 uniform float frame;
 uniform float time;
+uniform float invert;
 uniform float scene;
 uniform float sync;
 uniform sampler2D tDiffuse;
@@ -56,6 +57,12 @@ void main() {
     p -= 0.5;
     p.x *= 16. / 9.;
 
+    if(frame >= 7160.5 && frame < 7425.5) {
+         p /= 2.;
+    }
+
+    p = mix(p, p + hash(p.x + p.y * (1231321. + 342234.) * invert), invert);
+
     vec3 col;
 
     if (scene < 1.) {
@@ -78,6 +85,7 @@ void main() {
         particles = smoothstep(0., 0.01, particles);
 
         float bg = particles * spiral;
+
         col = (
             vec3(1.0, abs(p.y), 0.25) * bg +
             vec3(1., 1. - (1. - length(p)) * 0.15, 0.) * (1. - spiral) * particles * particle_outline +
@@ -110,11 +118,35 @@ void main() {
         edgies = mix(edgies, transPat, clamp((time - 5.0) * 1., 0., 1.));
         edgies = smoothstep(0., 0.01, edgies);
 
-
-        col = (
-            vec3(1., 1., 0.) * edgies
-        );
+        col = vec3(.996, .988, 0.);
+        if(frame >= 7274.5 && frame < 7425.5) {
+            col = vec3(244., 66., 231.) / 255.;
+            edgies = 1. - edgies;
+            col += edgies;
+            col = clamp(col, 0., 1.);
+    float letter = clamp(mix(0., 0.14, (frame - 7142.) / (7161. - 7142.)), 0., 0.14);
+    if(vUv.y < letter) {
+        col = vec3(0.1);
     }
+    if(vUv.y > 1. - letter) {
+        col = vec3(0.1);
+    }
+    if(vUv.x < letter) {
+        col = vec3(0.1);
+    }
+    if(vUv.x > 1. - letter) {
+        col = vec3(0.1);
+    }
+        } else {
+            col = mix(vec3(157., 67., 22.) / 255. * 0.7, col, edgies);
+        }
+
+
+    }
+
+
+    col = mix(col, fract(vec3(hash(col.x), hash(col.y), hash(col.z))), invert);
+
 
     gl_FragColor = vec4(col, 0.);
 }
