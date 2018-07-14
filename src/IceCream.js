@@ -167,11 +167,14 @@
       // Animate cone
       const poscone = trgtcone.add(dispcone.multiplyScalar(disp_fact));
       if (localtime>220){
+        if (BEAN>3882){}
+        else{
         const time = localtime - 220;
         //this.camera.position.y = this.Y + time * 0.5;
         //this.camera.position.x = this.X + time * 0.3; 
         //this.camera.position.z = this.Z + time * 0.2;
         this.camera.lookAt(new THREE.Vector3(0,this.Y + time*0.5,0));
+        }
       }
       else {
 
