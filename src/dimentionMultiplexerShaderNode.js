@@ -23,7 +23,7 @@
       this.uniforms.cameraFar.value = 150;
       this.uniforms.blastDistance.value = 50;
 //      this.uniforms.blastDistance.value = frame % 350;
-      this.uniforms.origin_x.value = 150 * Math.sin((frame - 5270) / 20);
+      this.uniforms.origin_x.value = 150 * Math.sin((frame - 5270) / 60 / 60 * 190 * 0.5 * Math.PI);
       this.uniforms.origin_y.value = 0;//10 * Math.sin(frame / 100);
       this.uniforms.origin_z.value = -15;
       this.uniforms.frame.value = frame;
