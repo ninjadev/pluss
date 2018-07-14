@@ -4,6 +4,7 @@
       options.inputs = {
         TestShader: new NIN.TextureInput(),
         CircleShader: new NIN.TextureInput(),
+        IceShader: new NIN.TextureInput(),
         squiggleBackground: new NIN.TextureInput(),
       };
       options.outputs = { render: new NIN.TextureOutput() };
@@ -14,7 +15,7 @@
         format: THREE.RGBAFormat
       });
       this.resize();
-      // credz alnitak Stack overflow 
+      // no longer SO
       this.remap = function (value, imin, imax, omin, omax)
       {
         const scale = (omax - omin)/(imax-imin);
@@ -133,7 +134,7 @@
       /* Position updates*/
       //this.positionUpdater(frame);
 
-      this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.TestShader);
+      this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.IceShader);
       this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.CircleShader);
       this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
       //this.camera.lookAt.set() = new THREE.Vector3(0.88,1.16,-5.01);
