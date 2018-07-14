@@ -84,10 +84,10 @@
         }
         for (var dot = 1; dot <= Math.min(dots_remaining, dots_per_level); dot++) {
           var progression = Math.min(10, dots_remaining - dot);
-          // 255 is for now probably the color of the tip of the leaf nodes at this point
-          var nr = 255 - progression * r / 10;
-          var ng = 255 - progression * g / 10;
-          var nb = 255 - progression * b / 10;
+          // The yellow of the stars.js scene is currently rgb(250, 231, 103) (#fae767).
+          var nr = 250 - progression * r / 10;
+          var ng = 231 - progression * g / 10;
+          var nb = 103 - progression * b / 10;
           const calcX = GU * (8 + x + dot / dots_per_level * dx * (1 +  Math.sin(dot / dots_per_level * Math.PI) * 0.3 * (level%2?1:-1)));
           const calcY = GU * (8.9 - y - dot / dots_per_level * dy) - GU;
           if(calcX <= 8 * GU) {
