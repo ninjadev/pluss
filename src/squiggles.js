@@ -62,6 +62,12 @@
 
     render() {
 
+      if(BEAN >= 5224 && BEAN < 5472) {
+        this.ctx.fillStyle = '#222';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        return;
+      }
+
       this.ctx.fillStyle = '#009ace';
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
