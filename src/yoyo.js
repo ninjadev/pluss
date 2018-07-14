@@ -303,7 +303,9 @@
             wobbler = lerp(wobbler, 0, F(this.frame, 1464 - 24, 4));
           }
 
+          let beforeTunnelSize = 1.6;
           let scale = 1 + (3 - i) + wobbler;
+          scale = smoothstep(scale, beforeTunnelSize, F(this.frame, 1830, 18));
           let squeezeProgress = F(this.frame, 1760, 19);
           let squeezeIntensity = Math.sqrt(Math.sin(lerp(0, 1, squeezeProgress) * Math.PI));
           let horizontalScaler = scale * (1 + 1.2 * squeezeIntensity);
@@ -384,13 +386,11 @@
       // tunnel
       if (BEAN >= 1848 && BEAN < 1872) {
         const tunnelProgress = F(this.frame, 1824, 64);
-        const lastHitProgress = F(this.frame, 1944, 12);
-        //const twistProgress = F(this.frame, 1896, 48);
         this.ctx.scale(16, 16);
         this.ctx.rotate(rotation);
-        const numTunnelBands = 131;
+        const numTunnelBands = 32;
         for (let i = 23; i < numTunnelBands; i++) {
-          let radius = 1 / (5 + (tunnelProgress * 2 * 16 + easeOut(0, 90, lastHitProgress) - i));
+          let radius = 1 / (5 + (tunnelProgress * 32 - i));
           if (i === numTunnelBands - 1) {
             this.ctx.fillStyle = this.green;
             radius = 0.1;
