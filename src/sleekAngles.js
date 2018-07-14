@@ -125,8 +125,6 @@
               1.5 * lerp(0.3, 0.6, this.random()),  // size
               this.random() > 0.5 ? '#3fbdcc' : 'white'
             );
-            /*
-            */
           }
         }
       }
