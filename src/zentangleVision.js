@@ -41,8 +41,8 @@
 
       var flat_material_1 = new THREE.MeshBasicMaterial({color: 0x3de8ff});
       var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xff0094});
-      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x71ff51});
-      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0xff0f0f});
+      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x18d100});
+      var flat_material_4 = new THREE.MeshBasicMaterial({color: 0xfffa00});
 
       loadObject('res/1.obj', flat_material_1, this.number1_raw );
       loadObject('res/2.obj', flat_material_2, this.number2_raw );
@@ -141,7 +141,8 @@
       // Region add numbers end
 
       let endFinalTransition = 4720;
-      if(this.fourShoutBean < BEAN && BEAN < endFinalTransition){
+      if(this.fourShoutBean < BEAN && BEAN < endFinalTransition)
+      {
         let number1PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, endFinalTransition, this.number1originalPosition, this.number2originalPosition, BEAN);
         this.number1.position.x = number1PosNow.x;
         this.number1.position.y = number1PosNow.y;
