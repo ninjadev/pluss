@@ -25,6 +25,11 @@
       this.blaster = 0;
     }
 
+    warmup(renderer) {
+      this.update(181);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
       this.frame = frame;

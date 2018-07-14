@@ -9,6 +9,13 @@
       super(id, options);
     }
 
+    warmup(renderer) {
+      this.ctx.update(5127);
+      this.ctx.render(renderer);
+      this.ctx.update(5499);
+      this.ctx.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.tDiffuse.value = this.inputs.texture.getValue();
       this.uniforms.tDiffuseBG.value = this.inputs.textureBG.getValue();

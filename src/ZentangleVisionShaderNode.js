@@ -13,6 +13,11 @@
       super(id, options);
     }
 
+    warmup(renderer) {
+      this.update(6949);
+      this.render(renderer);
+    }
+
     update(frame) {
       // if (frame % 400 < 300)
       // if (false)

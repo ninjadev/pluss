@@ -22,6 +22,11 @@
 
     }
 
+    warmup(renderer) {
+      this.ctx.update(8226);
+      this.ctx.render(renderer);
+    }
+
 
     update(frame) {
       super.update(frame);

@@ -19,6 +19,11 @@
       this.bgbeat = 0;
     }
 
+    warmup(renderer) {
+      this.ctx.update(3952);
+      this.ctx.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
       this.frame = frame;

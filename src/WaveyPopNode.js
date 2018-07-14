@@ -79,6 +79,11 @@
       this.uniforms.scene.value =  scene;
       this.uniforms.crazySpeed.value = 0.25 + Math.floor((BEAN - this.endBean) / 24) * 0.75;
     }
+
+    warmup(renderer) {
+      this.update(8223);
+      this.render(renderer);
+    }
   }
 
   global.WaveyPopNode = WaveyPopNode;

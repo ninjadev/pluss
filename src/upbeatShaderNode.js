@@ -31,6 +31,11 @@
         }
       }
     }
+
+    warmup(renderer) {
+      this.update(7385);
+      this.render(renderer);
+    }
   }
 
   global.upbeatShaderNode = upbeatShaderNode;

@@ -11,6 +11,11 @@
       this.resize();
     }
 
+    warmup(renderer) {
+      this.update(5872);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.frame.value = frame;
       this.uniforms.circleOlav.value = this.inputs.circleOlav.getValue();

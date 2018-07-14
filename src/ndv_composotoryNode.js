@@ -15,6 +15,11 @@
       this.uniforms.patterns.value = this.inputs.patterns.getValue();
       this.uniforms.background.value = this.inputs.background.getValue();
     }
+
+    warmup(renderer) {
+      this.update(8262);
+      this.render(renderer);
+    }
   }
 
   global.ndv_composotoryNode = ndv_composotoryNode;

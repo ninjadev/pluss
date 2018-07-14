@@ -670,6 +670,11 @@
       this.canvas.width = 16 * GU;
       this.canvas.height = 9 * GU;
     }
+
+    warmup(renderer) {
+      this.update(4509);
+      this.render(renderer);
+    }
   }
 
   global.greetz = greetz;

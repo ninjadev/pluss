@@ -127,6 +127,11 @@
       this.uniforms.patternSize.value = this.patternSize;
       this.uniforms.patternSpeed.value = this.patternSpeed;
     }
+
+    warmup(renderer) {
+      this.update(2722);
+      this.render(renderer);
+    }
   }
 
   global.NinetiesPatternsNode = NinetiesPatternsNode;

@@ -125,8 +125,7 @@
       {
         const scale = 10;
         const backgroundMesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(16*scale, 9*scale, 0),
-        );
+            new THREE.PlaneGeometry(16*scale, 9*scale, 0));
         backgroundMesh.position.z = 0;
 
         this.scene.add(backgroundMesh);
@@ -233,6 +232,11 @@
 
 
       super.update(frame);
+    }
+
+    warmup(renderer) {
+      this.update(5998);
+      this.render(renderer);
     }
   }
   global.IceCream = IceCream;

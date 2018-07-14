@@ -104,6 +104,11 @@
       this.output.needsUpdate = true;
       this.outputs.render.setValue(this.output);
     }
+
+    warmup(renderer) {
+      this.update(6772);
+      this.render(renderer);
+    }
   }
 
   global.stars = sky;

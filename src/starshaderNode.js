@@ -13,6 +13,11 @@
       this.uniforms.overlay.value = this.inputs.overlay.getValue();
       this.uniforms.underlay.value = this.inputs.underlay.getValue();
     }
+
+    warmup(renderer) {
+      this.update(6772);
+      this.render(renderer);
+    }
   }
 
   global.starshaderNode = starshaderNode;
