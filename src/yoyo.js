@@ -83,8 +83,8 @@
 
       const green = '#00ffc6';
       const yellow = '#fffc00';
-      const pink = '#e45fa2';
       const lightPink = '#f442e8';
+      const pink = lightPink;
 
       const colorsList = [
         [green, lightPink, yellow, pink],
@@ -112,9 +112,9 @@
         colors = colorsList[8];
       } else if (BEAN >= 31 * 48) {
         colors = colorsList[7];
-      } else if (BEAN >= 28.5 * 48 - 20 + 12) {
+      } else if (BEAN >= 1344 - 4 + 12) {
         colors = colorsList[3];
-      } else if (BEAN >= 28.5 * 48 - 20) {
+      } else if (BEAN >= 1344 - 4) {
         colors = colorsList[1];
       }
 
@@ -160,7 +160,7 @@
       }
 
 
-      if (BEAN >= 1440 && BEAN < 1440 + 24) {
+      if (BEAN >= 1440 - 4  && BEAN < 1440 + 24) {
         for (let i = 0; i < 2; i++) {
           this.ctx.save();
           this.ctx.fillStyle = colors[0];
@@ -170,7 +170,7 @@
             this.ctx.translate(shadowSize, shadowSize);
           }
           const duration = 12;
-          if (BEAN >= 1440 && BEAN <= 1440 + duration) {
+          if (BEAN >= 1440 - 4 && BEAN <= 1440 + duration) {
             this.ctx.save();
             this.ctx.translate(-3.65, -2.5);
             this.ctx.fillRect(-1, -1, 2, 2);
@@ -240,7 +240,7 @@
         this.ctx.scale(horizontalScaler, verticalScaler);
 
         if (i === 0) {
-          let x = lerp(0, -1, BEAN - 1356 + 1);
+          let x = lerp(0, -1, BEAN - 1356 - 4);
           x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
           x = lerp(x, -1, BEAN - 1464 + 1);
           x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
@@ -283,7 +283,7 @@
         if (BEAN >= 1368 - 20 && BEAN < 1392) {
           rotation = 0;
         }
-        if (BEAN >= 1368 - 12 && BEAN < 1392) {
+        if (BEAN >= 1356 - 4 && BEAN < 1392) {
           rotation = Math.PI / 4;
         }
         if (BEAN >= 1368 && BEAN < 1392) {
