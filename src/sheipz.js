@@ -14,12 +14,45 @@
       this.canvas = document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
       this.resize();
+
+      this.ps = new global.ParticleSystem(
+        {
+          friction: 0.88,
+          numParticles: 32,
+          life: 35,
+          shapes: [
+            'JaggedLine',
+            'WavyLine',
+            'WideRectangle',
+          ],
+          colors: ['#666']
+        }
+      );
+
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
     }
 
     update(frame) {
+      if (BEAT && BEAN === 2064) {
+        for (let i = 0; i < 24; i++) {
+          const angle = i / 24 * Math.PI * 2;
+          const radius = Math.random();
+          this.ps.spawn(
+            Math.cos(angle) * radius,  // x
+            Math.sin(angle) * radius,  // y
+            (0.5 + 0.1 * Math.random()) * Math.cos(angle),  // dx
+            (0.5 + 0.1 * Math.random()) * Math.sin(angle),  // dy
+            angle,  // rotation
+            0,
+            0.5
+          );
+        }
+      }
+
+      this.ps.update();
+
       super.update(frame);
       this.frame = frame;
     }
@@ -172,6 +205,8 @@
       vignetteAmount = easeIn(vignetteAmount, 1, F(this.frame, 2352 - 4, 4));
       vignetteAmount = Math.pow(vignetteAmount, 1.2);
       this.ctx.fillRect(-8, -4.5, 16, 0.119 * 9 * vignetteAmount);
+
+      this.ps.render(this.ctx);
 
       this.ctx.restore();
 
