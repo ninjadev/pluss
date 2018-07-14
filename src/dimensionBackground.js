@@ -43,6 +43,23 @@
       this.dimentionlens_model.scale.y = 24;
       this.dimentionlens_model.scale.z = 24;
 
+      this.vm_body = new THREE.Object3D();
+      var vm_body_material = new THREE.MeshPhongMaterial({color: 0xD72921});
+      loadObject('res/vm_body.obj', vm_body_material, this.vm_body );
+      this.scene.add( this.vm_body );
+
+      this.vm_disc = new THREE.Object3D();
+      var vm_disc_material = new THREE.MeshPhongMaterial({color: 0xE3F4D0});
+      loadObject('res/vm_disc.obj', vm_disc_material, this.vm_disc );
+      this.scene.add( this.vm_disc );
+
+      this.vm_arm = new THREE.Object3D();
+      var vm_arm_material = new THREE.MeshPhongMaterial({color: 0x203020});
+      loadObject('res/vm_arm.obj', vm_arm_material, this.vm_arm );
+      this.scene.add( this.vm_arm );
+
+
+
       this.stage_model = new THREE.Object3D();
       var loadObject = function (objPath, material, three_object) {
         var objLoader = new THREE.OBJLoader();
@@ -60,23 +77,10 @@
         });
       };
 
-      var bestMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF});
-
-      loadObject('res/stage.obj', bestMaterial, this.stage_model );
-      this.scene.add( this.stage_model );
-      this.stage_model.scale.x = 18;
-      this.stage_model.scale.y = 18;
-      this.stage_model.scale.z = 18;
-      this.stage_model.position.y = -12;
-      this.stage_model.position.z = 100;
-      this.stage_model.rotation.x = Math.PI / 2 * 0.37;
-      this.stage_model.position.y = -19;
-      this.stage_model.position.z = -60;
-
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
                                  new THREE.MeshPhongMaterial({ color: 0x666666 })); // A background of max size ish. Useful to know how large that would be :)
       this.bg.position.z = -49; // just within the cameras view
-      //this.scene.add(this.bg);
+      this.scene.add(this.bg);
 
       for (var i = 0; i < 60; i++)
       {
@@ -87,7 +91,6 @@
           cube.position.x = - 120 + i * 4;
           cube.position.z = - 60 + j * 4;
           cube.position.y = Math.random() * 3 - j;
-          //this.scene.add(cube);
         }
       }
 
@@ -130,6 +133,46 @@
         this.dimentionlens_model.position.y = 0.03 * (frame - end_ball_bounce) * GU * Math.sin(frame / Math.PI);
         this.dimentionlens_model.position.x = (frame - end_ball_bounce) * 2;
       }
+
+
+      var vm_scale = 20;
+      var vm_rotation_x = 1.9;
+      var vm_rotation_y = 0;
+      var vm_rotation_z = 0;
+      var vm_position_x = 0;
+      var vm_position_y = 0;
+      var vm_position_z = -70;
+
+      this.vm_arm.rotation.x = vm_rotation_x;
+      this.vm_body.rotation.x = vm_rotation_x;
+      this.vm_disc.rotation.x = vm_rotation_x;
+      this.vm_arm.rotation.y = vm_rotation_y;
+      this.vm_body.rotation.y = vm_rotation_y;
+      this.vm_disc.rotation.y = vm_rotation_y;
+      this.vm_arm.rotation.z = vm_rotation_z;
+      this.vm_body.rotation.z = vm_rotation_z;
+      this.vm_disc.rotation.z = vm_rotation_z;
+
+      this.vm_arm.position.x = vm_position_x;
+      this.vm_body.position.x = vm_position_x;
+      this.vm_disc.position.x = vm_position_x;
+      this.vm_arm.position.y = vm_position_y;
+      this.vm_body.position.y = vm_position_y;
+      this.vm_disc.position.y = vm_position_y;
+      this.vm_arm.position.z = vm_position_z;
+      this.vm_body.position.z = vm_position_z;
+      this.vm_disc.position.z = vm_position_z;
+
+      this.vm_body.scale.x = vm_scale;
+      this.vm_body.scale.y = vm_scale;
+      this.vm_body.scale.z = vm_scale;
+      this.vm_disc.scale.x = vm_scale;
+      this.vm_disc.scale.y = vm_scale;
+      this.vm_disc.scale.z = vm_scale;
+      this.vm_arm.scale.x = vm_scale;
+      this.vm_arm.scale.y = vm_scale;
+      this.vm_arm.scale.z = vm_scale;
+
     }
 
     render(renderer) {
