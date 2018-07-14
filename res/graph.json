@@ -244,6 +244,7 @@
     "id": "IceCream",
     "type": "IceCream",
     "connected": {
+      "CircleShader": "CircleShader.render",
       "TestShader": "TestShader.render",
       "squiggleBackground": "squiggleBackground.render"
     }
@@ -343,7 +344,7 @@
       "shader": "squiggleBackground"
     }
   },
-  { 
+  {
     "id": "ndv_composotory",
     "type": "ndv_composotoryNode",
     "options": {
@@ -367,5 +368,19 @@
     "options": {
       "shader": "upbeatShader"
     }
+  },
+  {
+    "id": "CircleShader",
+    "type": "CircleShaderNode",
+    "options": {
+      "shader": "CircleShader"
+    },
+    "connected": {
+      "circleOlav": "circleOlav.render"
+    } 
+  },
+  {
+    "id": "circleOlav",
+    "type": "circleOlav"
   }
 ]
