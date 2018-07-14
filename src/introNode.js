@@ -26,7 +26,7 @@
 
     update(frame) {
       this.frame = frame;
-      this.dots = (frame) % 200 ;
+      this.dots = (frame - 6125) % 200 ;
     }
 
     renderShape(ctx, shape) {
@@ -36,8 +36,6 @@
     render(renderer) {
       this.ctx.globalCompositeOperation = 'xor';
       this.ctx.clearRect(0, 0, 16 * GU, 9 * GU);
-
-      this.circleEndSize = smoothstep(0, 1, (this.frame - 827) / (996 - 827));
 
       const r = 140;
       const g = 150;

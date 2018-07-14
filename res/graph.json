@@ -30,7 +30,7 @@
       "F": "dimentionMultiplexerShader.render",
       "G": "dimentionMultiplexerShader.render",
       "H": "cradle.render",
-      "I": "IceCream.render",
+      "I": "IceCreamEndShader.render",
       "I_bg": "starshader.render",
       "J": "bird.render",
       "K": "ZentangleVisionShader.render",
@@ -244,6 +244,7 @@
     "id": "IceCream",
     "type": "IceCream",
     "connected": {
+      "IceShader": "IceShader.render",
       "CircleShader": "CircleShader.render",
       "TestShader": "TestShader.render",
       "squiggleBackground": "squiggleBackground.render"
@@ -338,6 +339,17 @@
     "type": "sprinkles"
   },
   {
+    "id": "IceCreamEndShader",
+    "type": "IceCreamEndShaderNode",
+    "options": {
+      "shader": "IceCreamEndShader"
+    },
+    "connected": {
+      "tree": "intro.render",
+      "icecream": "IceCream.render"
+    }
+  },
+  {
     "id": "squiggleBackground",
     "type": "squiggleBackgroundNode",
     "options": {
@@ -378,10 +390,25 @@
     },
     "connected": {
       "circleOlav": "circleOlav.render"
-    } 
+    }
   },
   {
     "id": "circleOlav",
     "type": "circleOlav"
+  },
+  {
+    "id": "IceShader",
+    "type": "IceShaderNode",
+    "options": {
+      "shader": "IceShader"
+    },
+    "connected":{
+      "iceSprinkles": "iceSprinkles.render"
+    }
+  },
+  {
+    "id": "iceSprinkles",
+    "type": "iceSprinkles"
   }
+
 ]
