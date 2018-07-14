@@ -52,7 +52,10 @@
       this.ctx.save();
       this.ctx.globalCompositeOperation = 'source-over';
 
-      this.ctx.globalAlpha = Math.max(Math.min((this.frame - 623) / (696 - 653), 1.0), 0.0);
+      let alpha = lerp(0.0, 1.0, (this.frame - 623) / (696 - 653));
+      alpha = lerp(alpha, 0.0, (this.frame - 8156 + 30) / 30);
+
+      this.ctx.globalAlpha = alpha;
 
       const whiteParts = [[5682, 6290], [6820, 7540]];
       let mixer = 0.0;
