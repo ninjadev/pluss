@@ -33,7 +33,9 @@
       this.canvas.width += 0;
       let startBEAN = 3984;
       let takt = 96;
-      
+      let showBEAN = startBEAN + 32;
+      let t = (frame - FRAME_FOR_BEAN(startBEAN))/(FRAME_FOR_BEAN(showBEAN) - FRAME_FOR_BEAN(startBEAN));
+      let size = lerp(0, 1, t);
       let colors = [this.pink, this.blue, this.green];
       let bgcolor = this.yellow;
       if (BEAN > startBEAN + takt) {
@@ -74,7 +76,7 @@
       for (var i=0;i<200;i++) {
         var x = this.stars[i][0] + amp*Math.sin(i + frame/60);
         var y = this.stars[i][1] + amp*Math.cos(i + frame/60);
-        var r = this.stars[i][2] + amp*0.3;
+        var r = (this.stars[i][2] + amp*0.3) * size;
         this.stars[i][0] = x;
         this.stars[i][1] = y;
         var a = x + r*0.5;
