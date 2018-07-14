@@ -53,10 +53,10 @@
       loadObject('res/3.obj', flat_material_3, this.number3_raw );
       loadObject('res/4.obj', flat_material_4, this.number4_raw );
 
-      this.oneShoutBean = 4462;
-      this.twoShoutBean = 4476;
-      this.threeShoutBean = 4490;
-      this.fourShoutBean = 4500;
+      this.oneShoutBean     = 4462;
+      this.twoShoutBean     = 4476;
+      this.threeShoutBean   = 4490;
+      this.fourShoutBean    = 4500;
       this.ShoutingOverBeab = 4512;
 
       this.number1 = new THREE.Object3D();
@@ -75,16 +75,21 @@
       this.number3_raw.position.x = -0.6 * GU;
       this.number4_raw.position.x = -1.2 * GU;
 
-      // Final x/y posotions:
-      this.number1.position.x = 1.5 * GU;
-      this.number2.position.x = 0 * GU;
-      this.number3.position.x = -1.5 * GU;
-      this.number4.position.x = 0 * GU;
+      this.number1originalPosition = new THREE.Vector3(1.5 * GU, -0.2 * GU, this.number1.position.z);
+      this.number2originalPosition = new THREE.Vector3(0 * GU, 0.6 * GU, this.number2.position.z);
+      this.number3originalPosition = new THREE.Vector3(-1.5 * GU, -0.2 * GU, this.number3.position.z);
+      this.number4originalPosition = new THREE.Vector3(0 * GU, -0.8 * GU, this.number4.position.z);
 
-      this.number1.position.y = -0.2 * GU;
-      this.number2.position.y = 0.6 * GU;
-      this.number3.position.y = -0.2 * GU;
-      this.number4.position.y = -0.8 * GU;
+      // Final x/y posotions:
+      this.number1.position.x = this.number1originalPosition.x;
+      this.number2.position.x = this.number2originalPosition.x;
+      this.number3.position.x = this.number3originalPosition.x;
+      this.number4.position.x = this.number4originalPosition.x;
+
+      this.number1.position.y = this.number1originalPosition.y;
+      this.number2.position.y = this.number2originalPosition.y;
+      this.number3.position.y = this.number3originalPosition.y;
+      this.number4.position.y = this.number4originalPosition.y;
     }
 
     update(frame) {
@@ -92,26 +97,22 @@
 
       // Remove when jumping to earlier to make debugging easier
       if(BEAN < this.oneShoutBean){
+        this.number1.position.x = this.number1originalPosition.x;
+        this.number2.position.x = this.number2originalPosition.x;
+        this.number3.position.x = this.number3originalPosition.x;
+        this.number4.position.x = this.number4originalPosition.x;
+
+        this.number1.position.y = this.number1originalPosition.y;
+        this.number2.position.y = this.number2originalPosition.y;
+        this.number3.position.y = this.number3originalPosition.y;
+        this.number4.position.y = this.number4originalPosition.y;
         this.scene.remove(this.number1);
         this.scene.remove(this.number2);
         this.scene.remove(this.number3);
         this.scene.remove(this.number4);
       }
 
-      // Alternative version if we figure out we only want the numbers shown at the positions anddont wantto dig out the code from git.
-      // if(BEAN == this.oneShoutBean){
-      //   this.scene.add(this.number1);
-      // }
-      // if(BEAN == this.twoShoutBean){
-      //   this.scene.add(this.number2);
-      // }
-      // if(BEAN == this.threeShoutBean){
-      //   this.scene.add(this.number3);
-      // }
-      // if(BEAN == this.fourShoutBean){
-      //   this.scene.add(this.number4);
-      // }
-
+      // Region from oneShoutBean up to fourShoutBean where we add the numbers:
       if(this.oneShoutBean < BEAN && BEAN < this.fourShoutBean){
         let currentStep = BEAN - this.oneShoutBean;
         let totalSteps = this.fourShoutBean - this.oneShoutBean;
@@ -143,7 +144,24 @@
       if(BEAN == this.fourShoutBean){
         this.scene.add(this.number4);
       }
+      // Region add numbers end
 
+      if(this.fourShoutBean < BEAN){
+        let number1PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean, 4760, this.number1originalPosition, this.number2originalPosition, BEAN);
+        this.number1.position.x = number1PosNow.x;
+        this.number1.position.y = number1PosNow.y;
+        let number2PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4760, this.number2originalPosition, this.number3originalPosition, BEAN);
+        this.number2.position.x = number2PosNow.x;
+        this.number2.position.y = number2PosNow.y;
+        let number3PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4760, this.number3originalPosition, this.number4originalPosition, BEAN);
+        this.number3.position.x = number3PosNow.x;
+        this.number3.position.y = number3PosNow.y;
+        let number4PosNow = getPositionForGivenBeanWhenMovingBetwennTwoPoints(this.fourShoutBean,4760, this.number4originalPosition, this.number1originalPosition, BEAN);
+        this.number4.position.x = number4PosNow.x;
+        this.number4.position.y = number4PosNow.y;
+      } // This ends when bird scene starts at bean #4776
+
+      // Region add rotation aboutself
       this.cube.rotation.x = Math.sin(frame / 10);
       this.cube.rotation.y = Math.cos(frame / 10);
 
@@ -151,7 +169,26 @@
       this.number2.rotation.y = frame / 10;
       this.number3.rotation.y = frame / 10;
       this.number4.rotation.y = frame / 10;
-    }
+      // End region rotate about self
+    } // End update()
+  }
+
+  function getPositionForGivenBeanWhenMovingBetwennTwoPoints(startBean, endBean, startPositionVector3, endPositionVector3, currentBean) {
+    // Get the inverse of the starting position so that we can subtract it from the final position:
+    let startPosition = new THREE.Vector3(0,0,0);
+    startPosition.copy(startPositionVector3);
+    startPosition.negate();
+    let startToEnd = new THREE.Vector3(0,0,0);
+    startToEnd.addVectors(endPositionVector3,startPosition);
+
+    let beanInterval = endBean - startBean;
+    let howFarWeAreAlong = currentBean - startBean;
+    let fractionIn = howFarWeAreAlong / beanInterval;
+
+    startToEnd.multiplyScalar(fractionIn);
+    let resultingPosition = new THREE.Vector3(0,0,0);
+    resultingPosition.addVectors(startPositionVector3, startToEnd);
+    return resultingPosition;
   }
 
   global.zentangleVision = zentangleVision;
