@@ -24,6 +24,7 @@
           P: new NIN.TextureInput(),
           Q: new NIN.TextureInput(),
           R: new NIN.TextureInput(),
+          S: new NIN.TextureInput(),
         },
         outputs: {
           render: new NIN.TextureOutput(),
@@ -53,8 +54,9 @@
       this.inputs.P.enabled = false;
       this.inputs.Q.enabled = false;
       this.inputs.R.enabled = false;
+      this.inputs.S.enabled = false;
 
-      let selectedScene;  
+      let selectedScene;
       if (BEAN < 48 * 18) {
         selectedScene = this.inputs.A;
       } else if (BEAN < 12 * 4 * 27) {
@@ -99,8 +101,10 @@
         selectedScene = this.inputs.I;
       } else if (BEAN < 12 * 4 * 90) {
         selectedScene = this.inputs.I_bg;
-      } else if (BEAN < 12 * 4 * 99.5) {
+      } else if (BEAN < 12 * 4 * 94) {
         selectedScene = this.inputs.K;
+      } else if (BEAN < 12 * 4 * 99) {
+        selectedScene = this.inputs.S;
       } else if (BEAN < 12 * 4 * 102) {
         selectedScene = this.inputs.J;
       } else if (BEAN < 12 * 4 * 108) {

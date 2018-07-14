@@ -39,7 +39,8 @@
       "N": "sheipz.render",
       "O": "sheipzidee.render",
       "Q": "sheipz2.render",
-      "R": "sheipzidee2.render"
+      "R": "sheipzidee2.render",
+      "S": "upbeatShader.render"
     }
   },
   {
@@ -230,8 +231,8 @@
   },
   {
     "id": "TestShader",
-    "type":"TestShaderNode", 
-    "options":{
+    "type": "TestShaderNode",
+    "options": {
       "shader": "TestShader"
     },
     "connected": {
@@ -333,7 +334,7 @@
     "id": "sprinkles",
     "type": "sprinkles"
   },
-  { 
+  {
     "id": "ndv_composotory",
     "type": "ndv_composotoryNode",
     "options": {
@@ -347,5 +348,12 @@
   {
     "id": "ndvpainter",
     "type": "ndvpainter"
+  },
+  {
+    "id": "upbeatShader",
+    "type": "upbeatShaderNode",
+    "options": {
+      "shader": "upbeatShader"
+    }
   }
 ]
