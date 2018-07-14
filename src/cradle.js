@@ -15,10 +15,12 @@
       this.output.magFilter = THREE.LinearFilter;
     }
 
+    /*
     warmup(renderer) {
       this.update(5872);
       this.render(renderer);
     }
+    */
 
     resize() {
       this.canvas.width = 16 * GU;

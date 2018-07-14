@@ -51,17 +51,27 @@
     }
 
     render() {
-      this.n_fill = this.inputs.paint_n.getValue().image;
-      this.n_3d_fill = this.inputs.paint_n_3d.getValue().image;
-      this.dv_fill = this.inputs.paint_dv.getValue().image;
-      this.background_fill = this.inputs.squiggles.getValue().image;
+      if(this.inputs.paint_n.getValue()) {
+        this.n_fill = this.inputs.paint_n.getValue().image;
+      }
+      if(this.inputs.paint_n_3d.getValue()) {
+        this.n_3d_fill = this.inputs.paint_n_3d.getValue().image;
+      }
+      if(this.inputs.paint_dv.getValue()) {
+        this.dv_fill = this.inputs.paint_dv.getValue().image;
+      }
+      if(this.inputs.squiggles.getValue()) {
+        this.background_fill = this.inputs.squiggles.getValue().image;
+      }
 
 
       // clear it
       this.ctx.clearRect(0,0,16*GU,9*GU);
 
       // background
-      this.ctx.drawImage(this.background_fill, 0, 0);
+      if(this.background_fill) {
+        this.ctx.drawImage(this.background_fill, 0, 0);
+      }
       this.ctx.save();
       this.ctx.translate(160,20);
       this.ctx.scale(GU,GU);
@@ -77,7 +87,9 @@
       this.ctx.stroke(this.n_shape);
       this.ctx.clip(this.n_shape, "evenodd");
       this.ctx.scale(2.79,10);
-      this.ctx.drawImage(this.n_fill, 0, 0);
+      if(this.n_fill) {
+        this.ctx.drawImage(this.n_fill, 0, 0);
+      }
       this.ctx.restore();
 
       // draw 3d effects of n
@@ -89,7 +101,9 @@
       this.ctx.stroke(this.n_3d);
       this.ctx.clip(this.n_3d, "evenodd");
       this.ctx.scale(10,10);
-      this.ctx.drawImage(this.n_3d_fill, 0, 0);
+      if(this.n_3d_fill) {
+        this.ctx.drawImage(this.n_3d_fill, 0, 0);
+      }
       this.ctx.restore();
 
       // paint dv
@@ -98,7 +112,9 @@
       this.ctx.stroke(this.dv);
       this.ctx.clip(this.dv, "evenodd");
       this.ctx.scale(10,10);
-      this.ctx.drawImage(this.dv_fill, 0, 0);
+      if(this.dv_fill) {
+        this.ctx.drawImage(this.dv_fill, 0, 0);
+      }
       this.ctx.restore();
 
       this.ctx.restore();
