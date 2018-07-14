@@ -23,7 +23,7 @@
 
       this.amplitude *= 0.9;
 
-      if(BEAT && BEAN <= 4300) {
+      if(BEAT && BEAN <= 4272) {
         switch((BEAN - 3984) % (48 * 4)) {
         case 0:
         case 32 - 4:
