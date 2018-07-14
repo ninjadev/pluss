@@ -1,7 +1,4 @@
 (function(global) {
-
-  const FFB = FRAME_FOR_BEAN;
-
   class ninjadevtext extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -52,6 +49,8 @@
     }
 
     render() {
+      const FFB = FRAME_FOR_BEAN;
+
       // This clears the canvas
       this.ctx.fillStyle = '#7cf3d3';
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
