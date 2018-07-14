@@ -9,7 +9,7 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20) ,new THREE.MeshPhongMaterial({ color: 0xFF256F }));
+      this.cube = new THREE.Mesh(new THREE.BoxGeometry(40, 40, 40) ,new THREE.MeshPhongMaterial({ color: 0xF625FF }));
       this.scene.add(this.cube);
 
       this.bg = new THREE.Mesh(new THREE.BoxGeometry(221, 124, 0.0001),
@@ -35,6 +35,14 @@
 
     update(frame) {
       super.update(frame);
+
+      if (frame < 5340) {
+        this.cube.position.x = 1000;
+      }
+      else
+      {
+        this.cube.position.x = 0;
+      }
 
       this.cube.rotation.x = Math.sin(frame / 20);
       this.cube.rotation.y = -Math.cos(frame / 20) + 3;

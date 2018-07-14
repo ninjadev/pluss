@@ -1,9 +1,19 @@
 {
   "title": "My project",
   "authors": [
-    "Your demoscene handle"
+    "capitalism",
+    "flowie",
+    "iverjo",
+    "kefirsjeiken",
+    "lulle",
+    "monsi",
+    "profit",
+    "rohtie",
+    "run",
+    "sigveseb",
+    "stiaje"
   ],
-  "description": "This is my project",
+  "description": "Ninjadev's PC demo entry for Solskogen 2018.",
   "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
   "music": {
     "path": "res/music.mp3",
@@ -11,7 +21,7 @@
     "subdivision": 12,
     "BEANOffset": 0
   },
-  "googleAnalyticsID": "Your GA ID",
+  "googleAnalyticsID": "",
   "labels": [
     {
       "name": "Intro 1",
@@ -72,6 +82,10 @@
     {
       "name": "Light 3",
       "BEAN": 4512
+    },
+    {
+      "name": "Bird",
+      "BEAN": 4776
     },
     {
       "name": "Light 4",

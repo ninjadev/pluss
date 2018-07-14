@@ -15,7 +15,7 @@ varying vec2 vUv;
 void main() {
     //gl_FragColor = vec4(vUv, 0.5 + 0.5 * sin(frame / 60.0), 1.0);
     vec4 color = texture2D(tDiffuse, vUv);
-    
+
     // Doing edge detection, simple sobel thingy
     vec4 up = texture2D(tDiffuse, vec2(vUv.x, vUv.y + EDGE_WIDTH));
     vec4 right = texture2D(tDiffuse, vec2(vUv.x + EDGE_WIDTH, vUv.y));
@@ -55,8 +55,8 @@ void main() {
       zentangled_color = texture2D(z6, vUv);
     }
     zentangled_color = vec4(zentangled_color.r - red * 1000.,
-                            zentangled_color.g - green * 1000., 
-                            zentangled_color.b - blue * 1000., 
+                            zentangled_color.g - green * 1000.,
+                            zentangled_color.b - blue * 1000.,
                             1.0);
     gl_FragColor = zentangled_color;
 }
