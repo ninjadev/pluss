@@ -225,8 +225,25 @@
     }
   },
   {
+    "id": "sprinkles",
+    "type": "sprinkles"
+  },
+  {
+    "id": "TestShader",
+    "type":"TestShaderNode", 
+    "options":{
+      "shader": "TestShader"
+    },
+    "connected": {
+      "sprinkles": "sprinkles.render"
+    }
+  },
+  {
     "id": "IceCream",
-    "type": "IceCream"
+    "type": "IceCream",
+    "connected": {
+      "TestShader": "TestShader.render"
+    }
   },
   {
     "id": "NinetiesPatterns",
@@ -313,6 +330,10 @@
     "type": "topRightNDVLogoNode"
   },
   {
+    "id": "sprinkles",
+    "type": "sprinkles"
+  },
+  { 
     "id": "ndv_composotory",
     "type": "ndv_composotoryNode",
     "options": {
