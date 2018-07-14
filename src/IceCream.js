@@ -132,6 +132,10 @@
         this.scene.add(backgroundMesh);
         this.backgroundMesh = backgroundMesh;
       }
+      this.X = this.camera.position.x;
+      this.Y = this.camera.position.y;
+      this.Z = this.camera.position.z;
+
     }
 
     update(frame) {
@@ -162,27 +166,36 @@
 
       // Animate cone
       const poscone = trgtcone.add(dispcone.multiplyScalar(disp_fact));
+      if (localtime>220){
+        const time = localtime - 220;
+        //this.camera.position.y = this.Y + time * 0.5;
+        //this.camera.position.x = this.X + time * 0.3; 
+        //this.camera.position.z = this.Z + time * 0.2;
+        this.camera.lookAt(new THREE.Vector3(0,this.Y + time*0.5,0));
+      }
+      else {
 
+        this.camera.lookAt(new THREE.Vector3(0,0,0));
+      }
       // Rotate around y-axis
-      if (localtime > 120) {
+      /*if (localtime > 120) {
         const rotvec = new THREE.Vector3(0,1,0);
         const rot = (localtime - 120) / 20.0;
         poscone.applyAxisAngle(rotvec, rot);
         pos1.applyAxisAngle(rotvec, rot);
         pos2.applyAxisAngle(rotvec, rot);
         pos3.applyAxisAngle(rotvec, rot);
-      }
+      }*/
 
       // Rotate around y-axis
-      if (localtime > 150) {
+      /*if (localtime > 150) {
         const rotvec = new THREE.Vector3(1,0,0);
         const rot = (localtime - 150) / 20.0;
         poscone.applyAxisAngle(rotvec, rot);
         pos1.applyAxisAngle(rotvec, rot);
         pos2.applyAxisAngle(rotvec, rot);
         pos3.applyAxisAngle(rotvec, rot);
-      }
-
+      }*/
       // Set positions
       this.cones.white_cone.mesh.position.set(pos1.x, pos1.y, pos1.z);
       this.cones.brown_cone.mesh.position.set(pos3.x, pos3.y, pos3.z);
@@ -201,7 +214,7 @@
         //this.camera.lookAt(this.cones.white_cone.mesh.position);
       }
  
-      this.camera.lookAt(new THREE.Vector3(0,0,0));
+      //this.camera.lookAt(new THREE.Vector3(0,0,0));
 
       // Update background
       {
