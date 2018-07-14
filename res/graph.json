@@ -244,6 +244,7 @@
     "id": "IceCream",
     "type": "IceCream",
     "connected": {
+      "IceShader": "IceShader.render",
       "CircleShader": "CircleShader.render",
       "TestShader": "TestShader.render",
       "squiggleBackground": "squiggleBackground.render"
@@ -389,10 +390,25 @@
     },
     "connected": {
       "circleOlav": "circleOlav.render"
-    } 
+    }
   },
   {
     "id": "circleOlav",
     "type": "circleOlav"
+  },
+  {
+    "id": "IceShader",
+    "type": "IceShaderNode",
+    "options": {
+      "shader": "IceShader"
+    },
+    "connected":{
+      "iceSprinkles": "iceSprinkles.render"
+    }
+  },
+  {
+    "id": "iceSprinkles",
+    "type": "iceSprinkles"
   }
+
 ]
