@@ -242,15 +242,24 @@
           this.ctx.restore();
         }
 
-        this.ctx.strokeStyle = 'white';
-        const lineWidth = 10 * this.boomsta;
-        const lineHeight = 0.5;
-        this.ctx.beginPath();
-        this.ctx.lineWidth = lineHeight;
-        this.ctx.lineCap = 'round';
-        this.ctx.moveTo(-lineWidth / 2, 2.5);
-        this.ctx.lineTo(lineWidth / 2, 2.5);
-        this.ctx.stroke();
+        // Beat bar
+        for (let i = 0; i < 2; i++) {
+          this.ctx.save();
+          this.ctx.strokeStyle = (i === 0 ? shadowColor : 'white');
+          if (i === 0) {
+            this.ctx.translate(0.08 * 1.6, 0.08 * 1.6);
+          }
+          const lineWidth = 10 * this.boomsta;
+          const lineHeight = 0.5;
+          this.ctx.beginPath();
+          this.ctx.lineWidth = lineHeight;
+          this.ctx.lineCap = 'round';
+          this.ctx.moveTo(-lineWidth / 2, 2.5);
+          this.ctx.lineTo(lineWidth / 2, 2.5);
+          this.ctx.stroke();
+          this.ctx.restore();
+        }
+
       } else {
         // transparent background, to mix in the banana shader
       }
