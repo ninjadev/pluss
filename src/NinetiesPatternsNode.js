@@ -115,22 +115,6 @@
           patternA = (BEAN / 4 | 0 ) % 4
 
         }
-        // else if (BEAN < MTV_BEAN + (SYNC_BEAN * 5)) {
-        //   patternA = this.BANANA;
-        //   currentTransition = this.NONE;
-        // }
-        // else if (BEAN < MTV_BEAN + (SYNC_BEAN * 5.5)) {
-        //   patternA = this.CRAZY;
-        //   currentTransition = this.NONE;
-        // }
-        // else if (BEAN < MTV_BEAN + (SYNC_BEAN * 6)) {
-        //   patternA = this.ZEBRA;
-        //   currentTransition = this.NONE;
-        // }
-        // else if (BEAN < MTV_BEAN + (SYNC_BEAN * 6.5)) {
-        //   patternA = this.GEOPARD;
-        //   currentTransition = this.NONE;
-        // }
 
       }
 
