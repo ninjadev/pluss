@@ -29,6 +29,7 @@
       // const maxTreeSize = 10 * this.dots_per_level;
       const maxTreeSize = 7 * this.dots_per_level;
       this.frame = frame;
+
       // 6125 is the frame when the tree starts to grow
       // The mod operator defines when the size restarts
       // ToDo : cap the dots at a multiple of dots_per_level?
@@ -41,7 +42,6 @@
       else{
         this.dots = maxTreeSize -2;
       }
-
     }
 
     renderShape(ctx, shape) {
