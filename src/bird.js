@@ -100,6 +100,12 @@
 
     render() {
       this.ctx.fillStyle = '#00ffc6';
+      if(BEAN < 4752 + 24) {
+        const r = easeOut(255, 0, F(this.frame, 4752, 24));
+        const g = 255;
+        const b = easeOut(255, 0xc6, F(this.frame, 4752, 24));
+        this.ctx.fillStyle = `rgb(${r|0}, ${g|0}, ${b|0})`;
+      }
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       const pink = '#ff00ea';
@@ -160,6 +166,12 @@
         this.ctx.translate(0, -GU * 16 * 3);
         this.ctx.rotate(Math.PI / 4);
         this.ctx.scale(2, 2);
+      }
+      if(BEAN < 4752 + 24) {
+        const r = easeOut(255, 0x4a, F(this.frame, 4752, 24));
+        const g = easeOut(255, 0x99, F(this.frame, 4752, 24));
+        const b = easeOut(255, 0x87, F(this.frame, 4752, 24));
+        this.ctx.fillStyle = `rgb(${r|0}, ${g|0}, ${b|0})`;
       }
       for(let i = 0; i < X; i++) {
         for(let j = -2; j < Y; j++) {
