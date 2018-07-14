@@ -85,9 +85,9 @@
       this.cylinderMaterial = new THREE.MeshBasicMaterial( {color: 0xEE7600} );
       this.cylinder = new THREE.Mesh( this.cylinderGeometry, this.cylinderMaterial );
       this.scene.add(this.cylinder);
-      this.cylinder.position.x = 6;
-      this.cylinder.position.y = -17;
-      this.cylinder.position.z = 20;
+      this.cylinder.position.x = 0;
+      this.cylinder.position.y = -14;
+      this.cylinder.position.z = 0;
       //light.position.set(50, 50, 50);
       //this.scene.add(light);
       this.camera.position.set(0,0,-50);
@@ -140,10 +140,12 @@
       const disp1 = new THREE.Vector3(   0, -10, 0);
       const disp2 = new THREE.Vector3( -10,  10, 0);
       const disp3 = new THREE.Vector3(  10,  10, 0);
+      const dispcone = new THREE.Vector3(  0,  -30, 0);
 
-      const trgt1 = new THREE.Vector3(8,0,0);
-      const trgt2 = new THREE.Vector3(0,0,0);
-      const trgt3 = new THREE.Vector3(4,8,0);
+      const trgt1 = new THREE.Vector3(4,0,0);
+      const trgt2 = new THREE.Vector3(-4,0,0);
+      const trgt3 = new THREE.Vector3(0,8,0);
+      const trgtcone = new THREE.Vector3(  0,  -14, 0);
 
       // TODO: Animate these over time down to 0
       const localtime = BEAN - 3600;
@@ -158,10 +160,14 @@
       const pos2 = trgt2.add(disp2.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
       const pos3 = trgt3.add(disp3.multiplyScalar(disp_fact)).applyAxisAngle(rotvec, rots*rot_fact);
 
+      // Animate cone
+      const poscone = trgtcone.add(dispcone.multiplyScalar(disp_fact));
+
       // Rotate around y-axis
       if (localtime > 120) {
         const rotvec = new THREE.Vector3(0,1,0);
         const rot = (localtime - 120) / 20.0;
+        poscone.applyAxisAngle(rotvec, rot);
         pos1.applyAxisAngle(rotvec, rot);
         pos2.applyAxisAngle(rotvec, rot);
         pos3.applyAxisAngle(rotvec, rot);
@@ -171,6 +177,7 @@
       if (localtime > 150) {
         const rotvec = new THREE.Vector3(1,0,0);
         const rot = (localtime - 150) / 20.0;
+        poscone.applyAxisAngle(rotvec, rot);
         pos1.applyAxisAngle(rotvec, rot);
         pos2.applyAxisAngle(rotvec, rot);
         pos3.applyAxisAngle(rotvec, rot);
@@ -180,7 +187,7 @@
       this.cones.white_cone.mesh.position.set(pos1.x, pos1.y, pos1.z);
       this.cones.brown_cone.mesh.position.set(pos3.x, pos3.y, pos3.z);
       this.cones.pink_cone.mesh.position.set(pos2.x, pos2.y, pos2.z);
-
+      this.cylinder.position.set(poscone.x, poscone.y, poscone.z);
 
       // Add hairs to balls
       {
