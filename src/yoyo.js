@@ -225,8 +225,8 @@
         this.ctx.save();
         let wobbler = 0.5 * Math.sin(this.frame * Math.PI * 2 / 60 / 60 * 190 / 2);
 
-        if (BEAN >= 1368 - 24 && BEAN < 1392) {
-          wobbler = lerp(wobbler, 0, F(this.frame, 1368 - 24, 4));
+        if (BEAN >= 1340 - 4 && BEAN < 1392) {
+          wobbler = lerp(wobbler, 0, F(this.frame, 1340-4, 4));
         }
         if (BEAN >= 1464 - 24 && BEAN < 1488) {
           wobbler = lerp(wobbler, 0, F(this.frame, 1464 - 24, 4));
@@ -279,8 +279,8 @@
         this.ctx.save();
         const shadowSize = 0.15;
         this.ctx.translate(shadowSize / scale, shadowSize / scale);
-        let rotation = Math.PI / 4 + this.frame / 50 + 0.67;
-        if (BEAN >= 1368 - 20 && BEAN < 1392) {
+        let rotation = Math.PI / 4 + this.frame / 50 + 0.89;
+        if (BEAN >= 1340 && BEAN < 1392) {
           rotation = 0;
         }
         if (BEAN >= 1356 - 4 && BEAN < 1392) {

@@ -59,7 +59,7 @@
         selectedScene = this.inputs.A;
       } else if (BEAN < 12 * 4 * 27) {
         selectedScene = this.inputs.C;
-      } else if (BEAN < 12 * 4 * 40.75) {
+      } else if (BEAN < 1960) {
         selectedScene = this.inputs.D;
       } else if (BEAN < 12 * 4 * 43) {
         selectedScene = this.inputs.D_transision;
