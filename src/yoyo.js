@@ -391,7 +391,7 @@
           this.ctx.scale(horizontalScaler, verticalScaler);
 
           if (i === 0) {
-            let x = lerp(0, -1, BEAN - 1356 - 4);
+            let x = lerp(0, -1, BEAN - 1356 - 8);
             x = easeIn(x, 0, F(this.frame, 1392 - 12, 12));
             x = lerp(x, -1, BEAN - 1464 + 1);
             x = easeIn(x, 0, F(this.frame, 1488 - 12, 12));
