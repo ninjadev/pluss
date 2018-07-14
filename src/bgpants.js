@@ -77,9 +77,7 @@
             var endBean = 4368;
             if(startBean < BEAN && BEAN < endBean)
             {
-              let beanInterval = endBean - startBean;
-              let howFarWeAreAlong = BEAN - startBean;
-              let fractionIn = howFarWeAreAlong / beanInterval;
+              var fractionIn = (BEAN - startBean) / (endBean - startBean);
               orange_height = Math.sin(fractionIn * Math.PI) * orange_height_normal;
               white_height = Math.sin(fractionIn * Math.PI) * white_height_normal;
             }
