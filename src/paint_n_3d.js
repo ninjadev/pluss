@@ -31,7 +31,7 @@
 
     render() {
 
-      this.ctx.fillStyle = 'darkbrown';
+      this.ctx.fillStyle = 'yellow';
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
       this.output.needsUpdate = true;
