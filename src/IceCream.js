@@ -3,6 +3,7 @@
     constructor(id, options) {
       options.inputs = {
         TestShader: new NIN.TextureInput(),
+        CircleShader: new NIN.TextureInput(),
         squiggleBackground: new NIN.TextureInput(),
       };
       options.outputs = { render: new NIN.TextureOutput() };
@@ -133,7 +134,7 @@
       //this.positionUpdater(frame);
 
       this.planeUpdater(this.cones.white_cone, this.camera, this.inputs.TestShader);
-      this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.TestShader);
+      this.planeUpdater(this.cones.pink_cone, this.camera, this.inputs.CircleShader);
       this.planeUpdater(this.cones.brown_cone, this.camera, this.inputs.TestShader); 
       //this.camera.lookAt.set() = new THREE.Vector3(0.88,1.16,-5.01);
       this.camera.position.x = 30* Math.sin(frame/100)+ 40; 

@@ -75,16 +75,21 @@
       // this.ctx.drawImage(this.squigglesBG.getValue().image, 0, 0);
       this.ctx.scale(GU, GU);
 
+      this.ctx.fillStyle = 'rgba(0,0,0,0.0)';
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
       this.ctx.save();
       this.ctx.scale(this.scale, this.scale);
       this.ctx.translate(this.x, this.y)
       this.ctx.lineWidth = 10;
       this.ctx.lineJoin = "round";
       this.ctx.lineCap = "round";
-      this.ctx.fillStyle = 'black'
-      this.ctx.fill(this.n_shape)
-      this.ctx.stroke(this.n_shape)
-      this.ctx.fillStyle = '#888'
+
+      this.ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      this.ctx.fill(this.n_shape);
+      this.ctx.stroke(this.n_shape);
+
+      this.ctx.fillStyle = '#888';
       this.ctx.fill(this.n_3d);
       this.ctx.stroke(this.n_3d);
       this.ctx.fillStyle = '#fff'
