@@ -12,8 +12,8 @@
     "run",
     "sigveseb",
     "sinny",
-    "stiaje"
-    "supersniken",
+    "stiaje",
+    "supersniken"
   ],
   "description": "Ninjadev's PC demo entry for Solskogen 2018.",
   "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
@@ -23,7 +23,7 @@
     "subdivision": 12,
     "BEANOffset": 0
   },
-  "googleAnalyticsID": "",
+  "googleAnalyticsID": "UA-97441881-4",
   "labels": [
     {
       "name": "Intro 1",
